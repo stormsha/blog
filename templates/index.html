@@ -1,0 +1,108 @@
+{%extends 'base_right.html'%}
+{% load blog_tags static comment_tags%}
+
+{% block title %}静觅 | StormSha的个人博客{% endblock title %}
+    {% block description %}
+    <meta name="description" content="StormSha的个人博客，记录生活的瞬间，分享学习的心得，感悟生活，留住感动，静静寻觅生活的美好"/>
+    {% endblock description %}
+    {% block keywords %}
+    <meta name="keywords" content="StormSha,Python,Django,静觅,网络,IT,技术,博客,个人博客"/>
+    {% endblock keywords %}
+{% block body%}
+    <div class="content-wrap">
+        <div class="content">
+            <div id="wowslider-container1">
+                <div class="ws_images">
+
+                    <ul>
+                        {% get_carousel_index as carousels%}
+                        {% for carousel in carousels %}
+
+                        <li>
+                            <a target="_blank" href="{{ carousel.url }}" title="{{ carousel.content }}">
+                                <img src="{{ carousel.img_url }}" title="{{ carousel.title }}" alt="{{ carousel.title }}"/>
+                            </a>
+                        </li>
+                        {% endfor %}
+                    </ul>
+                </div>
+
+                <div class="ws_thumbs">
+                    <div>
+                        {% get_carousel_index as carousels%}
+                        {% for carousel in carousels %}
+                        <a target="_blank" href="#" title="{{ carousel.title }}"><img src="{{ carousel.img_url }}"/></a>
+                        {% endfor %}
+                    </div>
+                </div>
+                <div class="ws_shadow"></div>
+            </div>
+            <script type="text/javascript" src="/static/js/slider.js"></script>
+            <div>
+                <div class="left-ad" style="clear: both;background-color: #fff; width: 30%;float: left;margin-right:2%;"></div>
+                <div class="hot-posts">
+                    <h2 class="title">热门排行</h2>
+                    <ul>
+                    {% get_article_list 'views' 5 as hot_article %}
+                        {% for hot in hot_article %}
+                        <li><p><span class="muted"><a href="javascript:;" data-action="ding" data-id="{{ hot.id }}" id="Addlike" class="action"><i
+                                class="fa fa-heart-o"></i><span class="count">{{ hot.loves }}</span> 喜欢</a></span></p><span class="label label-1">{{ forloop.counter}}</span><a
+                                href="/article/{{ hot.slug }}" title="{{ hot.title }}">{{ hot.title }}</a></li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+        {% for article in page_obj %}
+            <article class="excerpt">
+                <header><a class="label label-important" href="/category/{{ article.category.bigcategory.name }}/{{ article.category.name|lower }}">{{ article.category.name }}<i class="label-arrow"></i></a>
+                    <h2><a target="_blank" href="/article/{{ article.slug }}" title="{{ article.title }}">{{ article.title }} </a></h2>
+                </header>
+                <div class="focus"><a target="_blank" href="/article/{{ article.slug }}"><img class="thumb" width="200" height="123" src="{{ article.img_link }}"
+                                                                                                   alt="{{ article.title }}"/></a></div>
+                <span class="note">{{ article.summary }}</span>
+                <p class="auth-span">
+                    <span class="muted"><i class="fa fa-user"></i> <a href="/author/{{ article.author }}">{{ article.author }}</a></span>
+                    <span class="muted"><i class="fa fa-clock-o"></i> {{ article.create_date|date:'Y-m-d' }}</span> <span class="muted"><i class="fa fa-eye"></i> {{ article.views }}浏览</span>
+                    <span class="muted"><i class="fa fa-comments-o"></i> <a target="_blank" href="/article/{{ article.slug }}#comments">{% get_comment_count article.id  article.id%}评论</a></span><span
+                        class="muted">
+<a href="javascript:;" data-action="ding" data-id="{{ article.id }}" id="Addlike" class="action"><i class="fa fa-heart-o"></i><span class="count">{{ article.loves }}</span>喜欢</a></span>
+                </p>
+            </article>
+        {% empty %}
+            <div class="no-post">暂时还没有发布的文章！</div>
+        {% endfor %}
+
+        {% if is_paginated %}
+            <div class="pagination">
+                <ul>
+                    {% if first %}
+                        <li><a href="?page=1">1</a></li>
+                    {% endif %}
+                    {% if left %}
+                        {% if left_has_more %}
+                            <li><span>...</span></li>
+                        {% endif %}
+                        {% for i in left %}
+                            <li class="prev-page"><a href="?page={{ i }}">{{ i }}</a></li>
+                        {% endfor %}
+                    {% endif %}
+                    <li class="active"><a href="?page={{ page_obj.number }}">{{ page_obj.number }}</a></li>
+                    {% if right %}
+                        {% for i in right %}
+                            <li class="next-page"><a href="?page={{ i }}">{{ i }}</a></li>
+                        {% endfor %}
+                        {% if right_has_more %}
+                            <li><span>...</span></li>
+                        {% endif %}
+                    {% endif %}
+                    {% if last %}
+                        <li><a href="?page={{ paginator.num_pages }}">{{ paginator.num_pages }}</a></li>
+                    {% endif %}
+                </ul>
+            </div>
+        {% endif %}
+
+        </div>
+    </div>
+
+{%endblock body%}
