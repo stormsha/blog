@@ -12,9 +12,6 @@ https://docs.djangoproject.com/en/1.11/ref/settings/
 
 import os
 import sys
-import pymysql
-
-pymysql.install_as_MySQLdb()
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -24,16 +21,12 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # See https://docs.djangoproject.com/en/1.11/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-# 运行时记得添加一个SECRET_KEY，从自己的任何Django项目中拷贝一个即可
-SECRET_KEY = 'k-0af)v82oliks!oy=frlxw31u6nb9(7b)zkk$19rwv-jx%uyq'
+SECRET_KEY = '07#4u3t!4*#54s1a091bwdxwiup=#2@6w1i)tsreu6oy=@lb8p'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['www.stormsha.com','0,0,0,0','stormsha.com','stormsha','stormsha.cn','www.stormsha.cn']
-
-# 添加 apps 目录
-sys.path.insert(0, os.path.join(BASE_DIR, 'apps'))
+ALLOWED_HOSTS = ['127.0.0.1', 'www.stormsha.com', '0,0,0,0', 'stormsha.com', 'localhost']
 
 # Application definition
 
@@ -44,49 +37,20 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'django.contrib.sitemaps',  # 网站地图
-    'storm',
-    'oauth',
-    'comment',
-
-    # allauth
-    'django.contrib.sites',
-    'allauth',
-    'allauth.account',
-    'allauth.socialaccount',
-    'allauth.socialaccount.providers.github',
-
+    'django.contrib.sitemaps',
+    'django.contrib.humanize',  # 添加人性化过滤器
+    'storm',    # 博客应用
+    'user',     # 自定义用户应用
+    'comment',  # 评论
+    'haystack',  # 全文搜索应用 这个要放在其他应用之前
+    'rest_framework',   # API
 ]
-# allauth配置
-AUTHENTICATION_BACKENDS = (
-    # Needed to login by username in Django admin, regardless of `allauth`
-    'django.contrib.auth.backends.ModelBackend',
-
-    # `allauth` specific authentication methods, such as login by e-mail
-    'allauth.account.auth_backends.AuthenticationBackend',
-)
-# 多站点框架：
-# 位于django.contrib.sites的site。
-# SITE_ID指定与特定配置文件相关联的site对象之数据库的ID。
-# 当出现"SocialApp matching query does not exist"，这种报错的时候就需要更换这个ID
-SITE_ID = 1
-# 设置登录和注册成功后重定向的页面，默认是/accounts/profile/
-LOGIN_REDIRECT_URL = "/"
-# Email setting
-# 禁用注册邮箱验证
-ACCOUNT_EMAIL_VERIFICATION = 'none'
-# 登录方式，选择用户名或者邮箱登录
-ACCOUNT_AUTHENTICATION_METHOD = "username_email"
-# 设置用户注册的时候必须填写邮箱地址
-ACCOUNT_EMAIL_REQUIRED = True
-# 登出直接退出，不用确认
-ACCOUNT_LOGOUT_ON_GET = True
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
-    'django.middleware.csrf.CsrfViewMiddleware',
+    # 'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
@@ -97,7 +61,7 @@ ROOT_URLCONF = 'blog.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [os.path.join(BASE_DIR, 'templates')],  # 设置视图
+        'DIRS': [os.path.join(BASE_DIR, 'templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -105,6 +69,8 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+
+                'storm.context_processors.settings_info',  # 自定义上下文管理器
             ],
         },
     },
@@ -115,16 +81,16 @@ WSGI_APPLICATION = 'blog.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/1.11/ref/settings/#databases
-
+# 添加 apps 目录
+sys.path.insert(0, os.path.join(BASE_DIR, 'apps'))
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'HOST': 'localhost',
+        'HOST': '',
         'PORT': '3306',
         'USER': 'root',
-        'PASSWORD': 'sxc123654',
+        'PASSWORD': '',
         'NAME': 'blog',
-        'charset':'utf8',
         # 避免映射数据库时出现警告
         'OPTIONS': {
             'init_command': "SET sql_mode='STRICT_TRANS_TABLES'",
@@ -155,9 +121,6 @@ AUTH_PASSWORD_VALIDATORS = [
 
 # Internationalization
 # https://docs.djangoproject.com/en/1.11/topics/i18n/
-
-# LANGUAGE_CODE = 'en-us'
-
 # TIME_ZONE = 'UTC'
 LANGUAGE_CODE = 'zh-hans'
 TIME_ZONE = 'Asia/Shanghai'
@@ -169,25 +132,37 @@ USE_L10N = True
 # USE_TZ = True
 USE_TZ = False
 
-
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.11/howto/static-files/
 
-
+# 静态文件收集
 STATIC_URL = '/static/'
-STATIC_ROOT = os.path.join(BASE_DIR, 'nginx/static/')
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'static')
 ]
+
 # 媒体文件收集
 MEDIA_URL = "/media/"   # 媒体文件别名(相对路径) 和 绝对路径
 MEDIA_ROOT = (
     os.path.join(BASE_DIR, 'media')
 )
 
+# 统一分页设置
+BASE_PAGE_BY = 4
+BASE_ORPHANS = 5
+
+# 全文搜索应用配置
+HAYSTACK_CONNECTIONS = {
+    'default': {
+        'ENGINE': 'storm.whoosh_cn_backend.WhooshEngine',  # 选择语言解析器为自己更换的结巴分词
+        'PATH': os.path.join(BASE_DIR, 'whoosh_index'),  # 保存索引文件的地址，选择主目录下，这个会自动生成
+    }
+}
+# 自动更新索引
+HAYSTACK_SIGNAL_PROCESSOR = 'haystack.signals.RealtimeSignalProcessor'
 
 # 自定义用户model
-AUTH_USER_MODEL = 'oauth.Ouser'
+AUTH_USER_MODEL = 'user.Ouser'
 
 SITE_DESCRIPTION = "StormSha的个人网站，记录生活的瞬间，分享学习的心得，感悟生活，留住感动，静静寻觅生活的美好"
 
@@ -195,5 +170,4 @@ SITE_KEYWORDS = "StormSha,静觅,网络,IT,技术,博客,Python"
 
 SITE_END_TITLE = "聚会阅读器"
 
-
-
+API_FLAG = True

@@ -18,8 +18,9 @@ class AllArticleRssFeed(Feed):
 
     # 显示的内容的标题,这个才是最主要的东西
     def item_title(self, item):
-        return "【{}】{}".format(item.category,item.title)
+        return "【{}】{}".format(item.category, item.title)
 
     # 显示的内容的描述
     def item_description(self, item):
         return item.body_to_markdown()
+

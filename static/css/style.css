@@ -7695,3 +7695,7 @@ span .action-popover .popover-content .bds_more {
 .crayon-syntax {
 	float: initial!important
 }
+
+.highlighted {
+    color: #ea6f5a;
+}

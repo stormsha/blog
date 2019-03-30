@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Article, Tag, Category, Timeline, Carousel, Silian, Keyword, FriendLink,BigCategory
+from .models import Article, Tag, Category, Carousel, Keyword, FriendLink, BigCategory
 
 
 @admin.register(Article)
@@ -39,6 +39,7 @@ class TagAdmin(admin.ModelAdmin):
 class CategoryAdmin(admin.ModelAdmin):
     list_display = ('name', 'id', 'slug')
 
+
 @admin.register(BigCategory)
 class BigCategoryAdmin(admin.ModelAdmin):
     list_display = ('name', 'id', 'slug')
@@ -49,26 +50,9 @@ admin.site.site_header = '网站管理'
 admin.site.site_title = '博客后台管理'
 
 
-@admin.register(Timeline)
-class TimelineAdmin(admin.ModelAdmin):
-    list_display = ('title', 'side', 'update_date', 'icon', 'icon_color',)
-    fieldsets = (
-        ('图标信息', {'fields': (('icon', 'icon_color'),)}),
-        ('时间位置', {'fields': (('side', 'update_date', 'star_num'),)}),
-        ('主要内容', {'fields': ('title', 'content')}),
-    )
-    date_hierarchy = 'update_date'
-    list_filter = ('star_num', 'update_date')
-
-
 @admin.register(Carousel)
 class CarouselAdmin(admin.ModelAdmin):
     list_display = ('number', 'title', 'content', 'img_url', 'url')
-
-
-@admin.register(Silian)
-class SilianAdmin(admin.ModelAdmin):
-    list_display = ('id', 'remark', 'badurl', 'add_date')
 
 
 @admin.register(Keyword)
@@ -81,4 +65,3 @@ class FriendLinkAdmin(admin.ModelAdmin):
     list_display = ('name', 'description', 'link', 'create_date', 'is_active', 'is_show')
     date_hierarchy = 'create_date'
     list_filter = ('is_active', 'is_show')
-

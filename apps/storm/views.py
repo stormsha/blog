@@ -1,19 +1,23 @@
-from django.views import generic
-from django.utils.text import slugify
-from django.shortcuts import render, HttpResponse,render_to_response
-from django.views.decorators.csrf import csrf_exempt
-from django.shortcuts import get_object_or_404,get_list_or_404
-from .models import Article,BigCategory,Category,Tag
-from markdown.extensions.toc import TocExtension  # 锚点的拓展
+# ---------------------------
+__author__ = 'stormsha'
+__date__ = '2019/3/15 20:31'
+# ---------------------------
 import markdown
-
 import time
+from django.views import generic
+from django.conf import settings
+from django.utils.text import slugify
+from django.shortcuts import render, HttpResponse, render_to_response
+from django.views.decorators.csrf import csrf_exempt
+from django.shortcuts import get_object_or_404, get_list_or_404
+from .models import Article, BigCategory, Category, Tag
+from markdown.extensions.toc import TocExtension  # 锚点的拓展
+from haystack.generic_views import SearchView  # 导入搜索视图
+from haystack.query import SearchQuerySet
 
 
 # Create your views here.
 class IndexView(generic.ListView):
-    #
-
     """
         首页视图,继承自ListVIew，用于展示从数据库中获取的文章列表
     """
@@ -23,29 +27,43 @@ class IndexView(generic.ListView):
 
     # context_object_name属性用于给上下文变量取名（在模板中使用该名字）
     context_object_name = 'articles'
+
     paginate_by = 10
 
     def get_queryset(self):
+        # 重写通用视图的 get_queryset 函数，获取定制数据
         queryset = super(IndexView, self).get_queryset()
+
+        # 日期归档
         year = self.kwargs.get('year', 0)
         month = self.kwargs.get('month', 0)
-        tag = self.kwargs.get('tag', 0)
-        self.big_slug = self.kwargs.get('bigslug', '')
-        slug = self.kwargs.get('slug', '')
-        if self.big_slug:
-            big=get_object_or_404(BigCategory,slug=self.big_slug)
-            queryset = queryset.filter(category__bigcategory=big)
-            if slug:
-                slu=get_object_or_404(Category, slug=slug)
-                queryset = queryset.filter(category=slu)
-        if year and month:
-            queryset = get_list_or_404(queryset,create_date__year=year,create_date__month=month)
-        if tag:
 
+        # 标签
+        tag = self.kwargs.get('tag', 0)
+
+        # 导航条
+        self.big_slug = self.kwargs.get('bigslug', '')
+
+        # 文章分类
+        slug = self.kwargs.get('slug', '')
+
+        if self.big_slug:
+            big = get_object_or_404(BigCategory, slug=self.big_slug)
+            queryset = queryset.filter(category__bigcategory=big)
+
+            if slug:
+                slu = get_object_or_404(Category, slug=slug)
+                queryset = queryset.filter(category=slu)
+
+        if year and month:
+            queryset = get_list_or_404(queryset, create_date__year=year, create_date__month=month)
+
+        if tag:
             tags = get_object_or_404(Tag, name=tag)
             self.big_slug = BigCategory.objects.filter(category__article__tags=tags)
             self.big_slug = self.big_slug[0].slug
             queryset = queryset.filter(tags=tags)
+
         return queryset
 
     def get_context_data(self, **kwargs):
@@ -65,8 +83,9 @@ class IndexView(generic.ListView):
         # page_obj 是 Page 的一个实例，
         # is_paginated 是一个布尔变量，用于指示是否已分页。
         # 例如如果规定每页 10 个数据，而本身只有 5 个数据，其实就用不着分页，此时 is_paginated=False。
-        # 关于什么是 Paginator，Page 类在 Django Pagination 简单分页：http://zmrenwu.com/post/34/ 中已有详细说明。
+        # 关于什么是 Paginator，Page 类在 Django Pagination 简单分页。
         # 由于 context 是一个字典，所以调用 get 方法从中取出某个键对应的值。
+
         paginator = context.get('paginator')
         page = context.get('page_obj')
         is_paginated = context.get('is_paginated')
@@ -76,18 +95,11 @@ class IndexView(generic.ListView):
 
         # 将分页导航条的模板变量更新到 context 中，注意 pagination_data 方法返回的也是一个字典。
         context.update(pagination_data)
-        # 根据浏览量提取热门文章取前五
-        # hot_article=Article.objects.order_by('-views')[:5]
-        # context['hot_article']=hot_article
-
-        # dates = Article.objects.datetimes('create_date', 'month', order='DESC')
-        # context['dates'] = dates
 
         # 将更新后的 context 返回，以便 ListView 使用这个字典中的模板变量去渲染模板。
         # 注意此时 context 字典中已有了显示分页导航条所需的数据。
 
         context['category'] = self.big_slug
-
         return context
 
     def pagination_data(self, paginator, page, is_paginated):
@@ -153,7 +165,7 @@ class IndexView(generic.ListView):
             # 如果最左边的页码号比第 2 页页码号还大，
             # 说明最左边的页码号和第 1 页的页码号之间还有其它页码，因此需要显示省略号，通过 left_has_more 来指示。
             if left[0] > 2:
-                left_has_more = True
+                left_has_more=True
 
             # 如果最左边的页码号比第 1 页的页码号大，说明当前页左边的连续页码号中不包含第一页的页码，
             # 所以需要显示第一页的页码号，通过 first 来指示
@@ -167,7 +179,7 @@ class IndexView(generic.ListView):
 
             # 是否需要显示最后一页和最后一页前的省略号
             if right[-1] < total_pages - 1:
-                right_has_more = True
+                right_has_more=True
             if right[-1] < total_pages:
                 last = True
 
@@ -189,6 +201,49 @@ class IndexView(generic.ListView):
         return data
 
 
+class DetailView(generic.DetailView):
+    """
+        Django有基于类的视图DetailView,用于显示一个对象的详情页，我们继承它
+    """
+    # 获取数据库中的文章列表
+    model = Article
+    # template_name属性用于指定使用哪个模板进行渲染
+    template_name = 'article.html'
+    # context_object_name属性用于给上下文变量取名（在模板中使用该名字）
+    context_object_name = 'article'
+
+    def get_object(self):
+        obj = super(DetailView, self).get_object()
+        # 设置浏览量增加时间判断,同一篇文章两次浏览超过半小时才重新统计阅览量,作者浏览忽略
+        u = self.request.user
+        ses = self.request.session
+        the_key = 'is_read_{}'.format(obj.id)
+        is_read_time = ses.get(the_key)
+        if u != obj.author:
+            if not is_read_time:
+                obj.update_views()
+                ses[the_key] = time.time()
+            else:
+                now_time = time.time()
+                t = now_time - is_read_time
+                if t > 60 * 30:
+                    obj.update_views()
+                    ses[the_key] = time.time()
+        md = markdown.Markdown(extensions=[
+            'markdown.extensions.extra',
+            'markdown.extensions.codehilite',
+            TocExtension(slugify=slugify),
+        ])
+        obj.body = md.convert(obj.body)
+        obj.toc = md.toc
+        return obj
+
+    def get_context_data(self, **kwargs):
+        context = super(DetailView, self).get_context_data(**kwargs)
+        context['category'] = self.object.id
+        return context
+
+
 def MessageView(request):
     return render(request, 'message.html', {'category':'message'})
 
@@ -198,7 +253,7 @@ def LinkView(request):
 
 
 def AboutView(request):
-    return render(request, 'about.html', {'category':'about'})
+    return render(request, 'about.html', {'category': 'about'})
 
 
 def DonateView(request):
@@ -272,5 +327,17 @@ def LoveView(request):
         return HttpResponse('error', status=405)
 
 
+# 重写搜索视图，可以增加一些额外的参数，且可以重新定义名称
+class MySearchView(SearchView):
+    # 返回搜索结果集
+    context_object_name = 'search_list'
+    # 设置分页
+    paginate_by = getattr(settings, 'BASE_PAGE_BY', None)
+    paginate_orphans = getattr(settings, 'BASE_ORPHANS', 0)
+    # 搜索结果以浏览量排序
+    queryset = SearchQuerySet().order_by('-views')
+
+
 def page_not_found(request):
     return render_to_response('404.html')
+

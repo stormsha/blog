@@ -4,23 +4,23 @@
 
 <h3>一个以 Django 作为框架搭建的个人博客。</h3>
 
-博客效果： https://stormsha.com/ &ensp;&ensp;或者 &ensp;&ensp; https://stormsha.com/
+博客地址： [https://stormsha.com/](https://www.stormsha.com/)
 
+开发教程：[https://www.stormsha.com/article/666/](https://www.stormsha.com/article/666/)
 <h3>功能介绍</h3>
 
-Django 自带的后台管理系统，方便对于文章、用户及其他动态内容的管理
+> ①Django 自带的后台管理系统，方便对于文章、用户及其他动态内容的管理
 
-文章分类、标签、浏览量统计以及规范的 SEO 设置
+> ②文章分类、标签、浏览量统计以及规范的 SEO 设置
 
-用户认证系统，在 Django 自带的用户系统的基础上扩展 Oauth 认证
+> ③用户注册登录
 
-文章评论系统，支持 markdown 语法，二级评论结构和回复功能
+> ④文章评论系统，支持 markdown 语法，二级评论结构和回复功能
 
-规范的 Sitemap 网站地图
+> ⑤强大的全文搜索功能，只需要输入关键词就能展现全站与之关联的文章
 
-友情链接和推荐工具网站的展示
-
-RESTful API 风格的 API 接口
+ 
+> ⑥RSS 博客订阅功能及规范的 Sitemap 网站地图
 
 
 <h3>待开发后功能</h3>
@@ -33,13 +33,13 @@ RSS 博客订阅功能
 
 <h3>博客主页效果</h3>
 
-![PC效果](http://stormsha.cn/static/images/pcindexshow.png)
+![PC效果](https://stormsha.cn/static/images/pcindexshow.png)
 
 
 <h3>博客手机端显示效果（响应式）</h3>
 
 
-![博客手机端效果](http://stormsha.cn/static/images/mobileindex.png)
+![博客手机端效果](https://stormsha.cn/static/images/mobileindex.png)
 
 
 

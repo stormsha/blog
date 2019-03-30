@@ -5,12 +5,12 @@ from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 # 第四个是 auth中用户权限有关的类。auth可以设置每个用户的权限。
 from django.views.decorators.csrf import csrf_exempt
-from django.shortcuts import render,redirect,HttpResponseRedirect
-from .forms import UserForm,loginForm, ProfileForm
+from django.shortcuts import render, redirect, HttpResponseRedirect
+from .forms import UserForm, loginForm, ProfileForm
 import re
 
 
-#注册
+# 注册
 @csrf_exempt
 def register_view(request):
     context = {}
@@ -23,9 +23,9 @@ def register_view(request):
             password = form.cleaned_data['password']
             password2 = form.cleaned_data['password2']
             email = form.cleaned_data['email']
-            context={'username':username,'pwd':password,'email':email}
+            context = {'username': username, 'pwd': password, 'email': email}
             if password.isdigit():
-                context['pwd_error']='nums'
+                context['pwd_error'] = 'nums'
                 return render(request, 'account/signup.html', context)
             if password != password2:
                 context['pwd_error'] = 'unequal'
@@ -87,17 +87,17 @@ def login_view(req):
 
         remember = req.POST.get('remember', 0)
         if form.is_valid():
-            #获取表单用户密码
+            # 获取表单用户密码
             username = form.cleaned_data['username']
             password = form.cleaned_data['password']
             context={'username':username,'pwd':password}
-            #获取的表单数据与数据库进行比较
+            # 获取的表单数据与数据库进行比较
             user = authenticate(username = username,password = password)
             if next_to=='':
                 next_to='/'
             if user:
                 if user.is_active:
-                    #比较成功，跳转index
+                    # 比较成功，跳转index
                     auth.login(req,user)
                     req.session['username'] = username
                     req.session['uid'] = user.id
@@ -126,8 +126,8 @@ def login_view(req):
 
 # 登出
 def logout_view(req):
-    #清理cookie里保存username
-    next_to=req.GET.get('next','/')
+    # 清理cookie里保存username
+    next_to = req.GET.get('next', '/')
     if next_to == '':
         next_to = '/'
     auth.logout(req)

@@ -6,10 +6,10 @@ import markdown
 import emoji
 import re
 
+
 # Create your models here.
 
-
-# 文章关键词，用来作为SEO中keywords
+# 文章关键词，用来作为 SEO 中 keywords
 class Keyword(models.Model):
     name = models.CharField('文章关键词', max_length=20)
 
@@ -27,7 +27,7 @@ class Tag(models.Model):
     name = models.CharField('文章标签', max_length=20)
     slug = models.SlugField(unique=True)
     description = models.TextField('描述', max_length=240, default=settings.SITE_DESCRIPTION,
-                                   help_text='用来作为SEO中description,长度参考SEO标准')
+                                 help_text='用来作为SEO中description,长度参考SEO标准')
 
     class Meta:
         verbose_name = '标签'
@@ -40,20 +40,21 @@ class Tag(models.Model):
     def get_absolute_url(self):
         return reverse('blog:tag', kwargs={'tag': self.name})
 
-
     def get_article_list(self):
-        '''返回当前标签下所有发表的文章列表'''
+        """返回当前标签下所有发表的文章列表"""
         return Article.objects.filter(tags=self)
 
 
-# 文章大分类
+# 网站导航菜单栏分类表
 class BigCategory(models.Model):
     name = models.CharField('文章大分类', max_length=20)
+
+    # 用作文章的访问路径，每篇文章有独一无二的标识，下同
     slug = models.SlugField(unique=True)
     description = models.TextField('描述', max_length=240, default=settings.SITE_DESCRIPTION,
-                                   help_text='用来作为SEO中description,长度参考SEO标准')
-    keywords= models.TextField('关键字', max_length=240, default=settings.SITE_KEYWORDS,
-                                   help_text='用来作为SEO中keywords,长度参考SEO标准')
+                                 help_text='用来作为SEO中description,长度参考SEO标准')
+    keywords = models.TextField('关键字', max_length=240, default=settings.SITE_KEYWORDS,
+                              help_text='用来作为SEO中keywords,长度参考SEO标准')
 
     class Meta:
         verbose_name = '大分类'
@@ -63,13 +64,13 @@ class BigCategory(models.Model):
         return self.name
 
 
-# 文章小分类
+# 导航栏，分类下的下拉擦菜单分类
 class Category(models.Model):
     name = models.CharField('文章分类', max_length=20)
     slug = models.SlugField(unique=True)
     description = models.TextField('描述', max_length=240, default=settings.SITE_DESCRIPTION,
-                                   help_text='用来作为SEO中description,长度参考SEO标准')
-    bigcategory=models.ForeignKey(BigCategory,verbose_name='大分类')
+                                 help_text='用来作为SEO中description,长度参考SEO标准')
+    bigcategory = models.ForeignKey(BigCategory, verbose_name='大分类')
 
     class Meta:
         verbose_name = '分类'
@@ -80,7 +81,7 @@ class Category(models.Model):
         return self.name
 
     def get_absolute_url(self):
-        return reverse('blog:category', kwargs={'slug': self.slug,'bigslug':self.bigcategory.slug})
+        return reverse('blog:category', kwargs={'slug': self.slug, 'bigslug': self.bigcategory.slug})
 
     def get_article_list(self):
         return Article.objects.filter(category=self)
@@ -102,7 +103,7 @@ class Article(models.Model):
     category = models.ForeignKey(Category, verbose_name='文章分类')
     tags = models.ManyToManyField(Tag, verbose_name='标签')
     keywords = models.ManyToManyField(Keyword, verbose_name='文章关键词',
-                                      help_text='文章关键词，用来作为SEO中keywords，最好使用长尾词，3-4个足够')
+                                    help_text='文章关键词，用来作为SEO中keywords，最好使用长尾词，3-4个足够')
 
     class Meta:
         verbose_name = '文章'
@@ -130,56 +131,6 @@ class Article(models.Model):
 
     def get_next(self):
         return Article.objects.filter(id__gt=self.id).order_by('id').first()
-
-
-# 时间线
-class Timeline(models.Model):
-
-    # 时间线的颜色
-    COLOR_CHOICE = (
-        ('primary', '基本-蓝色'),
-        ('success', '成功-绿色'),
-        ('info', '信息-天蓝色'),
-        ('warning', '警告-橙色'),
-        ('danger', '危险-红色')
-    )
-    # 文章展示的位置，时间轴左右
-    SIDE_CHOICE = (
-        ('L', '左边'),
-        ('R', '右边'),
-    )
-    STAR_NUM = (
-        (1, '1颗星'),
-        (2, '2颗星'),
-        (3, '3颗星'),
-        (4, '4颗星'),
-        (5, '5颗星'),
-    )
-    side = models.CharField('位置', max_length=1, choices=SIDE_CHOICE, default='L')
-    star_num = models.IntegerField('星星个数', choices=STAR_NUM, default=3)
-    icon = models.CharField('图标', max_length=50, default='fa fa-pencil')
-    icon_color = models.CharField('图标颜色', max_length=20, choices=COLOR_CHOICE, default='info')
-    title = models.CharField('标题', max_length=100)
-    update_date = models.DateTimeField('更新时间')
-    content = models.TextField('主要内容')
-
-    class Meta:
-        verbose_name = '时间线'
-        verbose_name_plural = verbose_name
-        ordering = ['update_date']
-
-    def __str__(self):
-        return self.title[:20]
-
-    def title_to_emoji(self):
-        return emoji.emojize(self.title, use_aliases=True)
-
-    def content_to_markdown(self):
-        # 先转换成emoji然后转换成markdown
-        to_emoji_content = emoji.emojize(self.content, use_aliases=True)
-        return markdown.markdown(to_emoji_content,
-                                 extensions=['markdown.extensions.extra', ]
-                                 )
 
 
 # 幻灯片
@@ -215,6 +166,7 @@ class Silian(models.Model):
         return self.badurl
 
 
+# 友情链接表
 class FriendLink(models.Model):
     name = models.CharField('网站名称', max_length=50)
     description = models.CharField('网站描述', max_length=100, blank=True)
@@ -233,20 +185,20 @@ class FriendLink(models.Model):
         return self.name
 
     def get_home_url(self):
-        '''提取友链的主页'''
+        """提取友链的主页"""
         u = re.findall(r'(http|https://.*?)/.*?', self.link)
         home_url = u[0] if u else self.link
         return home_url
 
     def active_to_false(self):
-        self.is_active = False
+        self.is_active=False
         self.save(update_fields=['is_active'])
 
     def show_to_false(self):
         self.is_show = True
         self.save(update_fields=['is_show'])
-		
-		
+
+
 # 公告
 class Activate(models.Model):
     text = models.TextField('公告', null=True)
@@ -258,4 +210,6 @@ class Activate(models.Model):
         verbose_name_plural = verbose_name
 
     def __str__(self):
-        return self.badurl
+        return self.id
+
+

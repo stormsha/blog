@@ -1227,7 +1227,6 @@ function() {
                     um_id: z,
                     um_action: y
                 };
-                console.log(w)
                 a.post("/love/", w,
                 function(A) {
                     a(x).html(A)
@@ -1361,7 +1360,6 @@ function() {
                 data: a(this).serialize(),
                 type: a(this).attr("method"),
                 error: function(w) {
-                    console.log('error');
                     a(".comt-loading").hide();
                     a(".comt-error").show().html(w.responseText);
                     setTimeout(function() {
@@ -1377,13 +1375,15 @@ function() {
                     a("textarea").each(function() {
                         this.value = ""
                     });
+
+
+                    //获取seeion信息，判断用户是否登录
                     var user_id = "<%=session.getAttribute('uid','')%>";
-                    console.log(user_id)
                     var nick = $('#author').val();
-                    if (user_id != ''){
+                    if (user_id != ''){     //如果用户处于登录状态，展示用户ID
                         $('#nick').html(nick);
                     }
-                    else {
+                    else {                 //如果没有登录，证明是游民，游民可以换马甲
                         $('#nick').html(nick + '&nbsp; <a class="switch-author" href="javascript:;" data-type="switch-author" style="font-size:12px;">换个身份</a>');
                     }
 
@@ -1397,10 +1397,12 @@ function() {
                         n = parseInt($comments.text().match(/\d+/));
                         $comments.text($comments.text().replace(n, n + 1))
                     }
+
                     new_htm = '" id="new_comm_' + k + '"></';
                     new_htm = (z == "0") ? ('\n<ol style="clear:both;" class="commentlist commentnew' + new_htm + "ol>") : ('\n<ul class="children' + new_htm + "ul>");
                     ok_htm = '\n<span id="success_' + k + b;
                     ok_htm += "</span><span></span>\n";
+
                     if (z == "0") {
                         if (a("#postcomments .commentlist").length) {
                             a("#postcomments .commentlist").before(new_htm)

@@ -88,6 +88,7 @@
             padding: 0 !important;
         }
     </style>
+    {% block head %}{% endblock head %}
     <link rel='stylesheet' id='crayon-css' href='{% static 'css/crayon.min.css' %}' type='text/css' media='all'/>
     <link rel='stylesheet' id='crayon-theme-github-css' href='{% static 'css/github.css' %}' type='text/css' media='all'/>
     <link rel='stylesheet' id='crayon-font-monaco-css' href='{% static 'css/monaco.css' %}' type='text/css' media='all'/>
@@ -96,7 +97,9 @@
     <link rel='stylesheet' id='l2h_print_style-css' href='{% static 'css/print.min.css' %}' type='text/css' media='print'/>
     <link rel='stylesheet' id='style-css' href='{% static 'css/style.css' %}' type='text/css' media='all'/>
     <link rel='stylesheet' id='style-css' href='{% static 'font-awesome-4.7.0/css/font-awesome.min.css' %}' type='text/css' media='all'/>
+    <link rel="stylesheet" href="{% static 'highlights/github.css' %}">
     <script type='text/javascript' src='{% static 'js/jquery.min.js' %}'></script>
+
     <script type='text/javascript'>
         /* <![CDATA[ */
         var CrayonSyntaxSettings = {
@@ -166,7 +169,6 @@ var _hmt = _hmt || [];
     <script type="text/javascript" name="baidu-tc-cerfication" data-appid="5411405" src="{% static 'js/lightapp.js' %}"></script>
     <script type="text/javascript" src="{% static 'js/main.js' %}"></script>
     <script type="text/javascript"></script>
-    {% block head %}{% endblock head %}
 </head>
 
 <body class="home blog">
@@ -219,16 +221,17 @@ var _hmt = _hmt || [];
                     <!--导航条结束-->
 
                     <!--搜索框-->
-                    <!--目前搜索框功能感觉没必要没做-->
                     <li style="float:right;">
                         <div class="toggle-search"><i class="fa fa-search"></i></div>
                         <div class="search-expand" style="display: none;">
                             <div class="search-expand-inner">
-                                <form method="get" class="searchform themeform"
-                                      onsubmit="location.href='/?s=' + encodeURIComponent(this.s.value).replace(/%20/g, '+'); return false;"
-                                      action="/">
-                                    <div><input type="ext" class="search" name="s" onblur="if(this.value=='')this.value='search...';"
-                                                onfocus="if(this.value=='search...')this.value='';" value="search..."></div>
+                                <form class="nav-item navbar-form mr-2 py-md-2" role="search" method="get" id="searchform" action="{% url 'blog:search' %}">
+                                    <div class="input-group">
+                                        <input type="search" name="q" class="form-control rounded-0 f-15" placeholder="搜索" required=True>
+                                        <div class="input-group-btn">
+                                            <button class="btn btn-info rounded-0" type="submit"><i class="fa fa-search"></i></button>
+                                        </div>
+                                    </div><!-- /input-group -->
                                 </form>
                             </div>
                         </div>
@@ -285,11 +288,11 @@ var _hmt = _hmt || [];
             <a href="/" title="静觅">StormSha</a> 版权所有丨采用
             <a href="http://yusi123.com/"> 欲思 </a>主题丨
             <a href="https://www.djangoproject.com/" title="Django" target="_blank">基于Django构建</a>© 2019丨托管于
-            <a rel="nofollow" target="_blank" href="https://www.aliyun.com/" title="阿里云主机" target="_blank">阿里云主机</a> &
+            <a rel="nofollow" target="_blank" href="https://www.aliyun.com/" title="阿里云主机" target="_blank">腾讯云主机</a> &
             <a rel="nofollow" target="_blank" href="https://www.qiniu.com/">七牛云存储 </a>丨
-            <a href="/sitemap.xml" title="Sitemap" target="_blank">Sitemap</a>
+            <a href="/sitemap.xml" title="Sitemap" target="_blank">网站地图</a>
             <div>
-                <script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? "https://" : "http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1276375952'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s96.cnzz.com/z_stat.php%3Fid%3D1276375952%26online%3D1' type='text/javascript'%3E%3C/script%3E"));</script>
+                <script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? "https://" : "http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1276375952'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s96.cnzz.com/z_stat.php%3Fid%3D1276375952%26online%3D1%26show%3Dline' type='text/javascript'%3E%3C/script%3E"));</script>
             </div>
         </div>
 
