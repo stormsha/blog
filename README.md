@@ -1,5 +1,5 @@
 # blog
-基于Django1.11和 Bootstrap4开发的个人博客网站
+基于Django1.11和 Wordpress 开发的个人博客网站
 
 
 <h3>一个以 Django 作为框架搭建的个人博客。</h3>
