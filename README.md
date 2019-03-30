@@ -33,13 +33,13 @@ RSS 博客订阅功能
 
 <h3>博客主页效果</h3>
 
-![PC效果](https://stormsha.cn/static/images/pcindexshow.png)
+![PC效果](https://stormsha.com/static/images/pcindexshow.png)
 
 
 <h3>博客手机端显示效果（响应式）</h3>
 
 
-![博客手机端效果](https://stormsha.cn/static/images/mobileindex.png)
+![博客手机端效果](https://stormsha.com/static/images/mobileindex.png)
 
 
 
