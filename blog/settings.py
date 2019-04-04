@@ -21,12 +21,12 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # See https://docs.djangoproject.com/en/1.11/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = '07#4u3t!4*#54s1a091bwdxwiup=#2@6w1i)tsreu6oy=@lb8p'
+SECRET_KEY = ''
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['127.0.0.1', 'www.stormsha.com', '0,0,0,0', 'stormsha.com', 'localhost']
+ALLOWED_HOSTS = ['*']
 
 # Application definition
 
@@ -87,8 +87,8 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
         'HOST': '',
-        'PORT': '3306',
-        'USER': 'root',
+        'PORT': '',
+        'USER': '',
         'PASSWORD': '',
         'NAME': 'blog',
         # 避免映射数据库时出现警告
