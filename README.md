@@ -1,6 +1,6 @@
 一个以 Django1.11 作为框架搭建的个人博客。
 
-博客效果： https://stormsha.com/
+博客效果： https://stormsha.com
 
 ## 功能介绍
 - Django 自带的后台管理系统，方便对于文章、用户及其他动态内容的管理
@@ -15,7 +15,7 @@
 - RESTful API 风格的 API 接口
 
 ## 博客主页效果
-![博客主页 PC 效果](http://docs.stormsha.com/20190418215045.gif)
+![博客主页 PC 效果](http://docs.stormsha.com/20190418220609.png)
 
 ## 博客ipad显示效果（响应式）
 ![ipad 竖屏效果](http://docs.stormsha.com/20190418215046.png)
