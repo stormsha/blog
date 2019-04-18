@@ -1,52 +1,28 @@
-# blog
-基于Django1.11和 Wordpress 开发的个人博客网站
+一个以 Django1.11 作为框架搭建的个人博客。
 
-<font color=red>[提示]——如果直接拷贝使用请保留底部 《StormSha版权所有》，谢谢，毕竟此项目是作者辛苦多个日夜制作的</font>
-或者添加作者主页为友情链接，这都不愿意的话，那就随便你了
+博客效果： https://stormsha.com/
 
-<h3>一个以 Django 作为框架搭建的个人博客。</h3>
+## 功能介绍
+- Django 自带的后台管理系统，方便对于文章、用户及其他动态内容的管理
+- 文章分类、标签、浏览量统计以及规范的 SEO 设置
+- 用户认证系统，在 Django 自带的用户系统的基础上扩展 Oauth 认证，支持微博、Github 等第三方认证
+- 文章评论系统，炫酷的输入框特效，支持 markdown 语法，二级评论结构和回复功能
+- 信息提醒功能，收到评论和回复提醒，信息管理
+- 强大的全文搜索功能，只需要输入关键词就能展现全站与之关联的文章
+- RSS 博客订阅功能及规范的 Sitemap 网站地图
+- 友情链接和推荐工具网站的展示
+- 缓存系统，遵循缓存原则，加速网站打开速度
+- RESTful API 风格的 API 接口
 
-博客地址： [https://stormsha.com/](https://www.stormsha.com/)
+## 博客主页效果
+![博客主页 PC 效果](http://docs.stormsha.com/20190418215045.gif)
 
-开发教程：[https://www.stormsha.com/article/666/](https://www.stormsha.com/article/666/)
-<h3>功能介绍</h3>
+## 博客ipad显示效果（响应式）
+![ipad 竖屏效果](http://docs.stormsha.com/20190418215046.png)
 
-> ①Django 自带的后台管理系统，方便对于文章、用户及其他动态内容的管理
+## 博客手机端显示效果（响应式）
+![博客手机端效果](http://docs.stormsha.com/20190418215211.png)
 
-> ②文章分类、标签、浏览量统计以及规范的 SEO 设置
-
-> ③用户注册登录
-
-> ④文章评论系统，支持 markdown 语法，二级评论结构和回复功能
-
-> ⑤强大的全文搜索功能，只需要输入关键词就能展现全站与之关联的文章
-
- 
-> ⑥RSS 博客订阅功能及规范的 Sitemap 网站地图
-
-
-<h3>待开发后功能</h3>
-
-强大的全文搜索功能，只需要输入关键词就能展现全站与之关联的文章
-
-RSS 博客订阅功能
-
-缓存系统，遵循缓存原则，加速网站打开速度
-
-<h3>博客主页效果</h3>
-
-![PC效果](https://stormsha.com/static/images/pcindexshow.png)
-
-
-<h3>博客手机端显示效果（响应式）</h3>
-
-
-![博客手机端效果](https://stormsha.com/static/images/mobileindex.png)
-
-
-
-<h3>运行指导</h3>
-
-由于本项目分为几个不同的分支，每个分支的功能是一样的，但是运行的方式不同，所以需要根据分支查看对应的运行wiki
-
-[运行指导指导](https://github.com/stormsha/blog/wiki/stormsha-%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2%E8%BF%90%E8%A1%8C%E6%8C%87%E5%AF%BC)
+## 运行指导
+- 由于本项目分为几个不同的分支，每个分支的功能是一样的，但是运行的方式不同，所以需要根据分支查看对应的运行wiki
+- 指导 wiki：https://github.com/stormsha/blog/wiki
