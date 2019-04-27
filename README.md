@@ -12,7 +12,7 @@
 
 ## 博客效果
 
-[https://stormsha.com]https://stormsha.com
+https://stormsha.com
 
 ## 功能介绍
 
