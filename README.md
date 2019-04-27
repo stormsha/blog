@@ -1,8 +1,19 @@
 一个以 Django1.11 作为框架搭建的个人博客。
 
+## 此项目包含两个分支
+
+### 分支master
+
+基于 Python3.6 + Django1.11  1：1 仿制崔庆才个人博客
+
+### 分支online
+
+在线运行的项目 [个人主页](https://stormsha.com)，此项目后期有任何功能升级都会更新此分支，也会不断添加新功能在此分支
+
 博客效果： https://stormsha.com
 
 ## 功能介绍
+
 - Django 自带的后台管理系统，方便对于文章、用户及其他动态内容的管理
 - 文章分类、标签、浏览量统计以及规范的 SEO 设置
 - 用户认证系统，在 Django 自带的用户系统的基础上扩展 Oauth 认证，支持微博、Github 等第三方认证
@@ -15,14 +26,20 @@
 - RESTful API 风格的 API 接口
 
 ## 博客主页效果
+
 ![博客主页 PC 效果](http://docs.stormsha.com/20190418220609.png)
 
 ## 博客ipad显示效果（响应式）
+
 ![ipad 竖屏效果](http://docs.stormsha.com/20190418215046.png)
 
 ## 博客手机端显示效果（响应式）
+
 ![博客手机端效果](http://docs.stormsha.com/20190418215211.png)
 
 ## 运行指导
+
 - 由于本项目分为几个不同的分支，每个分支的功能是一样的，但是运行的方式不同，所以需要根据分支查看对应的运行wiki
 - 指导 wiki：https://github.com/stormsha/blog/wiki
+
+<br>
