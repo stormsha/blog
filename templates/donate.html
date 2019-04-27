@@ -1,0 +1,187 @@
+﻿{% extends 'base.html' %}
+{% load blog_tags %}
+{% block title %}静觅丨赞助作者{% endblock title %}
+
+{% block description %}
+    <meta name="description" content="{% get_title category as bigcategory %}{{ bigcategory.description }}"/>
+    {% endblock description %}
+    {% block keywords %}
+    <meta name="keywords" content="{% get_title category as bigcategory %}{{ bigcategory.keywords }}"/>
+    {% endblock keywords %}
+
+{% block body %}
+{% load static %}
+<div class="pagewrapper clearfix">
+	
+	
+		<header class="pageheader clearfix">
+			<h1 class="pull-left">
+				<a href="https://cuiqingcai.com/donate">赞助作者</a>
+			</h1>
+			<div class="pull-right"><!-- 百度分享 -->
+	            <span class="action action-share bdsharebuttonbox">
+                    <i class="fa fa-share-alt"></i>分享 (<span class="bds_count" data-cmd="count" title="累计分享0次">0</span>)
+                    <div class="action-popover">
+                        <div class="popover top in"><div class="arrow"></div>
+                            <div class="popover-content">
+                                <a href="#" class="sinaweibo fa fa-weibo" data-cmd="tsina" title="分享到新浪微博"></a>
+                                <a href="#" class="bds_qzone fa fa-star" data-cmd="qzone" title="分享到QQ空间"></a>
+                                <a href="#" class="tencentweibo fa fa-tencent-weibo" data-cmd="tqq" title="分享到腾讯微博"></a>
+                                <a href="#" class="qq fa fa-qq" data-cmd="sqq" title="分享到QQ好友"></a>
+                                <a href="#" class="bds_renren fa fa-renren" data-cmd="renren" title="分享到人人网"></a>
+                                <a href="#" class="bds_weixin fa fa-weixin" data-cmd="weixin" title="分享到微信"></a>
+                                <a href="#" class="bds_more fa fa-ellipsis-h" data-cmd="more"></a>
+                            </div>
+                        </div>
+                    </div>
+                </span>
+            </div>
+		</header>
+        <div class="article-content">
+            <div style="text-indent:0px;">
+                <p style="text-align: center;">
+                    <h2 style="line-height: 30px;text-align: center;">如果您喜欢我的文章，感觉我的文章对您有帮助，不妨动动您的金手指给予小额赞助，予人玫瑰，手有余香，不胜感激。</h2>
+                </p>
+                <h2 style="text-align: center;">赞助方式一</h2>
+                <h3 style="text-align: center;">手机支付宝扫一扫</h3>
+                <p style="text-align: center;">
+                    <a href="">
+                        <img class="alignnone size-full wp-image-1100" src="{% static 'images/支付宝.jpg' %}" alt="1424922459123" width="270px" height="270px" style='width: 270px;'/>
+                    </a>
+                </p>
+                <h2 style="text-align: center;">赞助方式二</h2>
+                <br>
+                <h3 style="text-align: center;">网页支付宝</h3>
+                <p style="text-align: center;">
+                    <div style="width: 310px; margin: 10px auto 0px; background-color: #03cab1; color: #ffffff; height: 40px; border: none; font-family: 'Microsoft Yahei'; font-size: 16px;text-align:center;line-height:40px;">stormsha@foxmail.com</div>
+                </p>
+                <form action="https://shenghuo.alipay.com/send/payment/fill.htm" method="post" name="form1" accept-charset="gb2312" onSubmit="document.charset='gb2312';" style="margin-top: -100px;">
+                    <input name="optEmail" value="cqc@cuiqingcai.com" type="hidden"/>
+                    <input name="payAmount" type="hidden" value="10"/>
+                    <input name="title" type="hidden" value="博客赞助" />
+                    <input name="memo" type="hidden" value="" />
+                    <br><br><br><br>
+                    <div style="width:100%;text-align:center">
+                        <input type="submit"  style="width:100px;height:100px;margin:30px auto;background-color: #f58a87;color:#FCFCFC;text-align:center;border-radius:50%;line-height:90px;font-family:'Microsoft Yahei'" onmouseover="this.style.backgroundColor='rgb(252, 125, 121)'" onmouseout="this.style.backgroundColor='#F58A87'" href="https://shenghuo.alipay.com/send/payment/fill.htm" style="color:#fff;padding: 40px 15px;" value="点击赞助"/>
+                    </div>
+                </form>
+
+                <h2 style="text-align: center;">赞助方式三</h2>
+                <h3 style="text-align: center;">微信扫一扫</h3>
+                <div class="weixin">
+                    <div class='accordion'>
+                        <ul>
+                            <li>
+                                <div class='title'><a href="{% static '' %}images/1.jpg">&#165;&nbsp;1</a></div>
+                                <a href="{% static 'images/1.jpg' %}"><img src='{% static 'images/1.jpg' %}'/></a>
+                            </li>
+                            <li>
+                                <div class='title'><a href="{% static '' %}images/5.jpg">&#165;&nbsp;5</a></div>
+                                <a href="{% static 'images/5.jpg' %}"><img src='{% static 'images/5.jpg' %}'/></a>
+                            </li>
+                            <li>
+                                <div class='title'><a href="{% static 'images/10.jpg' %}">&#165;&nbsp;10</a></div>
+                                <a href="{% static 'images/10.jpg' %}"><img src='{% static 'images/10.jpg' %}'/></a>
+                            </li>
+                            <li>
+                                <div class='title'><a href="{% static '' %}images/20.jpg">&#165;&nbsp;20</a></div>
+                                <a href="{% static 'images/20.jpg' %}"><img src='{% static 'images/20.jpg' %}'/></a>
+                            </li>
+                            <li>
+                                <div class='title'><a href="{% static 'images/any.jpg' %}">&#165;&nbsp;ANY</a></div>
+                                <a href="{% static 'images/any.jpg' %}"><img src='{% static 'images/any.jpg' %}'/></a>
+                            </li>
+                        </ul>
+                        <div class ="bg"></div>
+                        <div class = "describe">
+                                    <img src = "..{% static 'images/weixin1.png' %}" alt="微信支付"/>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <style type="text/css">
+                *{margin:0;padding:0;list-style:none;}
+                body{background:#eee;font-family:"Microsoft Yahei"}
+                a{text-decoration:none;}
+                img{border:none;width:100%;}
+                /* accordion */
+                .accordion{width:100%;height:320px;overflow:hidden;margin:0px auto;max-width:900px;}
+                .accordion ul{max-width:100%;margin:0px;}
+                .accordion li{
+                    display:block;width:20%;height:130px;overflow:hidden;position:relative;float:left;
+                    background:rgba(255,255,255,0.1);
+                    -webkit-transition:all .5s;
+                    -moz-transition:all .5s;
+                    -ms-transition:all .5s;
+                    -o-transition:all .5s;
+                    transition:all .5s;
+                }
+                .accordion li img{display:block;}
+                .accordion ul:hover li{width:18%;}
+                .accordion ul li:hover{width:28%;}
+                .accordion .title{position:absolute;left:0;bottom:0;width:100%;background:rgba(0,0,0,0.5);}
+                .accordion .title a{display:block;color:#fff;font-size:16px;padding:10px;}
+                @media (max-width:430px){
+                    .accordion{height:250px;}
+                    .accordion li{height:150px;}
+                    .describe{top:60px;}
+                    .describe img{height:90px;}
+                }
+                @media (max-width: 570px) and (min-width:431px){
+                    .accordion{height:320px;}
+                    .accordion li{height:180px;}
+                    .describe{top:70px;}
+                    .describe img{height:110px;}
+                }
+                @media (max-width: 740px) and (min-width:571px){
+                    .accordion{height:320px;}
+                    .accordion li{height:243px;}
+                    .describe{top:112px;}
+                    .describe img{height:130px;}
+                }
+                @media (max-width: 900px) and (min-width:741px){
+                    .accordion{height:320px;}
+                    .accordion li{height:250px;}
+                    .describe{top:90px;}
+                    .describe img{height:160px;}
+                }
+                @media (min-width:901px){
+                    .accordion{height:320px;}
+                    .accordion li{height:250px;}
+                    .describe{top:90px;}
+                    .describe img{height:160px;}
+                }
+                .describe{
+                    position:absolute;
+                    text-align:center;
+                    width:100%;
+                    max-width:900px;
+                    z-index:-1;
+                }
+                .bg{
+                    width:100%;
+                    max-width:900px;
+                    min-height:130px;
+                    background-color:#03cab1;
+                    position:absolute;
+                    top:0px;
+                    z-index:-2;
+                }
+                .weixin{
+                    position:relative;
+                    max-width:900px;
+                    margin:0 auto;
+                }
+                .article-content li:before{
+                content:none;
+                }
+                .weixin .title{
+                margin:0
+                }
+            </style>
+        </div>
+    </div>
+
+</section>
+
+{%endblock body%}

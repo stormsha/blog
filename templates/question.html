@@ -1,0 +1,52 @@
+﻿{%extends 'base.html' %}
+{% load blog_tags %}
+{% block title %}静觅丨提问交流{% endblock title %}
+
+{% block description %}
+    <meta name="description" content="{% get_title category as bigcategory %}{{ bigcategory.description }}"/>
+    {% endblock description %}
+    {% block keywords %}
+    <meta name="keywords" content="{% get_title category as bigcategory %}{{ bigcategory.keywords }}"/>
+    {% endblock keywords %}
+{%block body%}
+	
+<div class="pagewrapper clearfix">
+		<header class="pageheader clearfix">
+			<h1 class="pull-left">
+				<a href="https://cuiqingcai.com/question">提问交流</a>
+			</h1>
+			<div class="pull-right"><!-- 百度分享 -->
+	            <span class="action action-share bdsharebuttonbox"><i class="fa fa-share-alt"></i>分享 (<span class="bds_count" data-cmd="count" title="累计分享0次">0</span>)
+                    <div class="action-popover">
+                        <div class="popover top in">
+                            <div class="arrow"></div>
+                        <div class="popover-content">
+                            <a href="#" class="sinaweibo fa fa-weibo" data-cmd="tsina" title="分享到新浪微博"></a>
+                            <a href="#" class="bds_qzone fa fa-star" data-cmd="qzone" title="分享到QQ空间"></a>
+                            <a href="#" class="tencentweibo fa fa-tencent-weibo" data-cmd="tqq" title="分享到腾讯微博"></a>
+                            <a href="#" class="qq fa fa-qq" data-cmd="sqq" title="分享到QQ好友"></a>
+                            <a href="#" class="bds_renren fa fa-renren" data-cmd="renren" title="分享到人人网"></a>
+                            <a href="#" class="bds_weixin fa fa-weixin" data-cmd="weixin" title="分享到微信"></a>
+                            <a href="#" class="bds_more fa fa-ellipsis-h" data-cmd="more"></a>
+                        </div>
+                        </div>
+                    </div>
+                </span>
+            </div>
+		</header>
+        <div class="article-content">
+				<div class="">
+                    <div id="qrcodes">
+                        <div class="row">
+                            <div class="col-xs-12 col-md-4">
+                                <div class="p-sm" style="overflow: hidden; padding-bottom: 15px;">
+                                    <p class="text-center">很多朋友会通过各种途径咨询我我问题，有的通过邮件，有的在公众号留言，有的微博知乎私信，很多情况下我并不能及时查看到消息，另外由于个人精力有限也并没有那么多余力一一为大家解答，为此我开通了一个圈子，作为一个统一的交流问答平台，我会每天定时抽出时间为大家解答相关问题，同时也会为大家分享一些技术及行业资讯，欢迎朋友们的加入~</p>
+                                    <p class="text-center"><img class="aligncenter wp-image-6140 size-medium" src="/static/images/圈子.jpg" alt="" width="233" height="320"  sizes="(max-width: 233px) 100vw, 233px" /></p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+        </div>
+</div>
+{%endblock body%}

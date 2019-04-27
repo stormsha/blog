@@ -1,0 +1,361 @@
+﻿{%extends 'base.html' %}
+{%load blog_tags %}
+{% block title %}静觅丨关于自己{% endblock title %}
+
+{% block description %}
+    <meta name="description" content="{% get_title category as bigcategory %}{{ bigcategory.description }}"/>
+    {% endblock description %}
+    {% block keywords %}
+    <meta name="keywords" content="{% get_title category as bigcategory %}{{ bigcategory.keywords }}"/>
+    {% endblock keywords %}
+{%block body%}
+<div class="pagewrapper clearfix">
+		<header class="pageheader clearfix">
+			<h1 class="pull-left">
+				<a href="https://cuiqingcai.com/about">关于自己</a>
+			</h1>
+			<div class="pull-right"><!-- 百度分享 -->
+	            <span class="action action-share bdsharebuttonbox">
+                    <i class="fa fa-share-alt"></i>分享 (<span class="bds_count" data-cmd="count" title="累计分享0次">0</span>)
+                    <div class="action-popover">
+                        <div class="popover top in"><div class="arrow"></div>
+                            <div class="popover-content">
+                                <a href="#" class="sinaweibo fa fa-weibo" data-cmd="tsina" title="分享到新浪微博"></a>
+                                <a href="#" class="bds_qzone fa fa-star" data-cmd="qzone" title="分享到QQ空间"></a>
+                                <a href="#" class="tencentweibo fa fa-tencent-weibo" data-cmd="tqq" title="分享到腾讯微博"></a>
+                                <a href="#" class="qq fa fa-qq" data-cmd="sqq" title="分享到QQ好友"></a>
+                                <a href="#" class="bds_renren fa fa-renren" data-cmd="renren" title="分享到人人网"></a>
+                                <a href="#" class="bds_weixin fa fa-weixin" data-cmd="weixin" title="分享到微信"></a>
+                                <a href="#" class="bds_more fa fa-ellipsis-h" data-cmd="more"></a>
+                            </div>
+                        </div>
+                    </div>
+                </span>
+            </div>
+		</header>
+    <div class="article-content">
+        <div style="text-indent:0px;text-align:center">
+            <!-- personal -->
+            <h2 style="text-align: center;">个人简介</h2>
+            <p><img src="/static/images/picture.ico" style="border-radius:50%;width:100px" /></p>
+            <p style="text-align: center;font-size:16px">StormSha</p>
+            <p id="brief" style="text-align: center;">爱生活、爱艺术、爱书画、爱音乐、爱设计、爱编程。</p>
+            <p id="brief" style="text-align: center;">人生百态，笑口常开，秉承自我，谨慎独行。静觅，静静寻觅生活的美好。</p>
+            <p style="text-align: center;"><a href="/article/666"><input type="button" value="了解更多" style="width: 310px; margin: 10px auto 0px; background-color: rgb(245, 138, 135); color: rgb(255, 255, 255); height: 40px; border: none; font-family: 'Microsoft Yahei'; font-size: 16px; letter-spacing: 2px;" onmouseover="this.style.backgroundColor='rgb(252, 125, 121)'" onmouseout="this.style.backgroundColor='#F58A87'"/></a></p>
+            <p style="text-align: center;">
+            <p><!--end personal --></p>
+            <p><!-- tech tree --></p>
+            <h2 style="text-align: center;margin-top:40px;margin-bottom:40px;">我的技能树</h2>
+
+            <section class="tech">
+                <div class = "item">
+                    <div class = "describe">
+                        HTML/CSS/JS
+                    </div>
+                    <div class="progress">
+                      <span class="green" style="width: 74%;"><span>74%</span></span>
+                    </div>
+                </div>
+                <div class = "item">
+                    <div class = "describe">
+                        C/C++
+                    </div>
+                    <div class="progress">
+                      <span class="orange" style="width: 65%;"><span>65%</span></span>
+                    </div>
+                </div>
+                <div class = "item">
+                    <div class = "describe">
+                        PHOTOSHOP
+                    </div>
+                    <div class="progress">
+                          <span class="red" style="width: 72%;"><span>72%</span></span>
+                    </div>
+                </div>
+                <div class = "item">
+                    <div class = "describe">
+                                JAVA
+                    </div>
+                    <div class="progress">
+                        <span class="blue" style="width: 67%;"><span>67%</span></span>
+                    </div>
+                </div>
+                <div class = "item">
+                    <div class = "describe">PHP/MYSQL</div>
+                    <div class="progress">
+                        <span class = "darkblue" style="width: 60%;"><span>60%</span></span>
+                    </div>
+                </div>
+                <div class = "item">
+                    <div class = "describe">COCOS2DX</div>
+                    <div class="progress">
+                        <span class="orange" style="width: 65%;"><span>65%</span></span>
+                    </div>
+                </div>
+                <div class = "item">
+                    <div class = "describe">PYTHON</div>
+                    <div class="progress">
+                        <span class="green" style="width: 89%;"><span>89%</span></span>
+                    </div>
+                </div>
+                <div class = "item">
+                    <div class = "describe">PR/AE</div>
+                    <div class="progress">
+                        <span class="blue" style="width: 47%;"><span>47%</span></span>
+                    </div>
+                </div>
+            </section>
+            <p><!-- end tech --></p>
+            <p style="text-align: center;">
+                <a href="/link/"><input type="button" value="申请友链" style="width: 310px; margin: 10px auto 20px auto; background-color: rgb(3, 202, 177); color: rgb(255, 255, 255); height: 40px; border: none; font-family: 'Microsoft Yahei'; font-size: 16px; letter-spacing: 2px;" onmouseover="this.style.backgroundColor='rgb(7, 179, 158)'" onmouseout="this.style.backgroundColor='rgb(3, 202, 177)'"/>
+                </a>
+            </p>
+            <p style="text-align: center;">
+                <p><!-- contact --></p>
+                <h2 style="text-align: center;">与我联系</h2>
+                <div class = "icon-contact" style="margin-bottom:120px">
+                    <div class="col" id="icon">
+                        <a href="https://weibo.com/u/5392727577" target="_blank" class="social-icon tool-tip sinaweibo" title="新浪微博" data-placement="top">
+                            <i class="fa fa-weibo"></i>
+                        </a>
+                    </div>
+                    <div class="col" id="icon">
+                        <a href="" target="_blank" class="social-icon tool-tip tencentweibo" title="腾讯微博" data-placement="top">
+                            <i class="fa fa-tencent-weibo"></i>
+                        </a>
+                    </div>
+
+                    <div class="col" id="icon">
+                            <a href="" target="_blank" title="1414749109@qq.com" class="social-icon tool-tip qq"  data-placement="top">
+                                <i class="fa fa-qq"></i>
+                            </a>
+                    </div>
+
+                    <div class="col" id="icon">
+                            <a href="" target="_blank" class="social-icon tool-tip wechat" title="sxc123654" data-placement="top">
+                                <i class="weixins fa fa-weixin"></i>
+                            </a>
+                    </div>
+
+                    <div class="col" id="icon">
+                            <a href="https://github.com/stormsha" target="_blank" class="social-icon tool-tip github" title="GitHub" data-placement="top">
+                                <i class="fa fa-github"></i
+                                ></a>
+                    </div>
+
+                    <div class="col" id="icon">
+                            <a href="/feed/" target="_blank" class="social-icon tool-tip renren" title="RSS" data-placement="top">
+                                <i class="fa fa-rss"></i>
+                            </a>
+                    </div>
+                </div>
+            <p><!-- end contact -->
+        </div>
+    </div>
+    <style>
+
+/* 响应式布局 */
+@media (min-width: 768px) {</p>
+<p></p><!-- Crayon Syntax Highlighter v_2.7.2_beta -->
+
+		<div id="crayon-5c7a9a9618051303583782" class="crayon-syntax crayon-theme-github crayon-font-monaco crayon-os-pc print-yes notranslate" data-settings=" minimize scroll-mouseover wrap" style=" margin-top: 12px; margin-bottom: 12px; float: left; font-size: 12px !important; line-height: 15px !important;">
+
+			<div class="crayon-toolbar" data-settings=" show" style="font-size: 12px !important;height: 18px !important; line-height: 18px !important;"><span class="crayon-title"></span>
+			<div class="crayon-tools" style="font-size: 12px !important;height: 18px !important; line-height: 18px !important;"><div class="crayon-button crayon-nums-button" title="切换是否显示行编号"><div class="crayon-button-icon"></div></div><div class="crayon-button crayon-plain-button" title="纯文本显示代码"><div class="crayon-button-icon"></div></div><div class="crayon-button crayon-wrap-button" title="切换自动换行"><div class="crayon-button-icon"></div></div><div class="crayon-button crayon-expand-button" title="点击展开代码"><div class="crayon-button-icon"></div></div><div class="crayon-button crayon-copy-button" title="复制代码"><div class="crayon-button-icon"></div></div><div class="crayon-button crayon-popup-button" title="在新窗口中显示代码"><div class="crayon-button-icon"></div></div></div></div>
+			<div class="crayon-info" style="min-height: 16.8px !important; line-height: 16.8px !important;"></div>
+			<div class="crayon-plain-wrap"><textarea  class="crayon-plain print-no" data-settings="dblclick" readonly style="-moz-tab-size:4; -o-tab-size:4; -webkit-tab-size:4; tab-size:4; font-size: 12px !important; line-height: 15px !important;">
+.icon-contact {
+    height: 80px;
+    margin: auto;
+    width: 100%;
+    max-width:700px;
+}
+.icon-contact .fa{
+    line-height:70px;
+    font-size: 35px;
+    width: 70px;
+}
+.icon-contact .social-icon {
+    display: inline-block;
+    width: 70px;
+    height: 70px;
+    color: #fff;
+    border-radius: 100%;
+    margin: 6px;
+    text-align: center;
+    text-indent: 0px;
+}
+</textarea></div>
+			<div class="crayon-main" style="">
+				<table class="crayon-table">
+					<tr class="crayon-row">
+				<td class="crayon-nums " data-settings="show">
+					<div class="crayon-nums-content" style="font-size: 12px !important; line-height: 15px !important;"><div class="crayon-num" data-line="crayon-5c7a9a9618051303583782-1">1</div><div class="crayon-num crayon-striped-num" data-line="crayon-5c7a9a9618051303583782-2">2</div><div class="crayon-num" data-line="crayon-5c7a9a9618051303583782-3">3</div><div class="crayon-num crayon-striped-num" data-line="crayon-5c7a9a9618051303583782-4">4</div><div class="crayon-num" data-line="crayon-5c7a9a9618051303583782-5">5</div><div class="crayon-num crayon-striped-num" data-line="crayon-5c7a9a9618051303583782-6">6</div><div class="crayon-num" data-line="crayon-5c7a9a9618051303583782-7">7</div><div class="crayon-num crayon-striped-num" data-line="crayon-5c7a9a9618051303583782-8">8</div><div class="crayon-num" data-line="crayon-5c7a9a9618051303583782-9">9</div><div class="crayon-num crayon-striped-num" data-line="crayon-5c7a9a9618051303583782-10">10</div><div class="crayon-num" data-line="crayon-5c7a9a9618051303583782-11">11</div><div class="crayon-num crayon-striped-num" data-line="crayon-5c7a9a9618051303583782-12">12</div><div class="crayon-num" data-line="crayon-5c7a9a9618051303583782-13">13</div><div class="crayon-num crayon-striped-num" data-line="crayon-5c7a9a9618051303583782-14">14</div><div class="crayon-num" data-line="crayon-5c7a9a9618051303583782-15">15</div><div class="crayon-num crayon-striped-num" data-line="crayon-5c7a9a9618051303583782-16">16</div><div class="crayon-num" data-line="crayon-5c7a9a9618051303583782-17">17</div><div class="crayon-num crayon-striped-num" data-line="crayon-5c7a9a9618051303583782-18">18</div><div class="crayon-num" data-line="crayon-5c7a9a9618051303583782-19">19</div><div class="crayon-num crayon-striped-num" data-line="crayon-5c7a9a9618051303583782-20">20</div><div class="crayon-num" data-line="crayon-5c7a9a9618051303583782-21">21</div><div class="crayon-num crayon-striped-num" data-line="crayon-5c7a9a9618051303583782-22">22</div></div>
+				</td>
+						<td class="crayon-code"><div class="crayon-pre" style="font-size: 12px !important; line-height: 15px !important; -moz-tab-size:4; -o-tab-size:4; -webkit-tab-size:4; tab-size:4;"><div class="crayon-line" id="crayon-5c7a9a9618051303583782-1"><span class="crayon-sy">.</span><span class="crayon-v">icon</span><span class="crayon-o">-</span><span class="crayon-e">contact</span><span class="crayon-h"> </span><span class="crayon-sy">{</span></div><div class="crayon-line crayon-striped-line" id="crayon-5c7a9a9618051303583782-2"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-v">height</span><span class="crayon-o">:</span><span class="crayon-h"> </span><span class="crayon-cn">80px</span><span class="crayon-sy">;</span></div><div class="crayon-line" id="crayon-5c7a9a9618051303583782-3"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-v">margin</span><span class="crayon-o">:</span><span class="crayon-h"> </span><span class="crayon-v">auto</span><span class="crayon-sy">;</span></div><div class="crayon-line crayon-striped-line" id="crayon-5c7a9a9618051303583782-4"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-v">width</span><span class="crayon-o">:</span><span class="crayon-h"> </span><span class="crayon-cn">100</span><span class="crayon-o">%</span><span class="crayon-sy">;</span></div><div class="crayon-line" id="crayon-5c7a9a9618051303583782-5"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-v">max</span><span class="crayon-o">-</span><span class="crayon-v">width</span><span class="crayon-o">:</span><span class="crayon-cn">700px</span><span class="crayon-sy">;</span></div><div class="crayon-line crayon-striped-line" id="crayon-5c7a9a9618051303583782-6"><span class="crayon-sy">}</span></div><div class="crayon-line" id="crayon-5c7a9a9618051303583782-7"><span class="crayon-sy">.</span><span class="crayon-v">icon</span><span class="crayon-o">-</span><span class="crayon-i">contact</span><span class="crayon-h"> </span><span class="crayon-sy">.</span><span class="crayon-v">fa</span><span class="crayon-sy">{</span></div><div class="crayon-line crayon-striped-line" id="crayon-5c7a9a9618051303583782-8"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-v">line</span><span class="crayon-o">-</span><span class="crayon-v">height</span><span class="crayon-o">:</span><span class="crayon-cn">70px</span><span class="crayon-sy">;</span></div><div class="crayon-line" id="crayon-5c7a9a9618051303583782-9"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-v">font</span><span class="crayon-o">-</span><span class="crayon-v">size</span><span class="crayon-o">:</span><span class="crayon-h"> </span><span class="crayon-cn">35px</span><span class="crayon-sy">;</span></div><div class="crayon-line crayon-striped-line" id="crayon-5c7a9a9618051303583782-10"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-v">width</span><span class="crayon-o">:</span><span class="crayon-h"> </span><span class="crayon-cn">70px</span><span class="crayon-sy">;</span></div><div class="crayon-line" id="crayon-5c7a9a9618051303583782-11"><span class="crayon-sy">}</span></div><div class="crayon-line crayon-striped-line" id="crayon-5c7a9a9618051303583782-12"><span class="crayon-sy">.</span><span class="crayon-v">icon</span><span class="crayon-o">-</span><span class="crayon-i">contact</span><span class="crayon-h"> </span><span class="crayon-sy">.</span><span class="crayon-v">social</span><span class="crayon-o">-</span><span class="crayon-e">icon</span><span class="crayon-h"> </span><span class="crayon-sy">{</span></div><div class="crayon-line" id="crayon-5c7a9a9618051303583782-13"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-v">display</span><span class="crayon-o">:</span><span class="crayon-h"> </span><span class="crayon-v">inline</span><span class="crayon-o">-</span><span class="crayon-v">block</span><span class="crayon-sy">;</span></div><div class="crayon-line crayon-striped-line" id="crayon-5c7a9a9618051303583782-14"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-v">width</span><span class="crayon-o">:</span><span class="crayon-h"> </span><span class="crayon-cn">70px</span><span class="crayon-sy">;</span></div><div class="crayon-line" id="crayon-5c7a9a9618051303583782-15"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-v">height</span><span class="crayon-o">:</span><span class="crayon-h"> </span><span class="crayon-cn">70px</span><span class="crayon-sy">;</span></div><div class="crayon-line crayon-striped-line" id="crayon-5c7a9a9618051303583782-16"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-v">color</span><span class="crayon-o">:</span><span class="crayon-h"> </span><span class="crayon-p">#fff;</span></div><div class="crayon-line" id="crayon-5c7a9a9618051303583782-17"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-v">border</span><span class="crayon-o">-</span><span class="crayon-v">radius</span><span class="crayon-o">:</span><span class="crayon-h"> </span><span class="crayon-cn">100</span><span class="crayon-o">%</span><span class="crayon-sy">;</span></div><div class="crayon-line crayon-striped-line" id="crayon-5c7a9a9618051303583782-18"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-v">margin</span><span class="crayon-o">:</span><span class="crayon-h"> </span><span class="crayon-cn">6px</span><span class="crayon-sy">;</span></div><div class="crayon-line" id="crayon-5c7a9a9618051303583782-19"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-v">text</span><span class="crayon-o">-</span><span class="crayon-v">align</span><span class="crayon-o">:</span><span class="crayon-h"> </span><span class="crayon-v">center</span><span class="crayon-sy">;</span></div><div class="crayon-line crayon-striped-line" id="crayon-5c7a9a9618051303583782-20"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-v">text</span><span class="crayon-o">-</span><span class="crayon-v">indent</span><span class="crayon-o">:</span><span class="crayon-h"> </span><span class="crayon-cn">0px</span><span class="crayon-sy">;</span></div><div class="crayon-line" id="crayon-5c7a9a9618051303583782-21"><span class="crayon-sy">}</span></div><div class="crayon-line crayon-striped-line" id="crayon-5c7a9a9618051303583782-22">&nbsp;</div></div></td>
+					</tr>
+				</table>
+			</div>
+		</div>
+<!-- [Format Time: 0.0006 seconds] -->
+<p></p>
+<p>}
+@media (max-width: 768px) {
+    .icon-contact {
+        height: 60px;
+        margin: auto;
+        width: 100%;
+        }
+    .icon-contact .fa{
+        line-height:50px;
+        font-size: 20px;
+        width: 50px;
+    }
+    .icon-contact .social-icon {
+        display: inline-block;
+        width: 50px;
+        height: 50px;
+        color: #fff;
+        border-radius: 100%;
+        margin: 6px;
+        text-align: center;
+        text-indent: 0px;
+    }
+}</p>
+<p>/* 社交符号颜色 */
+.icon-contact .sinaweibo{
+    background-color: #EC5B5B;
+}
+.icon-contact .tencentweibo{
+    background-color: #2BC0B5;
+}
+.icon-contact .wechat{
+    background-color: #49C085;
+}
+.icon-contact .qq{
+    background-color: #6F92FF;
+}
+.icon-contact .renren{
+    background-color: #7243D4;
+}
+.icon-contact .github{
+    background-color: #7782D1;
+}
+.icon-contact a{
+    color:#fff !important;
+}
+.icon-contact #icon{
+        float:left;
+}
+.icon-contact .col {
+    width: 16.666667%;
+    float:left;
+    position: relative;
+    min-height: 1px;
+}
+.icon-contact{
+max-width:700px;
+margin:auto;
+text-indent:0px;
+}
+.friend-link a{
+color:#00a67c !important;
+}
+.tech{
+    max-width:700px;
+    margin:auto;
+ }
+ .tech .item{
+    width:100%;
+    clear:both;
+    margin-right:auto;
+    margin-left:auto;
+    height:35px;
+ }
+ .tech .describe{
+    font-family: "Microsoft Yahei";
+    margin-right: 12px;
+    text-align: center;
+ }
+ .tech .progress {
+  float:left;
+  height: 25px;
+  background: #f2f2f2;
+  border-left: 1px solid transparent;
+  border-right: 1px solid transparent;
+  width:70%;
+}
+.tech .progress > span {
+  position: relative;
+  float: left;
+  margin: 0 -1px;
+  min-width: 30px;
+  height: 25px;
+  line-height: 21px;
+  text-align: right;
+  background: #cccccc;
+  border: none;
+  border-color: #bfbfbf #b3b3b3 #9e9e9e;
+  -webkit-box-shadow: inset 0 1px rgba(255, 255, 255, 0.3), 0 1px 2px rgba(0, 0, 0, 0.2);
+  box-shadow: inset 0 1px rgba(255, 255, 255, 0.3), 0 1px 2px rgba(0, 0, 0, 0.2);
+}
+.tech  .progress > span > span {
+    padding: 0 8px;
+    font-size: 14px;
+    color: #404040;
+    color: rgba(0, 0, 0, 0.7);
+    font-family: "Microsoft Yahie";
+    line-height: 25px;
+}
+.tech .progress > span:before {
+  content: '';
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 1;
+  height: 25px;
+  border-radius: 10px;
+}
+.tech .progress .green {
+  background: #49C085;
+}
+.tech .progress .darkblue {
+  background: #7782D1;
+}
+.tech .progress .red {
+  background:  rgb(245, 138, 135);
+}
+.tech .progress .orange {
+  background: #f2b63c;
+}
+.tech .progress .blue {
+  background: #6F92FF;
+}
+@media (min-width: 750px) {
+    .tech .describe{
+        width:130px;
+        float:left;
+    }
+    .tech .progress {
+        width:79%;
+        float:left;
+    }
+}
+@media (max-width: 750px) {
+    .tech .describe{
+        width:100%;
+        margin-bottom:5px;
+        text-align:left;
+    }
+    .tech .progress {
+        width:100%;
+        margin-bottom:5px;
+    }
+}
+</style>
+        {% include 'comment_list.html' %}
+            <div class="commentnav"	></div>
+</div>
+{%endblock body%}

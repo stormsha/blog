@@ -1,0 +1,92 @@
+{% load static %}
+{% load humanize %}
+{% load comment_tags oauth_tags %}
+<div class="xld xlda pml mtm mbm" id="comment-table">
+{% get_all_comments user 'false' as comments %}
+{% get_comment_user user as cuser %}
+{% for comment in comments %}
+    <dl id="pmlist_2268797" class="bbda cur1 cl">
+            <dd class="m avt">
+                {% get_user_avatar_tag comment.author.nickname comment.author.email as user_info %}
+                <div class="newpm_avt" title="有未读消息"></div>
+                    <a href="{{ user_info.me_link }}" target="_blank"><img src="/media/{{ user_info.me_avatar }}"></a>
+                    {% ifnotequal comment.is_read 1 %}
+                            <i class="fa fa-lightbulb-o" aria-hidden="true" style="color: red"></i>
+                    {% endifnotequal %}
+            </dd>
+            <dd class="ptm pm_c">
+                {% if comment.belong.author == user and comment.parent == None and comment.author != cuser %}
+                    <span class="xi2 xw1">
+                        <a href="{{ user_info.me_link }}" target="_blank">{{ comment.author.nickname }}</a>
+                    </span>
+                        <i class="fa fa-share"></i>
+                        <a href="{{ comment.belong.get_absolute_url }}">{{ comment.belong.title }}</a>
+                    <br><br> {{ comment.expression_to_content | safe }} &nbsp;  <br><br>
+
+                    <i class="fa fa-calendar" aria-hidden="true"></i>
+                    <span class="xg1">{{ comment.create_date }}</span> &nbsp;
+
+                    <span class="pm_o y">
+                        <i class="fa fa-trash" aria-hidden="true" title="删除评论"></i> |
+                        <i class="fa fa-check-square" aria-hidden="true" title="标记为已读"></i> |
+                        <a target="_blank" href="{{ comment.belong.get_absolute_url }}#comments">回复</a>
+                    </span>
+
+                {% endif %}
+                {% if comment.parent.author == cuser %}
+                    <span class="xi2 xw1">
+                        <a href="{{ user_info.me_link }}" target="_blank">{{ comment.author.nickname }}</a>
+                    </span>
+                    {% confirm_user_webmaster comment.author.nickname comment.author.email as card %}
+                        {% confirm_user_author comment.belong comment.parent as to_user %}
+                        {% if card == "True" %}
+                            {{ card }}
+                            [<font color="red" size="3">站长</font>]
+                        {% elif to_user == "True" %}
+                            [<font color="red" size="3">作者</font>]
+                        {% endif %}
+                    <i class="fa fa-share"></i>
+                    <span class="xi2 xw1">您</span>
+                    <br><br> {{ comment.expression_to_content | safe }} &nbsp;  <br>
+                    <i class="fa fa-calendar" aria-hidden="true"></i>
+                    <span class="xg1">{{ comment.create_date }}</span> &nbsp;
+                    <span class="pm_o y">
+                        <i class="fa fa-trash" aria-hidden="true" title="删除评论"></i> |
+                        <i class="fa fa-check-square" aria-hidden="true" title="标记为已读"></i> |
+                        <a target="_blank" href="{{ comment.belong.get_absolute_url }}#comments">回复</a>
+                    </span>
+                {% endif %}
+                {% if comment.author == cuser %}
+                    <span class="xi2 xw1">
+                        <a href="{{ user_info.me_link }}" target="_blank">您</a>
+                    </span>
+                        {% if comment.parent %}
+                            <i class="fa fa-share"></i> {{ comment.parent.author.nickname }}
+                            {% confirm_user_webmaster comment.parent.author.nickname comment.parent.author.email as card %}
+                            {% confirm_user_author comment.belong comment.parent as to_user %}
+                            {% if card == "True" %}
+                                [<font color="red" size="3">站长</font>]
+                            {% elif comment.belong.author == to_user %}
+                                [<font color="red" size="3">作者</font>]
+                            {% endif %}
+                        {% elif comment.belong.author %}
+                                <i class="fa fa-share"></i>
+                                <a href="{{ comment.belong.get_absolute_url }}">
+                                    {{ comment.belong.title }}</a> | {{ comment.belong.author.username }}
+                                    [<font color="red" size="3">作者</font>]
+                        {% endif %}
+                    <br><br>{{ comment.expression_to_content | safe }} &nbsp;  <br>
+                    <i class="fa fa-calendar" aria-hidden="true"></i>
+                    <span class="xg1">{{ comment.create_date }}</span> &nbsp;
+                    <span class="pm_o y">
+                        <span class="pm_o y">
+                            <i class="fa fa-trash" aria-hidden="true" title="删除评论"></i> |
+                            <i class="fa fa-check-square" aria-hidden="true" title="标记为已读"></i> |
+                            <a target="_blank" href="{{ comment.belong.get_absolute_url }}#comments">回复</a>
+                        </span>
+                    </span>
+                {% endif %}
+            </dd>
+    </dl>
+{% endfor %}
+</div>

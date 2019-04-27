@@ -1,0 +1,6 @@
+﻿.login h1 a {
+	 background-image: url('../images/logo.png');
+	height: 100px;
+	width: 230px;
+	background-size: 230px;
+}

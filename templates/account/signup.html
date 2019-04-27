@@ -1,0 +1,81 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}注册{% endblock %}
+
+{% block top-file %}
+<link rel='stylesheet' id='style-css' href='{% static 'comment/css/bootstrap.min.css' %}' type='text/css' media='all'/>
+{% endblock %}
+<!--主要内容块-->
+{% block body %}
+<div class="container">
+<div class="row">
+    <div class="col-12 col-sm-8 col-md-6 offset-sm-2 offset-md-3 px-xl-5">
+        <div class="card rounded-0 px-3 px-lg-4">
+            <div class="card-header text-center bg-white py-2">
+                <h3 class="my-1 text-info">注册</h3>
+            </div>
+            <div class="card-body card-login">
+                <form class="signup" id="signup_form" method="post" action="{% url 'accounts:register' %}">
+                    <div id="div_id_email" class="form-group">
+                        <label for="id_email" class="form-control-label  requiredField">E-mail
+                            <span class="asteriskField">*</span>
+                        </label>
+                        <div class="">
+                            <input type="email" name="email" value="{{ email }}" placeholder="E-mail地址" autofocus="autofocus" class="textinput textInput form-control" required id="id_email" />
+                            <p id="error_1_id_email" class="help-block">
+                                <strong>
+                                        {% if email_error == 'exit' %}此e-mail地址已被其他用户注册
+                                        {% elif email_error == 'format' %}请输入的有效邮箱地址
+                                        {% endif %}
+                                </strong>
+                            </p>
+                        </div>
+                    </div>
+                    <div id="div_id_username" class="form-group has-danger">
+                        <label for="id_username" class="form-control-label  requiredField">用户名
+                            <span class="asteriskField">*</span>
+                        </label>
+                        <div class="">
+                            <input type="text" name="username" value="{{ username }}" placeholder="用户名"  minlength="1" maxlength="150" class="textinput textInput form-control form-control-danger" required id="id_username" />
+                            <p id="error_1_id_username" class="help-block">
+                                <strong>{% if user_error == 'exit' %}已存在一位使用该名字的用户
+                                    {% elif user_error == 'length' %}用户名限制5~20个字符
+                                    {% endif %}</strong>
+                            </p>
+                        </div>
+                    </div>
+                    <div id="div_id_password1" class="form-group has-danger">
+                        <label for="id_password1" class="form-control-label  requiredField">
+                                    密码<span class="asteriskField">*</span>
+                        </label>
+                        <div class="">
+                            <input type="password" name="password" value="{{ pwd }}" placeholder="密码" class="textinput textInput form-control form-control-danger" required id="id_password1" />
+                            <p id="error_1_id_password1" class="help-block">
+                                <strong>{% if pwd_error == 'nums' %}密码不能使用纯数字
+                                        {% elif pwd_error == 'length' %}密码限制8~20个字符
+                                        {% endif %}
+                                </strong>
+                            </p>
+                        </div>
+                    </div>
+                    <div id="div_id_password2" class="form-group">
+                        <label for="id_password2" class="form-control-label  requiredField">
+                                    密码(重复)<span class="asteriskField">*</span>
+                        </label>
+                        <div class="">
+                            <input type="password" name="password2" placeholder="密码(重复)" class="textinput textInput form-control" required id="id_password2" />
+                            <p id="error_1_id_password2" class="help-block">
+                                <strong>{% if pwd_error == 'unequal' %}两次输入的密码必须相同{% endif %}</strong>
+                            </p>
+                        </div>
+                    </div>
+                        <input type="hidden" name="next" value="{{ next_to }}"/>
+                        <a class="secondaryAction" href="/accounts/login?next=%2Faccounts%2Flogin%2F">已有账号登录</a>
+                        <button class="pull-right btn btn-info btn-sm rounded-0" type="submit">注册</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+{% endblock body %}

@@ -1,0 +1,953 @@
+﻿{% extends 'base_right.html' %}
+{% load blog_tags static %}
+{% block title %}{{ object.title }}{% endblock title %}
+{% block description %}
+    <meta name="description" content="{{ object.summary }}"/>
+    {% endblock description %}
+{% block keywords %}
+    <meta name="keywords" content="{% get_article_keywords object %}"/>
+    {% endblock keywords %}
+{% block top-file %}
+{#{% if user.is_authenticated %}#}
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/simplemde/latest/simplemde.min.css">
+
+{#{% endif %}#}
+<link href="{% static 'comment/css/base_comment.css' %}?v=20180114.008" rel="stylesheet">
+{% endblock %}
+{% block head %}
+    <script>
+    $(function(){
+        $("article").find('img').each(function () {
+            var realWidth = this.width;     //获取图片真实宽度
+            if(realWidth>770){
+                $(this).attr("width", '770');
+            }
+            $(this).click(function(){
+                var _this = $(this);
+                imgShow("#outerdiv", "#innerdiv", "#bigimg", _this);
+            });
+        });
+
+        $("img").find('img').each(function () {
+            $(this).click(function(){
+                var _this = $(this);//将当前的pimg元素作为_this传入函数
+                imgShow("#outerdiv", "#innerdiv", "#bigimg", _this);
+        });
+        });
+    });
+    function imgShow(outerdiv, innerdiv, bigimg, _this){
+        var src = _this.attr("src");//获取当前点击的pimg元素中的src属性
+        $(bigimg).attr("src", src);//设置#bigimg元素的src属性
+
+            /*获取当前点击图片的真实大小，并显示弹出层及大图*/
+        $("<img/>").attr("src", src).load(function(){
+            var windowW = $(window).width();//获取当前窗口宽度
+            var windowH = $(window).height();//获取当前窗口高度
+            var realWidth = this.width;//获取图片真实宽度
+            var realHeight = this.height;//获取图片真实高度
+            var imgWidth, imgHeight;
+            var scale = 0.8;//缩放尺寸，当图片真实宽度和高度大于窗口宽度和高度时进行缩放
+
+            if(realHeight>windowH*scale) {//判断图片高度
+                imgHeight = windowH*scale;//如大于窗口高度，图片高度进行缩放
+                imgWidth = imgHeight/realHeight*realWidth;//等比例缩放宽度
+                if(imgWidth>windowW*scale) {//如宽度扔大于窗口宽度
+                    imgWidth = windowW*scale;//再对宽度进行缩放
+                }
+            } else if(realWidth>windowW*scale) {//如图片高度合适，判断图片宽度
+                imgWidth = windowW*scale;//如大于窗口宽度，图片宽度进行缩放
+                            imgHeight = imgWidth/realWidth*realHeight;//等比例缩放高度
+            } else {//如果图片真实高度和宽度都符合要求，高宽不变
+                imgWidth = realWidth;
+                imgHeight = realHeight;
+            }
+                    $(bigimg).css("width",imgWidth);//以最终的宽度对图片缩放
+
+            var w = (windowW-imgWidth)/2;//计算图片与窗口左边距
+            var h = (windowH-imgHeight)/2;//计算图片与窗口上边距
+            $(innerdiv).css({"top":h, "left":w});//设置#innerdiv的top和left属性
+            $(outerdiv).fadeIn("fast");//淡入显示#outerdiv及.pimg
+        });
+        $(outerdiv).click(function(){//再次点击淡出消失弹出层
+            $(this).fadeOut("fast");
+        });
+    }
+</script>
+{% endblock head %}
+{% block body %}
+<div class="content-wrap">
+	    <div class="content">
+            <div class="breadcrumbs">
+                <a title="返回首页" href="/"><i class="fa fa-home"></i></a><small>></small>
+                <a href="/category/{{ object.category.bigcategory.slug }}">{{ object.category.bigcategory.name }}</a> <small>></small>
+                <a href="/category/{{ object.category.bigcategory.slug }}/{{ object.category.name|lower }}">{{ object.category.name }}</a>
+                <small>></small> <span class="muted">{{ object.title }}</span>
+            </div>
+            <header class="article-header">
+                <h1 class="article-title"><a href="/article/{{ object.slug }}">{{ object.title }}</a></h1>
+                <div class="meta">
+                    <span id="mute-category" class="muted">
+                        <i class="fa fa-list-alt"></i>
+                        <a href="category/technique/{{ object.category.name|lower }}"> {{ object.category.name }}</a>
+                    </span>
+                    <span class="muted">
+                        <i class="fa fa-user"></i>
+                        <a href="/author/{{ object.author.name }}">{{ object.author }}</a>
+                    </span>
+                    <time class="muted"><i class="fa fa-clock-o"></i> {{ object.create_date|date:'y-m-d' }}</time>
+                    <span class="muted"><i class="fa fa-eye"></i> {{ object.views }}浏览</span>
+                    <span class="muted">
+                        <i class="fa fa-comments-o"></i>
+                        <a href="/article/{{ object.slug }}#respond">0评论</a>
+                    </span>
+                </div>
+            </header>
+            <article class="article-content">
+			    {{ article.body|safe }}
+                <p>转载请注明：
+                    <a href="{% url 'blog:article' object.slug %}">StormSha</a> &raquo;
+                    <a href="{% url 'blog:article' object.slug %}">{{ object.title }}</a>
+                </p>
+
+     		 <div id="outerdiv" style="position:fixed;top:0;left:0;background:rgba(0,0,0,0.7);z-index:2;width:100%;height:100%;display:none;">
+                      <div id="innerdiv" style="position:absolute;">
+                          <img id="bigimg" style="border:5px solid #fff;" src="" />
+                      </div>
+                </div> 
+                <div class="article-social">
+                            <a href="javascript:;" data-action="ding" data-id="{{ object.id }}" id="Addlike" class="action">
+                                <i class="fa fa-heart-o"></i>喜欢 (<span class="count">{{ object.loves }}</span>)
+                            </a>
+                            <span class="or">or</span>
+                            <span class="action action-share bdsharebuttonbox"><i class="fa fa-share-alt"></i>分享 (
+                                <span class="bds_count" data-cmd="count" title="累计分享0次">0</span>)
+                                <div class="action-popover">
+                                    <div class="popover top in">
+                                        <div class="arrow"></div>
+                                        <div class="popover-content">
+                                            <a href="#" class="sinaweibo fa fa-weibo" data-cmd="tsina" title="分享到新浪微博"></a>
+                                            <a href="#" class="bds_qzone fa fa-star" data-cmd="qzone" title="分享到QQ空间"></a>
+                                            <a href="#" class="tencentweibo fa fa-tencent-weibo" data-cmd="tqq" title="分享到腾讯微博"></a>
+                                            <a href="#" class="qq fa fa-qq" data-cmd="sqq" title="分享到QQ好友"></a>
+                                            <a href="#" class="bds_renren fa fa-renren" data-cmd="renren" title="分享到人人网"></a>
+                                            <a href="#" class="bds_weixin fa fa-weixin" data-cmd="weixin" title="分享到微信"></a>
+                                            <a href="#" class="bds_more fa fa-ellipsis-h" data-cmd="more"></a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </span>
+                </div>
+            </article>
+            <div class="">
+                <div id="qrcodes">
+                    <div class="row">
+                        <div class="col-xs-12 col-md-4">
+                            <div class="p-sm" style="overflow: hidden; padding-bottom: 15px;">
+                                <p class="text-center">联系我请直接在公众号留言~</p>
+                                <p class="text-center">扫码或搜索：stormsha</p>
+                            <div class="text-center">
+                                <img class="code-img" src="{% static 'images/公众号.jpg'%}"/>
+                            </div>
+                            <div class="text-center">
+                                <p style="color: #e9415a; font-size: 15px;">stormsha</p>
+                                <p>
+                                    <span>微信公众号 </span><span style="color: #e9415a; font-size: 15px; margin-bottom: 45px;"> 扫一扫关注</span>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xs-12 col-md-4">
+                        <div class="p-sm" style="overflow: hidden; padding-bottom: 15px;">
+                            <p class="text-center">想结交更多的朋友吗?</p>
+                            <p class="text-center">来进击的Copier瞧瞧吧</p>
+                            <div class="text-center">
+                                <img class="code-img"
+                                     src="{% static 'images/进击的Coder.jpg' %}"/>
+                            </div>
+                            <div class="text-center">
+                                <p style="color: #e9415a; font-size: 15px;">进击的Copier</p>
+                                <p>
+                                    <span>QQ群号 </span><span style="color: #e9415a; font-size: 15px; margin-bottom: 45px;"> 213037458  </span>
+                                    <a class="btn btn-xs btn-danger" href="#" target="_blank">立即加入</a>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xs-12 col-md-4">
+                        <div class="p-sm" style="overflow: hidden; padding-bottom: 15px;">
+                            <p class="text-center">进击的Copier灌水太多?</p>
+                            <p class="text-center">这里是纯粹的技术领地</p>
+                            <div class="text-center">
+                                <img class="code-img"
+                                     src="{% static 'images/激进的Coder.jpg' %}"/>
+                            </div>
+                            <div class="text-center">
+                                <p style="color: #18A57D; font-size: 15px;">激进的Copier</p>
+                                <p>
+                                    <span>QQ群号 </span><span style="color: #18A57D; font-size: 15px; margin-bottom: 45px;"> 781587463  </span><a target="_blank" class="btn btn-xs" style="background-color: #18A57D"
+                                                                                                                                                href="#">立即加入</a>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+                <style>
+                    #qrcodes {
+                        min-height: 350px;
+                    background: white;
+                    }
+                    #qrcodes .btn {
+                        background-color: #eb586f;
+                        height: 22px;
+                        line-height: 22px !important;
+                        font-size: 12px;
+                        color: white;padding: initial;font-size: 12px;width: 65px;
+                    }
+                    .article-content #qrcodes{
+                        text-indent: 0px !important;
+                    }
+                    .article-content #qrcodes a {
+                        color: white;
+                    }
+                    #qrcodes .btn:hover {
+                        color: white;
+                    }
+                    #qrcodes .code-img {
+                        width: 180px;
+                    }
+                </style>
+                <style>
+                    #qrcodes * {
+                        -webkit-box-sizing: border-box;
+                        -moz-box-sizing: border-box;
+                        box-sizing: border-box;
+                    }
+                    *:before,
+                    *:after {
+                        -webkit-box-sizing: border-box;
+                        -moz-box-sizing: border-box;
+                        box-sizing: border-box;
+                    }
+                    .row {
+                        margin-right: -15px;
+                        margin-left: -15px;
+                    }
+                    .col-xs-1, .col-sm-1, .col-md-1, .col-lg-1, .col-xs-2, .col-sm-2, .col-md-2, .col-lg-2, .col-xs-3, .col-sm-3, .col-md-3, .col-lg-3, .col-xs-4, .col-sm-4, .col-md-4, .col-lg-4, .col-xs-5, .col-sm-5, .col-md-5, .col-lg-5, .col-xs-6, .col-sm-6, .col-md-6, .col-lg-6, .col-xs-7, .col-sm-7, .col-md-7, .col-lg-7, .col-xs-8, .col-sm-8, .col-md-8, .col-lg-8, .col-xs-9, .col-sm-9, .col-md-9, .col-lg-9, .col-xs-10, .col-sm-10, .col-md-10, .col-lg-10, .col-xs-11, .col-sm-11, .col-md-11, .col-lg-11, .col-xs-12, .col-sm-12, .col-md-12, .col-lg-12 {
+                        position: relative;
+                        min-height: 1px;
+                        padding-right: 15px;
+                        padding-left: 15px;
+                    }
+                    .col-xs-1, .col-xs-2, .col-xs-3, .col-xs-4, .col-xs-5, .col-xs-6, .col-xs-7, .col-xs-8, .col-xs-9, .col-xs-10, .col-xs-11, .col-xs-12 {
+                        float: left;
+                    }
+                    .col-xs-12 {
+                        width: 100%;
+                    }
+                    .col-xs-11 {
+                        width: 91.66666667%;
+                    }
+                    .col-xs-10 {
+                        width: 83.33333333%;
+                    }
+                    .col-xs-9 {
+                        width: 75%;
+                    }
+                    .col-xs-8 {
+                        width: 66.66666667%;
+                    }
+                    .col-xs-7 {
+                        width: 58.33333333%;
+                    }
+                    .col-xs-6 {
+                        width: 50%;
+                    }
+                    .col-xs-5 {
+                        width: 41.66666667%;
+                    }
+                    .col-xs-4 {
+                        width: 33.33333333%;
+                    }
+                    .col-xs-3 {
+                        width: 25%;
+                    }
+                    .col-xs-2 {
+                        width: 16.66666667%;
+                    }
+                    .col-xs-1 {
+                        width: 8.33333333%;
+                    }
+                    .col-xs-pull-12 {
+                        right: 100%;
+                    }
+                    .col-xs-pull-11 {
+                        right: 91.66666667%;
+                    }
+                    .col-xs-pull-10 {
+                        right: 83.33333333%;
+                    }
+                    .col-xs-pull-9 {
+                        right: 75%;
+                    }
+                    .col-xs-pull-8 {
+                        right: 66.66666667%;
+                    }
+                    .col-xs-pull-7 {
+                        right: 58.33333333%;
+                    }
+                    .col-xs-pull-6 {
+                        right: 50%;
+                    }
+                    .col-xs-pull-5 {
+                        right: 41.66666667%;
+                    }
+                    .col-xs-pull-4 {
+                        right: 33.33333333%;
+                    }
+                    .col-xs-pull-3 {
+                        right: 25%;
+                    }
+                    .col-xs-pull-2 {
+                        right: 16.66666667%;
+                    }
+                    .col-xs-pull-1 {
+                        right: 8.33333333%;
+                    }
+                    .col-xs-pull-0 {
+                        right: auto;
+                    }
+                    .col-xs-push-12 {
+                        left: 100%;
+                    }
+                    .col-xs-push-11 {
+                        left: 91.66666667%;
+                    }
+                    .col-xs-push-10 {
+                        left: 83.33333333%;
+                    }
+                    .col-xs-push-9 {
+                        left: 75%;
+                    }
+                    .col-xs-push-8 {
+                        left: 66.66666667%;
+                    }
+                    .col-xs-push-7 {
+                        left: 58.33333333%;
+                    }
+                    .col-xs-push-6 {
+                        left: 50%;
+                    }
+                    .col-xs-push-5 {
+                        left: 41.66666667%;
+                    }
+                    .col-xs-push-4 {
+                        left: 33.33333333%;
+                    }
+                    .col-xs-push-3 {
+                        left: 25%;
+                    }
+                    .col-xs-push-2 {
+                        left: 16.66666667%;
+                    }
+                    .col-xs-push-1 {
+                        left: 8.33333333%;
+                    }
+                    .col-xs-push-0 {
+                        left: auto;
+                    }
+                    .col-xs-offset-12 {
+                        margin-left: 100%;
+                    }
+                    .col-xs-offset-11 {
+                        margin-left: 91.66666667%;
+                    }
+                    .col-xs-offset-10 {
+                        margin-left: 83.33333333%;
+                    }
+                    .col-xs-offset-9 {
+                        margin-left: 75%;
+                    }
+                    .col-xs-offset-8 {
+                        margin-left: 66.66666667%;
+                    }
+                    .col-xs-offset-7 {
+                        margin-left: 58.33333333%;
+                    }
+                    .col-xs-offset-6 {
+                        margin-left: 50%;
+                    }
+                    .col-xs-offset-5 {
+                        margin-left: 41.66666667%;
+                    }
+                    .col-xs-offset-4 {
+                        margin-left: 33.33333333%;
+                    }
+                    .col-xs-offset-3 {
+                        margin-left: 25%;
+                    }
+                    .col-xs-offset-2 {
+                        margin-left: 16.66666667%;
+                    }
+                    .col-xs-offset-1 {
+                        margin-left: 8.33333333%;
+                    }
+                    .col-xs-offset-0 {
+                        margin-left: 0;
+                    }
+                    @media (min-width: 768px) {
+                        .col-sm-1, .col-sm-2, .col-sm-3, .col-sm-4, .col-sm-5, .col-sm-6, .col-sm-7, .col-sm-8, .col-sm-9, .col-sm-10, .col-sm-11, .col-sm-12 {
+                            float: left;
+                        }
+                        .col-sm-12 {
+                            width: 100%;
+                        }
+                        .col-sm-11 {
+                            width: 91.66666667%;
+                        }
+                        .col-sm-10 {
+                            width: 83.33333333%;
+                        }
+                        .col-sm-9 {
+                            width: 75%;
+                        }
+                        .col-sm-8 {
+                            width: 66.66666667%;
+                        }
+                        .col-sm-7 {
+                            width: 58.33333333%;
+                        }
+                        .col-sm-6 {
+                            width: 50%;
+                        }
+                        .col-sm-5 {
+                            width: 41.66666667%;
+                        }
+                        .col-sm-4 {
+                            width: 33.33333333%;
+                        }
+                        .col-sm-3 {
+                            width: 25%;
+                        }
+                        .col-sm-2 {
+                            width: 16.66666667%;
+                        }
+                        .col-sm-1 {
+                            width: 8.33333333%;
+                        }
+                        .col-sm-pull-12 {
+                            right: 100%;
+                        }
+                        .col-sm-pull-11 {
+                            right: 91.66666667%;
+                        }
+                        .col-sm-pull-10 {
+                            right: 83.33333333%;
+                        }
+                        .col-sm-pull-9 {
+                            right: 75%;
+                        }
+                        .col-sm-pull-8 {
+                            right: 66.66666667%;
+                        }
+                        .col-sm-pull-7 {
+                            right: 58.33333333%;
+                        }
+                        .col-sm-pull-6 {
+                            right: 50%;
+                        }
+                        .col-sm-pull-5 {
+                            right: 41.66666667%;
+                        }
+                        .col-sm-pull-4 {
+                            right: 33.33333333%;
+                        }
+                        .col-sm-pull-3 {
+                            right: 25%;
+                        }
+                        .col-sm-pull-2 {
+                            right: 16.66666667%;
+                        }
+                        .col-sm-pull-1 {
+                            right: 8.33333333%;
+                        }
+                        .col-sm-pull-0 {
+                            right: auto;
+                        }
+                        .col-sm-push-12 {
+                            left: 100%;
+                        }
+                        .col-sm-push-11 {
+                            left: 91.66666667%;
+                        }
+                        .col-sm-push-10 {
+                            left: 83.33333333%;
+                        }
+                        .col-sm-push-9 {
+                            left: 75%;
+                        }
+                        .col-sm-push-8 {
+                            left: 66.66666667%;
+                        }
+                        .col-sm-push-7 {
+                            left: 58.33333333%;
+                        }
+                        .col-sm-push-6 {
+                            left: 50%;
+                        }
+                        .col-sm-push-5 {
+                            left: 41.66666667%;
+                        }
+                        .col-sm-push-4 {
+                            left: 33.33333333%;
+                        }
+                        .col-sm-push-3 {
+                            left: 25%;
+                        }
+                        .col-sm-push-2 {
+                            left: 16.66666667%;
+                        }
+                        .col-sm-push-1 {
+                            left: 8.33333333%;
+                        }
+                        .col-sm-push-0 {
+                            left: auto;
+                        }
+                        .col-sm-offset-12 {
+                            margin-left: 100%;
+                        }
+                        .col-sm-offset-11 {
+                            margin-left: 91.66666667%;
+                        }
+                        .col-sm-offset-10 {
+                            margin-left: 83.33333333%;
+                        }
+                        .col-sm-offset-9 {
+                            margin-left: 75%;
+                        }
+                        .col-sm-offset-8 {
+                            margin-left: 66.66666667%;
+                        }
+                        .col-sm-offset-7 {
+                            margin-left: 58.33333333%;
+                        }
+                        .col-sm-offset-6 {
+                            margin-left: 50%;
+                        }
+                        .col-sm-offset-5 {
+                            margin-left: 41.66666667%;
+                        }
+                        .col-sm-offset-4 {
+                            margin-left: 33.33333333%;
+                        }
+                        .col-sm-offset-3 {
+                            margin-left: 25%;
+                        }
+                        .col-sm-offset-2 {
+                            margin-left: 16.66666667%;
+                        }
+                        .col-sm-offset-1 {
+                            margin-left: 8.33333333%;
+                        }
+                        .col-sm-offset-0 {
+                            margin-left: 0;
+                        }
+                    }
+                    @media (min-width: 992px) {
+                        .col-md-1, .col-md-2, .col-md-3, .col-md-4, .col-md-5, .col-md-6, .col-md-7, .col-md-8, .col-md-9, .col-md-10, .col-md-11, .col-md-12 {
+                            float: left;
+                        }
+                        .col-md-12 {
+                            width: 100%;
+                        }
+                        .col-md-11 {
+                            width: 91.66666667%;
+                        }
+                        .col-md-10 {
+                            width: 83.33333333%;
+                        }
+                        .col-md-9 {
+                            width: 75%;
+                        }
+                        .col-md-8 {
+                            width: 66.66666667%;
+                        }
+                        .col-md-7 {
+                            width: 58.33333333%;
+                        }
+                        .col-md-6 {
+                            width: 50%;
+                        }
+                        .col-md-5 {
+                            width: 41.66666667%;
+                        }
+                        .col-md-4 {
+                            width: 33.33333333%;
+                        }
+                        .col-md-3 {
+                            width: 25%;
+                        }
+                        .col-md-2 {
+                            width: 16.66666667%;
+                        }
+                        .col-md-1 {
+                            width: 8.33333333%;
+                        }
+                        .col-md-pull-12 {
+                            right: 100%;
+                        }
+                        .col-md-pull-11 {
+                            right: 91.66666667%;
+                        }
+                        .col-md-pull-10 {
+                            right: 83.33333333%;
+                        }
+                        .col-md-pull-9 {
+                            right: 75%;
+                        }
+                        .col-md-pull-8 {
+                            right: 66.66666667%;
+                        }
+                        .col-md-pull-7 {
+                            right: 58.33333333%;
+                        }
+                        .col-md-pull-6 {
+                            right: 50%;
+                        }
+                        .col-md-pull-5 {
+                            right: 41.66666667%;
+                        }
+                        .col-md-pull-4 {
+                            right: 33.33333333%;
+                        }
+                        .col-md-pull-3 {
+                            right: 25%;
+                        }
+                        .col-md-pull-2 {
+                            right: 16.66666667%;
+                        }
+                        .col-md-pull-1 {
+                            right: 8.33333333%;
+                        }
+                        .col-md-pull-0 {
+                            right: auto;
+                        }
+                        .col-md-push-12 {
+                            left: 100%;
+                        }
+                        .col-md-push-11 {
+                            left: 91.66666667%;
+                        }
+                        .col-md-push-10 {
+                            left: 83.33333333%;
+                        }
+                        .col-md-push-9 {
+                            left: 75%;
+                        }
+                        .col-md-push-8 {
+                            left: 66.66666667%;
+                        }
+                        .col-md-push-7 {
+                            left: 58.33333333%;
+                        }
+                        .col-md-push-6 {
+                            left: 50%;
+                        }
+                        .col-md-push-5 {
+                            left: 41.66666667%;
+                        }
+                        .col-md-push-4 {
+                            left: 33.33333333%;
+                        }
+                        .col-md-push-3 {
+                            left: 25%;
+                        }
+                        .col-md-push-2 {
+                            left: 16.66666667%;
+                        }
+                        .col-md-push-1 {
+                            left: 8.33333333%;
+                        }
+                        .col-md-push-0 {
+                            left: auto;
+                        }
+                        .col-md-offset-12 {
+                            margin-left: 100%;
+                        }
+                        .col-md-offset-11 {
+                            margin-left: 91.66666667%;
+                        }
+                        .col-md-offset-10 {
+                            margin-left: 83.33333333%;
+                        }
+                        .col-md-offset-9 {
+                            margin-left: 75%;
+                        }
+                        .col-md-offset-8 {
+                            margin-left: 66.66666667%;
+                        }
+                        .col-md-offset-7 {
+                            margin-left: 58.33333333%;
+                        }
+                        .col-md-offset-6 {
+                            margin-left: 50%;
+                        }
+                        .col-md-offset-5 {
+                            margin-left: 41.66666667%;
+                        }
+                        .col-md-offset-4 {
+                            margin-left: 33.33333333%;
+                        }
+                        .col-md-offset-3 {
+                            margin-left: 25%;
+                        }
+                        .col-md-offset-2 {
+                            margin-left: 16.66666667%;
+                        }
+                        .col-md-offset-1 {
+                            margin-left: 8.33333333%;
+                        }
+                        .col-md-offset-0 {
+                            margin-left: 0;
+                        }
+                    }
+                    @media (min-width: 1200px) {
+                        .col-lg-1, .col-lg-2, .col-lg-3, .col-lg-4, .col-lg-5, .col-lg-6, .col-lg-7, .col-lg-8, .col-lg-9, .col-lg-10, .col-lg-11, .col-lg-12 {
+                            float: left;
+                        }
+                        .col-lg-12 {
+                            width: 100%;
+                        }
+                        .col-lg-11 {
+                            width: 91.66666667%;
+                        }
+                        .col-lg-10 {
+                            width: 83.33333333%;
+                        }
+                        .col-lg-9 {
+                            width: 75%;
+                        }
+                        .col-lg-8 {
+                            width: 66.66666667%;
+                        }
+                        .col-lg-7 {
+                            width: 58.33333333%;
+                        }
+                        .col-lg-6 {
+                            width: 50%;
+                        }
+                        .col-lg-5 {
+                            width: 41.66666667%;
+                        }
+                        .col-lg-4 {
+                            width: 33.33333333%;
+                        }
+                        .col-lg-3 {
+                            width: 25%;
+                        }
+                        .col-lg-2 {
+                            width: 16.66666667%;
+                        }
+                        .col-lg-1 {
+                            width: 8.33333333%;
+                        }
+                        .col-lg-pull-12 {
+                            right: 100%;
+                        }
+                        .col-lg-pull-11 {
+                            right: 91.66666667%;
+                        }
+                        .col-lg-pull-10 {
+                            right: 83.33333333%;
+                        }
+                        .col-lg-pull-9 {
+                            right: 75%;
+                        }
+                        .col-lg-pull-8 {
+                            right: 66.66666667%;
+                        }
+                        .col-lg-pull-7 {
+                            right: 58.33333333%;
+                        }
+                        .col-lg-pull-6 {
+                            right: 50%;
+                        }
+                        .col-lg-pull-5 {
+                            right: 41.66666667%;
+                        }
+                        .col-lg-pull-4 {
+                            right: 33.33333333%;
+                        }
+                        .col-lg-pull-3 {
+                            right: 25%;
+                        }
+                        .col-lg-pull-2 {
+                            right: 16.66666667%;
+                        }
+                        .col-lg-pull-1 {
+                            right: 8.33333333%;
+                        }
+                        .col-lg-pull-0 {
+                            right: auto;
+                        }
+                        .col-lg-push-12 {
+                            left: 100%;
+                        }
+                        .col-lg-push-11 {
+                            left: 91.66666667%;
+                        }
+                        .col-lg-push-10 {
+                            left: 83.33333333%;
+                        }
+                        .col-lg-push-9 {
+                            left: 75%;
+                        }
+                        .col-lg-push-8 {
+                            left: 66.66666667%;
+                        }
+                        .col-lg-push-7 {
+                            left: 58.33333333%;
+                        }
+                        .col-lg-push-6 {
+                            left: 50%;
+                        }
+                        .col-lg-push-5 {
+                            left: 41.66666667%;
+                        }
+                        .col-lg-push-4 {
+                            left: 33.33333333%;
+                        }
+                        .col-lg-push-3 {
+                            left: 25%;
+                        }
+                        .col-lg-push-2 {
+                            left: 16.66666667%;
+                        }
+                        .col-lg-push-1 {
+                            left: 8.33333333%;
+                        }
+                        .col-lg-push-0 {
+                            left: auto;
+                        }
+                        .col-lg-offset-12 {
+                            margin-left: 100%;
+                        }
+                        .col-lg-offset-11 {
+                            margin-left: 91.66666667%;
+                        }
+                        .col-lg-offset-10 {
+                            margin-left: 83.33333333%;
+                        }
+                        .col-lg-offset-9 {
+                            margin-left: 75%;
+                        }
+                        .col-lg-offset-8 {
+                            margin-left: 66.66666667%;
+                        }
+                        .col-lg-offset-7 {
+                            margin-left: 58.33333333%;
+                        }
+                        .col-lg-offset-6 {
+                            margin-left: 50%;
+                        }
+                        .col-lg-offset-5 {
+                            margin-left: 41.66666667%;
+                        }
+                        .col-lg-offset-4 {
+                            margin-left: 33.33333333%;
+                        }
+                        .col-lg-offset-3 {
+                            margin-left: 25%;
+                        }
+                        .col-lg-offset-2 {
+                            margin-left: 16.66666667%;
+                        }
+                        .col-lg-offset-1 {
+                            margin-left: 8.33333333%;
+                        }
+                        .col-lg-offset-0 {
+                            margin-left: 0;
+                        }
+                    }
+                </style>
+            </div>
+            <div style="background:#fff;padding-bottom:20px;font-size:14px;">
+                <p style="text-align: center;margin-bottom:20px;padding:0px 20px">您的支持是博主写作最大的动力，如果您喜欢我的文章，感觉我的文章对您有帮助，请狠狠点击下面的</p>
+                <p style="text-align: center;">
+                    <a href="{% url 'blog:category' 'donate' '' %}">
+                        <input style="width: 310px; margin: 10px auto 0px; background-color: #f58a87; color: #ffffff; height: 40px; border: none; font-family: 'Microsoft Yahei'; font-size: 16px; letter-spacing: 2px;" type="button" value="我要小额赞助" />
+                    </a>
+                </p>
+            </div>
+                <footer class="article-footer">
+                    <!--文章标签-->
+                    <div class="article-tags">
+                    <i class="fa fa-tags"></i>
+                        {% get_article_tag object.id as tags %}
+                        {% for tag in tags %}..
+                            <a href="{% url 'blog:tag' tag.slug %}" rel="tag">{{ tag.name }}</a>
+                        {% endfor %}
+                    </div>
+                    <!--文章标签结束-->
+
+                </footer>
+                <!--推荐文章-->
+                <nav class="article-nav">
+                        <span class="article-nav-prev">
+                            <i class="fa fa-angle-double-left"></i>
+                            {% get_article_previous object.id as article_previous %}
+                            <a href="{% url 'blog:article'  article_previous.slug %}" rel="prev">{{ article_previous.title }}</a>
+                        </span>
+                        <span class="article-nav-next">
+                            {% get_article_next object.id as article_next %}
+                            <a href="{% url 'blog:article'  article_next.slug %}" rel="prev">{{ article_next.title }}</a>
+                            <i class="fa fa-angle-double-right"></i>
+                        </span>
+                </nav>
+
+		    <div class="related_top">
+			    <div class="related_posts">
+                <ul class="related_img">
+                    {% get_category_article object as  category_article %}
+                    {% for article in category_article.article_4 %}
+                        <li class="related_box"  >
+                        <a href="{% url 'blog:article' article.slug %}" title="{{ article.title }}" target="_blank">
+                <img src="{{ article.img_link }}" alt="{{ article.title }}" />	<br><span class="r_title">{{ article.title }}</span></a>
+                        </li>
+                    {% endfor %}
+                </ul>
+
+                <div class="relates">
+                    <ul>
+                        {% for article in category_article.article_8 %}
+                        <li>
+                            <i class="fa fa-minus"></i>
+                            <a href="{% url 'blog:article' article.slug %}">{{ article.title }}</a>
+                        </li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+            </div>
+
+
+{#            <div class="card mt-2 rounded-0 border-0" id="comment-block">#}
+{#                {% include 'comment/editor.html' %}#}
+{#            </div>#}
+		    {% include 'comment_list.html' %}
+	    </div>
+</div>
+{% endblock body %}
+
+
+{% block end_file %}
+{% if user.is_authenticated %}
+<script src="https://cdn.jsdelivr.net/simplemde/latest/simplemde.min.js"></script>
+{#<script src="{% static 'comment/js/editor.js' %}?v=20180113.05907"></script>#}
+<script src="{% static 'comment/js/activate-power.js' %}?v=20180120"></script>
+<script>
+var sw=window.screen.width;if(sw>1200){POWERMODE.colorful=true;POWERMODE.shake=false;document.body.addEventListener('input',POWERMODE)};
+
+</script>
+{% endif %}
+{% endblock %}

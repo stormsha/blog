@@ -1,0 +1,82 @@
+{% extends 'base_right.html' %}
+{% load blog_tags oauth_tags comment_tags static %}
+{% load humanize %}
+{% load highlight %}
+
+{% block head_title %}文章搜索：{{ query }}{% endblock %}
+{% block title %}静觅 | 文章搜索：{{ query }}{% endblock title %}
+{% block metas %}
+<meta name="description" content="文章搜索：{{ query }}，网站全文搜索功能，按照文章标题和内容建立索引，实现整站搜索，django-haystack全文搜索库的使用">
+<meta name="keywords" content="{{ query }},全文搜索,django-haystack">
+{% endblock %}
+
+
+{% block description %}
+<meta name="description" content="文章搜索：{{ query }}，网站全文搜索功能，按照文章标题和内容建立索引，实现整站搜索，django-haystack全文搜索库的使用"/>
+{% endblock description %}
+
+{% block keywords %}
+<meta name="keywords" content="StormSha,{{ query }},全文搜索,django-haystack"/>
+{% endblock keywords %}
+
+{% block body %}
+    <div class="content-wrap">
+	    <div class="content">
+            <header class="archive-header">
+                <h1><i class="fa fa-folder-open"></i>  &nbsp;分类：{{ query }}
+                    <a title="订阅福利专区" target="_blank" href="{% url 'blog:category' resources '' %}"><i class="rss fa fa-rss"></i></a>
+                </h1>
+            </header>
+            {% for article in search_list %}
+            <article class="excerpt">
+                <header>
+                    <a class="label label-important" href="{{ article.object.category.get_absolute_url }}">{{ article.object.category.name }}<i class="label-arrow"></i></a>
+
+                    <!--高亮标题-->
+                    <h2 class="mt-0 font-weight-bold text-info f-17">
+                            <a href="{{ article.object.get_absolute_url }}" target="_blank">{% my_highlight article.object.title query %}</a>
+                    </h2>
+
+                </header>
+                <div class="focus"><a target="_blank" href="{{ article.object.get_absolute_url }}">
+                    <img class="thumb" width="200" height="123" src="{{ article.object.img_link }}" alt="{{ article.object.title }}" /></a>
+                </div>
+                <!--摘要处显示部分文章内容-->
+                {% with article.object.body_to_markdown|safe as this_body %}
+                <p class="d-none d-sm-block mb-2 f-15">{% highlight this_body with query max_length 130 %}</p>
+                <p class="d-block d-sm-none mb-2 f-15">{% highlight this_body with query max_length 64 %}</p>
+                {% endwith %}
+                <!--摘要处显示部分文章内容结束-->
+
+                <p class="auth-span">
+                <span class="muted"><i class="fa fa-user"></i> <a href="/author/{{ article.object.author }}">{{ article.object.author }}</a></span>
+                <span class="muted"><i class="fa fa-clock-o"></i> {{ article.object.create_date|date:'Y-m-d'}}</span>
+                <span class="muted"><i class="fa fa-eye"></i> {{ article.object.views }}浏览</span>
+                <span class="muted"><i class="fa fa-comments-o"></i>
+                    <a target="_blank" href="/article/{{ article.object.slug }}#comments">{% get_comment_count article.object.id  article.object.id%}评论</a>
+                </span>
+                <span class="muted"><a href="javascript:;" data-action="ding" data-id="455" id="Addlike" class="action">
+                    <i class="fa fa-heart-o"></i>
+                <span class="count">{{ article.object.love }}</span>喜欢</a></span></p>
+            </article>
+            {% empty %}
+                    <div class="no-post">未搜索到相关内容！</div>
+            {% endfor %}
+            {% if is_paginated %}
+                <div class="text-center mt-2 mt-sm-1 mt-md-0 mb-3 f-16">
+                    {% if page_obj.has_previous %}
+                    <a class="text-success" href="?q={{ query }}&amp;page={{ page_obj.previous_page_number }}">上一页</a>
+                    {% else %}
+                    <span class="text-secondary" title="当前页已经是首页">上一页</span>
+                    {% endif %}
+                    <span class="mx-2">第&nbsp;{{ page_obj.number }}&nbsp;/&nbsp;{{ paginator.num_pages }}&nbsp;页</span>
+                    {% if page_obj.has_next %}
+                    <a class="text-success" href="?q={{ query }}&amp;page={{ page_obj.next_page_number }}">下一页</a>
+                    {% else %}
+                    <span class="text-secondary" title="当前页已经是末页">下一页</span>
+                    {% endif %}
+                </div>
+            {% endif %}
+        </div>
+    </div>
+{% endblock body %}

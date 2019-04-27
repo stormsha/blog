@@ -1,0 +1,49 @@
+{% load staticfiles %}
+{% load static %}
+<!doctype html>
+<html lang="en">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="referrer" content="origin">
+    <!-- TDK and ICO -->
+    {% block title %}{% endblock %}
+
+    <meta name="description" content="用户账号管理，使用django-allauth社交用户系统，支持微博、Github等社交账号登录，加入TendCode，查看更多信息。">
+    <meta name="keywords" content="django-allauth,社交用户系统,OAuth 2.0">
+
+
+    <!-- Bootstrap and font-awesome CSS -->
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}" type='text/css'>
+    <link href="{% static 'font-awesome-4.7.0/css/font-awesome.min.css' %}" rel="stylesheet">
+
+</head>
+<body>
+
+<!--主要内容块-->
+{% block main %}
+{% endblock %}
+
+
+<footer class="container-fluid mt-4">
+    <div class="card-body text-center px-0 f-16">
+        <p class="card-text mb-1">Copyright&nbsp;&copy;&nbsp;2017-<span id="year-info"></span>
+            <script>function getnewYear(){var d = new Date();var x = document.getElementById("year-info");
+            x.innerHTML=d.getFullYear();}getnewYear()</script>
+            <a href="https://github.com/stormsha" target="_blank" title="博客作者的Github">StormSha</a>.&nbsp;Powered&nbsp;by&nbsp;Django.
+        </p>
+        <p class="mb-0">
+            <a href="http://www.miibeian.gov.cn/" target="_blank">粤ICP备17114114号-3</a>&nbsp;|
+            <a href="/sitemap.xml" target="_blank">网站地图</a>Sha
+        </p>
+        <!--站长统计-->
+        <div>
+            <script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? "https://" : "http://");
+            document.write(unescape("%3Cspan id='cnzz_stat_icon_1276375952'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s96.cnzz.com/z_stat.php%3Fid%3D1276375952%26online%3D1%26show%3Dline' type='text/javascript'%3E%3C/script%3E"));</script>
+        </div>
+        <!--站长统计结束-->
+    </div>
+</footer>
+</body>
+</html>

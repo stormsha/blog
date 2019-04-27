@@ -1,0 +1,17 @@
+{% load static %}
+<div class="card border-0 rounded-0 f-16" id="editor-block">
+    {% if user.is_authenticated %}
+    <div class="card-body p-2 p-md-3">
+        <textarea class="form-control rounded-0" id="comment-form" name="text"
+                  placeholder="评论请使用 markdown 语法" rows="5" required></textarea>
+    </div>
+
+    {% else %}
+    <div class="card-body text-center m-2 m-md-3 f-16" id="no-editor">
+        <div>您尚未登录，请
+            <a class="text-danger" href="{% url 'account_login' %}?next={{ request.path }}">登录</a> 或
+            <a class="text-danger" href="{% url 'account_signup' %}?next={{ request.path }}">注册</a> 后评论
+        </div>
+    </div>
+    {% endif %}
+</div>

@@ -1,0 +1,165 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% load blog_tags static %}
+{% load humanize %}
+
+{% block right %}
+        <aside class="sidebar">
+            <div class="widget widget_text">
+                <div class="textwidget">
+                    <div class="social">
+                        <a href="https://weibo.com/stormsha" rel="external nofollow" title="新浪微博" target="_blank">
+				<i class="sinaweibo fa fa-weibo"></i></a>
+				<a href="https://github.com/stormsha/blog" rel="external nofollow" title="Github" target="_blank">
+				<i class="tencentweibo fa fa-github"></i></a>
+				<a class="weixin"><i class="weixins fa fa-weixin"></i>
+                        <div class="weixin-popover">
+                            <div class="popover bottom in">
+                                <div class="arrow"></div>
+                                <div class="popover-title"></div>
+                                <div class="popover-content"><img src="http://docs.stormsha.com/20190417222808.jpg"></div>
+                            </div>
+                        </div>
+                    </a>
+                        <a href="http://mail.qq.com/cgi-bin/qm_share?t=qm_mailme&email=mail@stormsha.com" rel="external nofollow" title="Email"
+                           target="_blank"><i class="email fa fa-envelope-o"></i></a>
+                        <a href="/feed/" rel="external nofollow" target="_blank" title="订阅本站"><i class="rss fa fa-rss"></i></a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="widget widget_metaslider_widget">
+                <!--热门专题-->
+                <div class="title"><h2>热门专题</h2></div><!-- meta slider -->
+                <div style="width: 100%;" class="metaslider metaslider-nivo metaslider-2698 ml-slider meta-slider">
+                    <div id="metaslider_container_2698">
+                        <div class='slider-wrapper theme-bar'>
+                            <div class='ribbon'></div>
+                            <div id='metaslider_2698' class='nivoSlider'>
+                                {% get_carousel_right as carousels %}
+                                {% for carousel in carousels  %}
+                                    <a href="{{ carousel.url }}" target="_blank">
+                                        <img src="{{ carousel.img_url }}" height="300" width="320" data-title="{{ carousel.content }}"
+                                             title="{{ carousel.title }}" alt="{{ carousel.title }}" class="slider-2698 slide-1720"/>
+                                    </a>
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </div>
+                    <!--热门专题结束-->
+
+                    <script type="text/javascript">
+                        var metaslider_2698 = function ($) {
+                            $('#metaslider_2698').nivoSlider({
+                                boxCols: 7,
+                                boxRows: 5,
+                                pauseTime: 3000,
+                                effect: "random",
+                                controlNav: false,
+                                directionNav: true,
+                                pauseOnHover: true,
+                                animSpeed: 600,
+                                prevText: "&lt;",
+                                nextText: "&gt;",
+                                slices: 15,
+                                manualAdvance: false
+                            });
+                        };
+                        var timer_metaslider_2698 = function () {
+                            var slider = !window.jQuery ? window.setTimeout(timer_metaslider_2698, 100) : !jQuery.isReady ? window.setTimeout(timer_metaslider_2698, 1) : metaslider_2698(window.jQuery);
+                        };
+                        timer_metaslider_2698();
+                    </script>
+                </div>
+                <!--// meta slider-->
+            </div>
+            <!--广告位-->
+            <div class="widget widget_text">
+                <div class="textwidget">
+                    <a href="/"><img style="width:100%" src="http://docs.stormsha.com/20190417204350.png"/></a>
+                </div>
+            </div>
+            <!--广告位结束-->
+            <div class="widget widget_archive">
+
+                <!--文章归档-->
+                <div class="title"><h2>文章归档</h2></div>
+                    {% get_data_date as data_date %}
+                    <ul>
+                        {% if data_date %}
+                            {% for date in data_date %}
+                                <li><a href='{% url 'blog:date' date|date:'Y' date|date:'m' %}'>{{ date|date:'Y-m' }}</a></li>
+                            {% endfor %}
+                        {% else %}
+                            <div>近期没有发表过文章</div>
+                        {% endif %}
+                    </ul>
+                </div>
+                <!--文章归档结束-->
+
+                <!--猜你喜欢-->
+                <div class="widget d_postlist">
+                    <div class="title"><h2>猜你喜欢</h2></div>
+                    <ul>
+                        {% get_article_list 'views' 8 as hot_tag %}
+                        {% for hot in hot_tag %}
+                        <li>
+                            <a href="/article/{{ hot.slug }} " title="{{ hot.title }}">
+                                <span class="thumbnail"><img src="{{ hot.img_link }}" alt="{{ hot.title }}"/></span>
+                                <span class="text">{{ hot.title }}</span>&nbsp;
+                                <i class="fa fa-calendar" aria-hidden="true"></i>
+                                <span class="muted">{{ hot.create_date|naturaltime }}</span>&nbsp;
+                                <i class="fa fa-eye" aria-hidden="true"></i>
+                                <span class="muted">{{ hot.views }}</span>
+                            </a>
+                        </li>
+                        {% endfor %}
+                    </ul>
+                </div>
+                <!--猜你喜欢结束-->
+
+            <!--标签云-->
+            <div class="widget d_tag">
+                <div class="title"><h2>标签云</h2></div>
+                <div class="d_tags">
+                    {% get_tag_list as tags %}
+                    {% for tag in tags %}
+                        <a title="{{ tag.total_num }}个话题" href="{% url 'blog:tag' tag.name %}">{{ tag.name }} ({{ tag.total_num }})</a>
+                    {% endfor %}
+                </div>
+            </div>
+            <!--标签云结束-->
+
+            <!--友情链接-->
+            <div class="widget widget_links">
+                <div class="title"><h2>友情链接</h2></div>
+                    {% get_friends as friends %}
+                    <ul class='xoxo blogroll'>
+                        {% if friends %}
+                            {% for friend in friends %}
+                                <li><a href="{{ friend.link }}" target="_blank">{{ friend.name }}</a></li>
+                            {% endfor %}
+                        {% else %}
+                            <div>&nbsp;&nbsp;暂无友链，欢迎来战</div>
+                        {% endif %}
+                    </ul>
+            </div>
+            <!--友情链接结束-->
+
+            <!--精品推荐-->
+            <div class="widget widget_text">
+                <div class="title"><h2>精品推荐</h2></div>
+                <div class="text widget">
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;广告位诚邀加盟
+                </div>
+            </div>
+
+            <!--精品推荐结束-->
+            <div class="widget widget_text">
+
+            </div>
+        </aside>
+{% endblock right %}
+
+{% block end_file %}
+{% endblock end_file %}
