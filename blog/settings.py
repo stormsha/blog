@@ -12,7 +12,7 @@ https://docs.djangoproject.com/en/1.11/ref/settings/
 
 import os
 import sys
-
+import json
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -21,13 +21,17 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # See https://docs.djangoproject.com/en/1.11/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = ''
+SECRET_KEY = '07#4u3t!4*#54s1a091bwdxwiup=#2@6w1i)tsreu6oy=@lb8p'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
 ALLOWED_HOSTS = ['*']
 
+with open(os.path.join(BASE_DIR, 'settings.json'), encoding='utf-8') as f:
+    settings_json = json.load(f)
+    # from blog.aes_encrypt import ae
+    # settings_json['MYSQL_DB_PASSWORD'] = ae.decrypt(settings_json['MYSQL_DB_PASSWORD'])
 # Application definition
 
 INSTALLED_APPS = [
@@ -86,11 +90,11 @@ sys.path.insert(0, os.path.join(BASE_DIR, 'apps'))
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'HOST': '',
-        'PORT': '',
-        'USER': '',
-        'PASSWORD': '',
-        'NAME': 'blog',
+        'HOST': settings_json['MYSQL_HOST'],
+        'PORT': settings_json['MYSQL_PORT'],
+        'USER': settings_json['MYSQL_USER'],
+        'PASSWORD': settings_json['MYSQL_DB_PASSWORD'],
+        'NAME': settings_json['MYSQL_NAME'],
         # 避免映射数据库时出现警告
         'OPTIONS': {
             'init_command': "SET sql_mode='STRICT_TRANS_TABLES'",
@@ -164,10 +168,10 @@ HAYSTACK_SIGNAL_PROCESSOR = 'haystack.signals.RealtimeSignalProcessor'
 # 自定义用户model
 AUTH_USER_MODEL = 'user.Ouser'
 
-SITE_DESCRIPTION = "StormSha的个人网站，记录生活的瞬间，分享学习的心得，感悟生活，留住感动，静静寻觅生活的美好"
+SITE_DESCRIPTION = settings_json['SITE_DESCRIPTION']
 
-SITE_KEYWORDS = "StormSha,静觅,网络,IT,技术,博客,Python"
+SITE_KEYWORDS = settings_json['SITE_KEYWORDS']
 
 SITE_END_TITLE = "聚会阅读器"
 
-API_FLAG = True
+API_FLAG = settings_json['API_FLAG']

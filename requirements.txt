@@ -32,5 +32,8 @@ requests==2.21.0
 requests-oauthlib==1.2.0
 rsa==4.0
 six==1.12.0
-urllib3==1.24.2
+urllib3==1.24.1
 Whoosh==2.7.4
+Naked==0.1.31
+PyYAML==5.1.2
+shellescape==3.4.1
