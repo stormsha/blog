@@ -2,7 +2,7 @@
   "MYSQL_HOST": "db",
   "MYSQL_PORT": "3306",
   "MYSQL_USER": "root",
-  "MYSQL_DB_PASSWORD": "root",
+  "MYSQL_DB_PASSWORD": "rt",
   "MYSQL_NAME": "blog",
 
   "SITE_DESCRIPTION": "StormSha的个人网站，记录生活的瞬间，分享学习的心得，感悟生活，留住感动，静静寻觅生活的美好",
