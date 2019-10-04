@@ -113,3 +113,4 @@ requirements.bat.txt
 
 *.html linguist-language=Python
 
+settings.json
