@@ -113,4 +113,4 @@ requirements.bat.txt
 
 *.html linguist-language=Python
 
-*.json
+.json
