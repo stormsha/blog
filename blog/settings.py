@@ -30,9 +30,6 @@ ALLOWED_HOSTS = ['*']
 
 with open(os.path.join(BASE_DIR, 'settings.json'), encoding='utf-8') as f:
     settings_json = json.load(f)
-    # from blog.aes_encrypt import ae
-    # settings_json['MYSQL_DB_PASSWORD'] = ae.decrypt(settings_json['MYSQL_DB_PASSWORD'])
-# Application definition
 
 INSTALLED_APPS = [
     'django.contrib.admin',
