@@ -14,6 +14,11 @@ from .models import Article, BigCategory, Category, Tag
 from markdown.extensions.toc import TocExtension  # 锚点的拓展
 from haystack.generic_views import SearchView  # 导入搜索视图
 from haystack.query import SearchQuerySet
+from user.forms import UserForm, loginForm, ProfileForm
+from django.contrib.auth import authenticate
+from django.contrib import auth
+from django.shortcuts import render, redirect, HttpResponseRedirect, reverse, HttpResponse
+from django.http import JsonResponse
 
 
 # Create your views here.
@@ -199,6 +204,45 @@ class IndexView(generic.ListView):
         }
 
         return data
+
+    def post(self, request):
+        context = {}
+        form = loginForm(request.POST)
+        next_to = request.POST.get('next', '/')
+        remember = request.POST.get('remember', 0)
+        if form.is_valid():
+            # 获取表单用户密码
+            username = form.cleaned_data['username']
+            password = form.cleaned_data['password']
+            context = {'username': username, 'pwd': password}
+            # 获取的表单数据与数据库进行比较
+            user = authenticate(username=username, password=password)
+            if next_to == '':
+                next_to = '/'
+            if user:
+                if user.is_active:
+                    # 比较成功，跳转index
+                    auth.login(request, user)
+                    request.session['username'] = username
+                    request.session['uid'] = user.id
+                    request.session['nick'] = None
+                    request.session['tid'] = None
+                    response = HttpResponseRedirect(next_to)
+                    if remember != 0:
+                        response.set_cookie('username', username)
+                    else:
+                        response.set_cookie('username', '', max_age=-1)
+                    return response
+                else:
+                    context['inactive'] = True
+                    return render(request, 'oauth/login.html', context)
+            else:
+                # 比较失败，还在login
+                context['error'] = 'true'
+                return render(request, 'oauth/login.html', context)
+        else:
+            context['error'] = 'true'
+            return render(request, 'oauth/login.html', context)
 
 
 class DetailView(generic.DetailView):

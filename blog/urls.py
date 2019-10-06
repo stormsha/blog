@@ -41,7 +41,7 @@ sitemaps = {
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     # 用户
-    url(r'^accounts/', include('user.urls', namespace='accounts')),
+    url(r'', include('user.urls', namespace='accounts')),
     # storm
     url('', include('storm.urls', namespace='blog')),  # blog
     # 评论

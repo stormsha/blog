@@ -7,7 +7,8 @@
     <meta name="baidu-tc-verification" content="0fb041a64ee71333c957d8c784961cc8"/>
     <meta property="qc:admins" content="145637425211673116375"/>
     <meta http-equiv="X-UA-Compatible" content="IE=10,IE=9,IE=8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimum-scale=1.0, maximum-scale=1.0">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0, user-scalable=0, minimum-scale=1.0, maximum-scale=1.0">
     <!-- All in One SEO Pack 2.3.12.2.1 by Michael Torbert of Semper Fi Web Design[392,409] -->
     {% block description %}
     {% endblock description %}
@@ -15,11 +16,11 @@
     {% endblock keywords %}
     <link rel="icon" href="{% static 'images/picture.ico' %}" type="image/x-icon"/>
     <title>
-            {% block title %}{% endblock title %}
+        {% block title %}{% endblock title %}
     </title>
 
     <script>
-        window._deel = {name: '静觅',url: '/', ajaxpager: 'on', commenton: 0, roll: [11,12]}
+        window._deel = {name: '静觅', url: '/', ajaxpager: 'on', commenton: 0, roll: [11, 12]}
     </script>
 
     <!-- /all in one seo pack -->
@@ -90,13 +91,19 @@
     </style>
     {% block head %}{% endblock head %}
     <link rel='stylesheet' id='crayon-css' href='{% static 'css/crayon.min.css' %}' type='text/css' media='all'/>
-    <link rel='stylesheet' id='crayon-theme-github-css' href='{% static 'css/github.css' %}' type='text/css' media='all'/>
-    <link rel='stylesheet' id='crayon-font-monaco-css' href='{% static 'css/monaco.css' %}' type='text/css' media='all'/>
-    <link rel='stylesheet' id='page-list-style-css' href='{% static 'css/page-list.css' %}' type='text/css' media='all'/>
-    <link rel='stylesheet' id='l2h_style-css' href='{% static 'css/latex.min.css' %}' type='text/css' media='screen, print'/>
-    <link rel='stylesheet' id='l2h_print_style-css' href='{% static 'css/print.min.css' %}' type='text/css' media='print'/>
+    <link rel='stylesheet' id='crayon-theme-github-css' href='{% static 'css/github.css' %}' type='text/css'
+          media='all'/>
+    <link rel='stylesheet' id='crayon-font-monaco-css' href='{% static 'css/monaco.css' %}' type='text/css'
+          media='all'/>
+    <link rel='stylesheet' id='page-list-style-css' href='{% static 'css/page-list.css' %}' type='text/css'
+          media='all'/>
+    <link rel='stylesheet' id='l2h_style-css' href='{% static 'css/latex.min.css' %}' type='text/css'
+          media='screen, print'/>
+    <link rel='stylesheet' id='l2h_print_style-css' href='{% static 'css/print.min.css' %}' type='text/css'
+          media='print'/>
     <link rel='stylesheet' id='style-css' href='{% static 'css/style.css' %}' type='text/css' media='all'/>
-    <link rel='stylesheet' id='style-css' href='{% static 'font-awesome-4.7.0/css/font-awesome.min.css' %}' type='text/css' media='all'/>
+    <link rel='stylesheet' id='style-css' href='{% static 'font-awesome-4.7.0/css/font-awesome.min.css' %}'
+          type='text/css' media='all'/>
     <link rel="stylesheet" href="{% static 'highlights/github.css' %}">
     <script type='text/javascript' src='{% static 'js/jquery.min.js' %}'></script>
 
@@ -157,111 +164,103 @@
 
     <!--百度统计-->
     <meta name="360-site-verification" content="bdc579accc68a98f1258ebcce2266afa"/>
-    <script type="text/javascript" name="baidu-tc-cerfication" data-appid="5411405" src="{% static 'js/lightapp.js' %}"></script>
+    <script type="text/javascript" name="baidu-tc-cerfication" data-appid="5411405"
+            src="{% static 'js/lightapp.js' %}"></script>
     <script type="text/javascript" src="{% static 'js/main.js' %}"></script>
     <script type="text/javascript"></script>
 </head>
 
 <body class="home blog">
 
-    <header id="header" class="header">
-        <div class="container-inner">
-            <!--头部-->
-            <div class="yusi-logo">
-                    <a href="/">
-                        <h1>
-                            <span class="yusi-mono">静觅</span>
-                            <span class="yusi-bloger">StormSha的个人博客</span>
-                        </h1>
-                    </a>
-                </div>
+<header id="header" class="header">
+    <div class="container-inner">
+        <!--头部-->
+        <div class="yusi-logo">
+            <a href="/">
+                <h1>
+                    <span class="yusi-mono">静觅</span>
+                    <span class="yusi-bloger">StormSha的个人博客</span>
+                </h1>
+            </a>
+        </div>
 
-            <!--导航条-->
-            <div id="nav-header" class="navbar">
-                <ul class="nav">
-                    <!--获取一级分类信息-->
-                    {% get_bigcategory_list as bigcategory %}
-                    <li id="menu-item-44"
-                        class="menu-item menu-item-type-custom menu-item-object-custom {% if not category %}current-menu-item current_page_item{% endif %} menu-item-home menu-item-44"><a
+        <!--导航条-->
+        <div id="nav-header" class="navbar">
+            <ul class="nav">
+                <!--获取一级分类信息-->
+                {% get_bigcategory_list as bigcategory %}
+                <li id="menu-item-44"
+                    class="menu-item menu-item-type-custom menu-item-object-custom {% if not category %}current-menu-item current_page_item{% endif %} menu-item-home menu-item-44">
+                    <a
                             href="/">首页</a></li>
 
-                    <!--导航条一级分类渲染-->
-                    {% for big in bigcategory %}
+                <!--导航条一级分类渲染-->
+                {% for big in bigcategory %}
 
-                        <!--获取二级分类信息-->
-                        {% get_category_list big.id as cate %}
+                    <!--获取二级分类信息-->
+                    {% get_category_list big.id as cate %}
 
-                        <!--如果一级分类下有二级分类则进行渲染-->
-                        {% if cate %}
-                            <li id="menu-item-14"
-                                    class="menu-item menu-item-type-taxonomy menu-item-object-category {% if category == big.slug %}current-menu-item {% endif %} menu-item-has-children menu-item-14">
-                                    <a href="{% url 'blog:category' big.slug '' %}">{{ big.name }}</a>
-                                        <ul class="sub-menu">
-                                            <!--导航条二级分类渲染-->
-                                            {% for c in cate %}
-                                                    <li id="menu-item-19" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-19"><a href="{% url 'blog:category'  big.slug   c.slug  %}">{{ c.name }}</a></li>
-                                            {% endfor %}
-                                        </ul>
-                            </li>
+                    <!--如果一级分类下有二级分类则进行渲染-->
+                    {% if cate %}
+                        <li id="menu-item-14"
+                            class="menu-item menu-item-type-taxonomy menu-item-object-category {% if category == big.slug %}current-menu-item {% endif %} menu-item-has-children menu-item-14">
+                            <a href="{% url 'blog:category' big.slug '' %}">{{ big.name }}</a>
+                            <ul class="sub-menu">
+                                <!--导航条二级分类渲染-->
+                                {% for c in cate %}
+                                    <li id="menu-item-19"
+                                        class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-19">
+                                        <a href="{% url 'blog:category'  big.slug   c.slug %}">{{ c.name }}</a></li>
+                                {% endfor %}
+                            </ul>
+                        </li>
 
                         <!--无二级分类的一级分类渲染-->
-                        {% else %}
-                            <li id="menu-item-851" class="menu-item menu-item-type-post_type menu-item-object-page {% if category == big.slug %}current-menu-item {% endif %} menu-item-851"><a href="{% url 'blog:category' big.slug '' %}">{{ big.name }}</a></li>
-                        {% endif %}
-                    {% endfor %}
-                    <!--导航条结束-->
+                    {% else %}
+                        <li id="menu-item-851"
+                            class="menu-item menu-item-type-post_type menu-item-object-page {% if category == big.slug %}current-menu-item {% endif %} menu-item-851">
+                            <a href="{% url 'blog:category' big.slug '' %}">{{ big.name }}</a></li>
+                    {% endif %}
+                {% endfor %}
+                <!--导航条结束-->
 
-                    <!--搜索框-->
-                    <li style="float:right;">
-                        <div class="toggle-search"><i class="fa fa-search"></i></div>
-                        <div class="search-expand" style="display: none;">
-                            <div class="search-expand-inner">
-                                <form class="nav-item navbar-form mr-2 py-md-2" role="search" method="get" id="searchform" action="{% url 'blog:search' %}">
-                                    <div class="input-group">
-                                        <input type="search" name="q" class="form-control rounded-0 f-15" placeholder="搜索" required=True>
-                                        <div class="input-group-btn">
-                                            <button class="btn btn-info rounded-0" type="submit"><i class="fa fa-search"></i></button>
-                                        </div>
-                                    </div><!-- /input-group -->
-                                </form>
-                            </div>
+                <!--搜索框-->
+                <li style="float:right;">
+                    <div class="toggle-search"><i class="fa fa-search"></i></div>
+                    <div class="search-expand" style="display: none;">
+                        <div class="search-expand-inner">
+                            <form class="nav-item navbar-form mr-2 py-md-2" role="search" method="get" id="searchform"
+                                  action="{% url 'blog:search' %}">
+                                <div class="input-group">
+                                    <input type="search" name="q" class="form-control rounded-0 f-15" placeholder="搜索"
+                                           required=True>
+                                    <div class="input-group-btn">
+                                        <button class="btn btn-info rounded-0" type="submit"><i
+                                                class="fa fa-search"></i></button>
+                                    </div>
+                                </div><!-- /input-group -->
+                            </form>
                         </div>
-                    </li>
-                    <!--搜索框结束-->
+                    </div>
+                </li>
+                <!--搜索框结束-->
 
-                </ul>
-            </div>
-            <!--导航条结束-->
+            </ul>
         </div>
-    </header>
+        <!--导航条结束-->
+    </div>
+</header>
 
 <section class="container">
 
     <div class="speedbar">
         <!--登录-->
         <!--目前登录功能只有注册登录其它没必要没做-->
-        <div class="pull-right">
-            {% if request.session.username|default:'' == '' %}
-                    <i class="fa fa-power-off"></i>
-                    <a href="{% url 'accounts:login' %}?next={{ request.path }}">登录</a>
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  <i class="fa fa-user-plus"></i>
-                    <a href="{% url 'accounts:register' %}?next={{ request.path }}">注册</a>
-            {% else %}
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i class="fa fa-user"></i>
-                    <a href="/">投稿</a>
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i class="fa fa-user-circle-o" aria-hidden="true"></i>
-                    <a href="{% url 'accounts:profile' %}?next={{ request.path }}">{{ request.session.username }}</a>
-
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i class="fa fa-sign-out" aria-hidden="true"></i>
-                    <a href="{% url 'accounts:logout' %}?next={{ request.path }}">退出</a>
-            {% endif %}
-        </div>
+        {% include 'oauth/login.html' %}
         <!--登录注册结束-->
-
         <!--公告-->
-        <div class="toptip"><strong class="text-success"><i class="fa fa-volume-up"></i> </strong>   {% get_active %}</div>
+        <div class="toptip"><strong class="text-success"><i class="fa fa-volume-up"></i> </strong>{% get_active %}</div>
         <!--公告结束-->
-
     </div>
 
     <!--右侧内容区-->
@@ -288,9 +287,12 @@
 </footer>
 <!--网站底部结束-->
 
-<link rel='stylesheet' id='metaslider-nivo-slider-css' href='{% static 'css/nivo-slider.css' %}' type='text/css' media='all' property='stylesheet'/>
-<link rel='stylesheet' id='metaslider-public-css' href='{% static 'css/public.css' %}' type='text/css' media='all' property='stylesheet'/>
-<link rel='stylesheet' id='metaslider-nivo-slider-bar-css' href='{% static 'css/bar.css' %}' type='text/css' media='all' property='stylesheet'/>
+<link rel='stylesheet' id='metaslider-nivo-slider-css' href='{% static 'css/nivo-slider.css' %}' type='text/css'
+      media='all' property='stylesheet'/>
+<link rel='stylesheet' id='metaslider-public-css' href='{% static 'css/public.css' %}' type='text/css' media='all'
+      property='stylesheet'/>
+<link rel='stylesheet' id='metaslider-nivo-slider-bar-css' href='{% static 'css/bar.css' %}' type='text/css' media='all'
+      property='stylesheet'/>
 <script type='text/javascript' src='{% static 'js/jquery.js' %}'></script>
 <script type='text/javascript' src='{% static 'js/wp-embed.min.js' %}'></script>
 <script type='text/javascript' src='{% static 'js/jquery.nivo.slider.pack.js' %}'></script>
@@ -299,7 +301,7 @@
     /*300*25 创建于 2019-03-2*/
     var cpro_id = "u1959047";
 </script>
-<script src="{%  static 'js/s.js' %}" type="text/javascript"></script>
+<script src="{% static 'js/s.js' %}" type="text/javascript"></script>
 
 <script>
     setTimeout(function () {

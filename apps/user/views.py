@@ -5,9 +5,12 @@ from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 # 第四个是 auth中用户权限有关的类。auth可以设置每个用户的权限。
 from django.views.decorators.csrf import csrf_exempt
-from django.shortcuts import render, redirect, HttpResponseRedirect
+from django.shortcuts import render, redirect, HttpResponseRedirect, reverse, HttpResponse
+from django.views.decorators.http import require_POST
+from django.http import JsonResponse
 from .forms import UserForm, loginForm, ProfileForm
 import re
+import json
 
 
 # 注册
@@ -45,7 +48,7 @@ def register_view(request):
                 context['user_error'] = 'length'
                 return render(request, 'account/signup.html', context)
             if user:
-                context['user_error']='exit'
+                context['user_error'] = 'exit'
                 return render(request, 'account/signup.html', context)
             if not re.match('^[a-zA-Z0-9_.-]+@[a-zA-Z0-9-]+(\.[a-zA-Z0-9-]+)*\.[a-zA-Z0-9]{2,6}$', email):
                 context['email_error'] = 'format'
@@ -79,33 +82,33 @@ def register_view(request):
 
 # 登陆
 @csrf_exempt
+@require_POST
 def login_view(req):
     context = {}
-    if req.method == 'POST':
+    if req.method == 'POST' and req.is_ajax:
         form = loginForm(req.POST)
-        next_to=req.POST.get('next','/')
-
+        next_to = req.POST.get('next', '/')
         remember = req.POST.get('remember', 0)
         if form.is_valid():
             # 获取表单用户密码
             username = form.cleaned_data['username']
             password = form.cleaned_data['password']
-            context={'username':username,'pwd':password}
+            context = {'username': username, 'pwd': password}
             # 获取的表单数据与数据库进行比较
-            user = authenticate(username = username,password = password)
-            if next_to=='':
-                next_to='/'
+            user = authenticate(username=username, password=password)
+            if next_to == '':
+                next_to = '/'
             if user:
                 if user.is_active:
                     # 比较成功，跳转index
-                    auth.login(req,user)
+                    auth.login(req, user)
                     req.session['username'] = username
                     req.session['uid'] = user.id
                     req.session['nick'] = None
                     req.session['tid'] = None
                     reqs = HttpResponseRedirect(next_to)
                     if remember != 0:
-                        reqs.set_cookie('username',username)
+                        reqs.set_cookie('username', username)
                     else:
                         reqs.set_cookie('username', '', max_age=-1)
                     return reqs
@@ -115,13 +118,14 @@ def login_view(req):
             else:
                 # 比较失败，还在login
                 context['error'] = True
-                return render(req, 'account/login.html', context)
+                print(context)
+                return JsonResponse(context)
     else:
-        next_to = req.GET.get('next', '/')
+        # next_to = req.GET.get('next', '/')
 
-        context['next_to'] = next_to
+        # context['next_to'] = next_to
 
-    return render(req, 'account/login.html', context)
+        return render(req, 'index.html', context)
 
 
 # 登出
@@ -154,4 +158,3 @@ def change_profile_view(request):
         # 不是POST请求就返回空表单
         form = ProfileForm(instance=request.user)
     return render(request, 'oauth/change_profile.html', context={'form': form})
-
