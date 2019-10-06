@@ -6,7 +6,16 @@
             dataType: "HTML",
             data: $('#login').serialize(),
             success: function (data) {
-                $("#pull-login").html(data);
+                try{
+                    var result = JSON.parse(data);
+                    if (result.ok == '1'){
+                        window.location.reload()  //刷新页面
+                    }else {
+                        $("#pull-login").html(data);
+                    }
+                }catch (e){
+                    $("#pull-login").html(data);
+                }
             },
             error: function (data) {
                 console.log(data);
@@ -92,7 +101,6 @@
                                 </div>
                             </div>
                         </div>
-                        <input type="hidden" name="next" value="{{ next_to }}"/>
                         <a class="secondaryAction" href="{% url 'accounts:register' %}">忘记密码了？</a>
                         <div class="login-title">
                             <span><a href="{% url 'accounts:register' %}">还没账号？去注册</a></span>

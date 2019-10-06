@@ -208,7 +208,6 @@ class IndexView(generic.ListView):
     def post(self, request):
         context = {}
         form = loginForm(request.POST)
-        next_to = request.POST.get('next', '/')
         remember = request.POST.get('remember', 0)
         if form.is_valid():
             # 获取表单用户密码
@@ -217,8 +216,6 @@ class IndexView(generic.ListView):
             context = {'username': username, 'pwd': password}
             # 获取的表单数据与数据库进行比较
             user = authenticate(username=username, password=password)
-            if next_to == '':
-                next_to = '/'
             if user:
                 if user.is_active:
                     # 比较成功，跳转index
@@ -227,8 +224,7 @@ class IndexView(generic.ListView):
                     request.session['uid'] = user.id
                     request.session['nick'] = None
                     request.session['tid'] = None
-                    print(next_to)
-                    response = HttpResponseRedirect(next_to)
+                    response = JsonResponse({"ok": "1"})
                     if remember != 0:
                         response.set_cookie('username', username)
                     else:
