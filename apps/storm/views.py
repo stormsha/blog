@@ -227,6 +227,7 @@ class IndexView(generic.ListView):
                     request.session['uid'] = user.id
                     request.session['nick'] = None
                     request.session['tid'] = None
+                    print(next_to)
                     response = HttpResponseRedirect(next_to)
                     if remember != 0:
                         response.set_cookie('username', username)
