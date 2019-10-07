@@ -208,38 +208,46 @@ class IndexView(generic.ListView):
     def post(self, request):
         context = {}
         form = loginForm(request.POST)
-        remember = request.POST.get('remember', 0)
-        if form.is_valid():
-            # 获取表单用户密码
-            username = form.cleaned_data['username']
-            password = form.cleaned_data['password']
-            context = {'username': username, 'pwd': password}
-            # 获取的表单数据与数据库进行比较
-            user = authenticate(username=username, password=password)
-            if user:
-                if user.is_active:
-                    # 比较成功，跳转index
-                    auth.login(request, user)
-                    request.session['username'] = username
-                    request.session['uid'] = user.id
-                    request.session['nick'] = None
-                    request.session['tid'] = None
-                    response = JsonResponse({"ok": "1"})
-                    if remember != 0:
-                        response.set_cookie('username', username)
+        fun = request.POST.get('fun', None)
+        if fun == 'login':
+            remember = request.POST.get('remember', 0)
+            if form.is_valid():
+                # 获取表单用户密码
+                username = form.cleaned_data['username']
+                password = form.cleaned_data['password']
+                context = {'username': username, 'pwd': password}
+                # 获取的表单数据与数据库进行比较
+                user = authenticate(username=username, password=password)
+                if user:
+                    if user.is_active:
+                        # 比较成功，跳转index
+                        auth.login(request, user)
+                        request.session['username'] = username
+                        request.session['uid'] = user.id
+                        request.session['nick'] = None
+                        request.session['tid'] = None
+                        response = JsonResponse({"ok": "1"})
+                        if remember != 0:
+                            response.set_cookie('username', username)
+                        else:
+                            response.set_cookie('username', '', max_age=-1)
+                        return response
                     else:
-                        response.set_cookie('username', '', max_age=-1)
-                    return response
+                        context['inactive'] = True
+                        return render(request, 'oauth/user.html', context)
                 else:
-                    context['inactive'] = True
-                    return render(request, 'oauth/login.html', context)
+                    # 比较失败，还在login
+                    context['login_error'] = 'true'
+                    context['error'] = 'true'
+                    return render(request, 'oauth/user.html', context)
             else:
-                # 比较失败，还在login
+                context['login_error'] = 'true'
                 context['error'] = 'true'
-                return render(request, 'oauth/login.html', context)
-        else:
-            context['error'] = 'true'
-            return render(request, 'oauth/login.html', context)
+                return render(request, 'oauth/user.html', context)
+        if fun == 'register':
+            pass
+        if fun == 'forget':
+            pass
 
 
 class DetailView(generic.DetailView):

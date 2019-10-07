@@ -1,10 +1,10 @@
 <script type="text/javascript">
-    function login() {
+    function register() {
         $.ajax({
             type: "POST",//方法类型
             url: "/",//url
             dataType: "HTML",
-            data: $('#login-form').serialize(),
+            data: $('#register-form').serialize(),
             success: function (data) {
                 try {
                     var result = JSON.parse(data);
@@ -24,27 +24,27 @@
     }
 </script>
 
-<div class="{% if login_error %}modal fade in {% else %} modal fade {% endif %}" id="login" tabindex="-1" role="dialog"
+<div class="{% if register_error %}modal fade in {% else %} modal fade {% endif %}" id="register" tabindex="-1" role="dialog"
      aria-labelledby="myModalLabel"
-     aria-hidden="{% if login_error %}false{% else %} true {% endif %}"
-     style="display: {% if login_error %}block{% else %}none{% endif %}">
+     aria-hidden="{% if modal %}false{% else %} true {% endif %}"
+     style="display: {% if register_error %}block{% else %}none{% endif %}">
     <div class="modal-dialog" style="width:550px;">
         <div class="modal-content">
             <!--  模态框的头 -->
             <div class="modal-header" style="background-color:#ffffff;">
-                {% if login_error %}
+                {% if register_error %}
                     <a class="close" data-dismiss="modal" href="{% url 'blog:index' %}">×</a>
                 {% else %}
                     <button class="close" data-dismiss="modal" aria-hidden="true">×</button>
                 {% endif %}
-                <h2 class="modal-title" id="myModalLabel" align="center">登录</h2>
+                <h2 class="modal-title" id="myModalLabel" align="center">注册</h2>
             </div>
             <div class="modal-body" style="background-color:#ffffff;">
                 <!--   以下是登录的form表单 -->
-                <form class="form-horizontal" role="form" name="f" id="login-form" method="POST">
+                <form class="form-horizontal" role="form" name="f" id="register-form" method="POST">
                     {% csrf_token %}
                     {{ test }}
-                    {% if login_error %}
+                    {% if register_error %}
                         <div class="alert alert-block alert-danger">
                             <ul>
                                 <li>您提供的用户名或密码不正确。</li>
@@ -65,6 +65,20 @@
                             <label id="n" style="color: red;"></label>
                         </div>
                     </div>
+                    <div class="form-group" id="div3">
+                        <label for="firstname" class="col-sm-2 control-label">邮箱：</label>
+                        <div class="col-sm-10" id="email">
+                            <input type="text" class="form-control" id="name" placeholder="请输入名字"
+                                   style="width:300px"
+                                   name="eamil"
+                                   class="tooltip-test"
+                                   data-toggle="tooltip" data-placement="bottom"
+                                   title="请输入邮箱"
+                                   data-trigger="focus"
+                            >
+                            <label id="n" style="color: red;"></label>
+                        </div>
+                    </div>
                     <div class="form-group " id="div2">
                         <label for="lastname" class="col-sm-2 control-label">密 码：</label>
                         <div class="col-sm-10" id="pd">
@@ -78,22 +92,12 @@
                             <label id="p" style="color: red;"></label>
                         </div>
                     </div>
-                    <div class="form-group">
-                        <div class="col-sm-offset-2 col-sm-10">
-                            <div class="checkbox">
-                                <label>
-                                    <input type="checkbox" name="remember">请记住我
-                                </label>
-                            </div>
-                        </div>
-                    </div>
-                    <input type="hidden" name="fun" value="login"/>
-                    <a class="secondaryAction" data-toggle="modal" data-dismiss="modal" aria-hidden="true"
-                       data-target="#forget">忘记密码了？</a>
+                    <input type="hidden" name="fun" value="register"/>
                     <div class="login-title">
-                        <span><a data-toggle="modal" data-dismiss="modal" aria-hidden="true" data-target="#register">还没账号？去注册</a></span>
+                        <span><a data-toggle="modal" data-dismiss="modal" aria-hidden="true" data-target="#login">已经有账号了？去登录</a></span>
                     </div>
-                    <a class="pull-right btn btn-info btn-sm rounded-0" onclick="login()">登录</a>
+                    <label style="color: red">由于网站升级，暂时停用</label>
+                    <a class="pull-right btn btn-info btn-sm rounded-0">注册</a>
                 </form>
             </div>
             <div class="modal-footer" style="background-color:#ffffff;">

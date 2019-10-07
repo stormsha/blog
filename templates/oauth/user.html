@@ -1,0 +1,22 @@
+<div class="pull-right" id="pull-login">
+    {% if request.session.username|default:'' == '' %}
+        <i class="fa fa-power-off"></i>
+        <a data-toggle="modal" data-target="#login">登录</a>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  <i class="fa fa-user-plus"></i>
+        <a data-toggle="modal" data-target="#register">注册</a>
+    {% else %}
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i class="fa fa-user"></i>
+        <a href="/">投稿</a>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i class="fa fa-user-circle-o" aria-hidden="true"></i>
+        <a href="{% url 'accounts:profile' %}?next={{ request.path }}">{{ request.session.username }}</a>
+
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i class="fa fa-sign-out" aria-hidden="true"></i>
+        <a href="{% url 'accounts:logout' %}?next={{ request.path }}">退出</a>
+    {% endif %}
+    {% include 'oauth/login.html' %}
+    {% include 'oauth/register.html' %}
+    {% include 'oauth/forget.html' %}
+    {% if error %}
+        <div class="modal-backdrop fade in"></div>
+    {% endif %}
+</div>
