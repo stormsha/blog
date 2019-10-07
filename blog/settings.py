@@ -24,8 +24,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = '07#4u3t!4*#54s1a091bwdxwiup=#2@6w1i)tsreu6oy=@lb8p'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
-
+DEBUG = False
 ALLOWED_HOSTS = ['*']
 
 with open(os.path.join(BASE_DIR, 'settings.json'), encoding='utf-8') as f:
@@ -45,6 +44,7 @@ INSTALLED_APPS = [
     'comment',  # 评论
     'haystack',  # 全文搜索应用 这个要放在其他应用之前
     'rest_framework',   # API
+    'compressor' # 压缩js、css文件
 ]
 
 MIDDLEWARE = [
@@ -137,10 +137,15 @@ USE_TZ = False
 # https://docs.djangoproject.com/en/1.11/howto/static-files/
 
 # 静态文件收集
+STATICFILES_FINDERS = ('django.contrib.staticfiles.finders.AppDirectoriesFinder',
+                       'django.contrib.staticfiles.finders.FileSystemFinder',
+                       'compressor.finders.CompressorFinder',)
+COMPRESS_OFFLINE = True
 STATIC_URL = '/static/'
-STATICFILES_DIRS = [
+
+STATIC_ROOT = (
     os.path.join(BASE_DIR, 'static')
-]
+)
 
 # 媒体文件收集
 MEDIA_URL = "/media/"   # 媒体文件别名(相对路径) 和 绝对路径

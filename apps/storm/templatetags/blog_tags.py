@@ -86,13 +86,15 @@ def get_carousel_right():
 @register.simple_tag
 def get_article_list(sort=None, num=None):
     """获取指定排序方式和指定数量的文章"""
+    all_article = Article.objects.all()
+    all_num = len(all_article)
     if sort:
         if num:
-            return Article.objects.order_by(sort)[:num]
-        return Article.objects.order_by(sort)
+            return all_article.order_by(sort)[all_num-num:all_num]
+        return all_article.order_by(sort)
     if num:
-        return Article.objects.all()[:num]
-    return Article.objects.all()
+        return all_article[:num]
+    return all_article
 
 
 # 返回文章列表模板
