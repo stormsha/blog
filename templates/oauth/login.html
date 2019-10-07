@@ -45,22 +45,24 @@
                     {% csrf_token %}
                     {{ test }}
                     {% if login_error %}
-                        <div class="alert alert-block alert-danger">
+                        <div class="alert alert-danger">
                             <ul>
-                                <li>您提供的用户名或密码不正确。</li>
+                                <li>您提供的用户名或密码不正确</li>
                             </ul>
                         </div>
                     {% endif %}
                     <div class="form-group" id="div1">
                         <label for="firstname" class="col-sm-2 control-label">用户名：</label>
                         <div class="col-sm-10" id="user">
-                            <input type="text" class="form-control" id="name" placeholder="请输入名字"
+                            <input type="text" class="form-control" id="name" placeholder="请输入用户名"
                                    style="width:300px"
                                    name="username"
                                    class="tooltip-test"
                                    data-toggle="tooltip" data-placement="bottom"
                                    title="请输入6——8位的字母或数字任意组合"
                                    data-trigger="focus"
+                                   autofocus="autofocus"
+                                   value="{{ username }}" required
                             >
                             <label id="n" style="color: red;"></label>
                         </div>
@@ -74,6 +76,9 @@
                                    data-toggle="tooltip" data-placement="bottom"
                                    title="请输入6位密码"
                                    data-trigger="focus"
+                                   autofocus="autofocus"
+                                   value="{{ pwd }}"
+                                   required
                             >
                             <label id="p" style="color: red;"></label>
                         </div>

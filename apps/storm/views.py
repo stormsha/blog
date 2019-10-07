@@ -239,6 +239,10 @@ class IndexView(generic.ListView):
                     # 比较失败，还在login
                     context['login_error'] = 'true'
                     context['error'] = 'true'
+                    username = request.POST.get('username', None)
+                    pwd = request.POST.get('password', None)
+                    context['username'] = username
+                    context['pwd'] = pwd
                     return render(request, 'oauth/user.html', context)
             else:
                 context['login_error'] = 'true'
