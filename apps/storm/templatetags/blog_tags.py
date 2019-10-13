@@ -9,6 +9,8 @@ from django import template
 from ..models import Article, Category, Tag, Carousel, FriendLink, BigCategory, Activate, Keyword
 from django.db.models.aggregates import Count
 from django.utils.html import mark_safe
+from django.core.cache import cache
+from django.conf import settings
 import re
 
 # 注册自定义标签函数
@@ -19,14 +21,29 @@ register = template.Library()
 @register.simple_tag
 def get_bigcategory_list():
     """返回大分类列表"""
-    return BigCategory.objects.all()
+    big_category_key = "big_category"
+    big_category = cache.get(big_category_key)
+    if big_category:
+        cat = big_category
+    else:
+        cat = BigCategory.objects.all()
+        cache.set(big_category_key, cat, settings.CACHE_TIME)
+    return cat
 
 
 # 返回文章分类查询集
 @register.simple_tag
 def get_category_list(id):
     """返回小分类列表"""
-    return Category.objects.filter(bigcategory_id=id)
+    big_category_key = "big_category_{}".format(id)
+    big_category = cache.get(big_category_key)
+    if big_category:
+        cat = big_category
+    else:
+        category = Category.objects.filter(bigcategory_id=id)
+        cache.set(big_category_key, category, settings.CACHE_TIME)
+        cat = category
+    return cat
 
 
 # 返回公告查询集
@@ -73,28 +90,45 @@ def get_carousel_list():
 # 获取滚动的大幻灯片查询集
 @register.simple_tag
 def get_carousel_index():
-    return Carousel.objects.filter(number__lte=5)
+    carousels_key = "carousels"
+    cache_carousels = cache.get(carousels_key)
+    if cache_carousels:
+        carousels = cache_carousels
+    else:
+        carousels = Carousel.objects.filter(number__lte=5)
+        cache.set(carousels_key, carousels, settings.CACHE_TIME)
+    return carousels
 
 
 # 获取右侧栏热门专题幻灯片查询集
 @register.simple_tag
 def get_carousel_right():
-    return Carousel.objects.filter(number__gt=5, number__lte=10)
+    carousels_key = "carousels_r"
+    cache_carousels = cache.get(carousels_key)
+    if cache_carousels:
+        carousels = cache_carousels
+    else:
+        carousels = Carousel.objects.filter(number__gt=5, number__lte=10)
+        cache.set(carousels_key, carousels, settings.CACHE_TIME)
+    return carousels
 
 
 # 获取热门排行数据查询集，参数：sort 文章类型， num 数量
 @register.simple_tag
 def get_article_list(sort=None, num=None):
     """获取指定排序方式和指定数量的文章"""
-    all_article = Article.objects.all()
-    all_num = len(all_article)
-    if sort:
-        if num:
-            return all_article.order_by(sort)[all_num-num:all_num]
-        return all_article.order_by(sort)
-    if num:
-        return all_article[:num]
-    return all_article
+    article_sort_key = "article_{}_{}".format(sort, num)
+    cache_article = cache.get(article_sort_key)
+    if cache_article:
+        articles = cache_article
+    else:
+        all_article = Article.objects.all()
+        if sort:
+            articles = all_article.order_by("-{}".format(sort))[:num]
+        else:
+            articles = all_article.order_by("-{}".format(sort))[:num]
+            cache.set(article_sort_key, articles, settings.CACHE_TIME)
+    return articles
 
 
 # 返回文章列表模板
@@ -126,39 +160,39 @@ def get_request_param(request, param, default=None):
 # 获取前一篇文章，参数当前文章 ID
 @register.simple_tag
 def get_article_previous(article_id):
-    has_previous = False
-    id_previous = int(article_id)
-    while not has_previous and id_previous >= 1:
-        article_previous = Article.objects.filter(id=id_previous - 1).first()
-        if not article_previous:
-            id_previous -= 1
-        else:
-            has_previous = True
-    if has_previous:
-        article = Article.objects.filter(id=id_previous).first()
-        return article
+    article_previous_key = "article_previous_{}".format(article_id)
+    article_previous = cache.get(article_previous_key)
+    if article_previous:
+        article = article_previous
     else:
-        return
+        if int(article_id) > 1:
+            article_previous = Article.objects.filter(id__lt=int(article_id)).order_by('-id')
+            if article_previous:
+                article = article_previous.first()
+            else:
+                article = ""
+        cache.set(article_previous_key, article, settings.CACHE_TIME)
+    return article
 
 
 # 获取下一篇文章，参数当前文章 ID
 @register.simple_tag
 def get_article_next(article_id):
-    has_next = False
-    id_next = int(article_id)
-    article_id_max = Article.objects.all().order_by('-id').first()
-    id_max = article_id_max.id
-    while not has_next and id_next <= id_max:
-        article_next = Article.objects.filter(id=id_next + 1).first()
-        if not article_next:
-            id_next += 1
-        else:
-            has_next = True
-    if has_next:
-        article = Article.objects.filter(id=id_next).first()
-        return article
+    article_next_key = "article_next_{}".format(article_id)
+    article_next = cache.get(article_next_key)
+    if article_next:
+        article = article_next
     else:
-        return
+        id_next = int(article_id)
+        article_id_max = Article.objects.all().order_by('-id').first()
+        id_max = article_id_max.id
+        articles = Article.objects.filter(id__gt=id_next, id__lte=id_max).order_by('id')
+        if articles:
+            article = articles.first()
+        else:
+            article = ""
+        cache.set(article_next_key, article, settings.CACHE_TIME)
+    return article
 
 
 # 获取文章详情页下方的推荐阅读文章

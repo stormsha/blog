@@ -19,6 +19,7 @@ from django.contrib.auth import authenticate
 from django.contrib import auth
 from django.shortcuts import render, redirect, HttpResponseRedirect, reverse, HttpResponse
 from django.http import JsonResponse
+from django.core.cache import cache
 
 
 # Create your views here.
@@ -353,11 +354,18 @@ class DetailView(generic.DetailView):
                 if t > 60 * 30:
                     obj.update_views()
                     ses[the_key] = time.time()
-        md = markdown.Markdown(extensions=[
-            'markdown.extensions.extra',
-            'markdown.extensions.codehilite',
-            TocExtension(slugify=slugify),
-        ])
+        ud = obj.update_date.strftime("%Y%m%d%H%M%S")
+        md_key = '{}_md_{}'.format(obj.id, ud)
+        cache_md = cache.get(md_key)
+        if cache_md:
+            md = cache_md
+        else:
+            md = markdown.Markdown(extensions=[
+                'markdown.extensions.extra',
+                'markdown.extensions.codehilite',
+                TocExtension(slugify=slugify),
+            ])
+            cache.set(md_key, md, 60 * 60 * 12)
         obj.body = md.convert(obj.body)
         obj.toc = md.toc
         return obj

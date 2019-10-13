@@ -1,7 +1,9 @@
 {% extends 'base.html' %}
 {% load staticfiles %}
 {% load blog_tags static %}
+{% load cache %}
 {% block right %}
+    {% cache 1800 'cache_name' %}
     <aside class="sidebar" id="sidebar">
         <div class="widget widget_text">
             <div class="textwidget">
@@ -27,7 +29,6 @@
                 </div>
             </div>
         </div>
-
         <div class="widget widget_metaslider_widget">
             <!--热门专题-->
             <div class="title"><h2>热门专题</h2></div><!-- meta slider -->
@@ -110,7 +111,7 @@
                                 src="{{ hot.img_link }}" alt="{{ hot.title }}"/></span>
                             <span class="text">{{ hot.title }}</span>
                             <span class="muted">{{ hot.create_date|date:'Y-m-d' }}</span>
-                            <span class="muted">{{ hot.loves }}喜欢</span>
+                            <span class="muted"><i class="fa fa-heart-o"></i> {{ hot.loves }}</span>
                         </a>
                     </li>
                 {% endfor %}
@@ -160,4 +161,5 @@
 
         </div>
     </aside>
+    {% endcache %}
 {% endblock right %}

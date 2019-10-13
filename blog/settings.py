@@ -101,7 +101,18 @@ DATABASES = {
         },
     }
 }
-
+# 使用django-redis缓存页面
+REDIS_HOST = settings_json.get('REDIS_HOST', '127.0.0.1')
+REDIS_PORT = settings_json.get('REDIS_PORT', '6379')
+CACHES = {
+    "default": {
+        "BACKEND": "django_redis.cache.RedisCache",
+        "LOCATION": "redis://{}:{}".format(REDIS_HOST, REDIS_PORT),
+        "OPTIONS": {
+            "CLIENT_CLASS": "django_redis.client.DefaultClient",
+        }
+    }
+}
 # Password validation
 # https://docs.djangoproject.com/en/1.11/ref/settings/#auth-password-validators
 
@@ -136,6 +147,7 @@ USE_TZ = False
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.11/howto/static-files/
 
+# 日志
 LOGGING = {
     'version': 1,
     'disable_existing_loggers': True,
@@ -168,20 +180,28 @@ LOGGING = {
         }
     }
 }
-DEBUG_PROPAGATE_EXCEPTIONS = True
+# 允许跨域访问
 CORS_ORIGIN_ALLOW_ALL = True
+
+# 开发环境时使用静态文件压缩
+if DEBUG:
+    COMPRESS_ENABLED = True
+    COMPRESS_OFFLINE = True
+else:
+    DEBUG_PROPAGATE_EXCEPTIONS = True
+
 # 静态文件收集
 STATICFILES_FINDERS = ('django.contrib.staticfiles.finders.AppDirectoriesFinder',
                        'django.contrib.staticfiles.finders.FileSystemFinder',
                        'compressor.finders.CompressorFinder',)
-# COMPRESS_OFFLINE = True
-STATIC_URL = '/static/'
 
+# 静态文件路径
+STATIC_URL = '/static/'
 STATIC_ROOT = (
     os.path.join(BASE_DIR, 'static')
 )
 
-# 媒体文件收集
+# 上传文件路径
 MEDIA_URL = "/media/"  # 媒体文件别名(相对路径) 和 绝对路径
 MEDIA_ROOT = (
     os.path.join(BASE_DIR, 'media')
@@ -211,3 +231,6 @@ SITE_KEYWORDS = settings_json['SITE_KEYWORDS']
 SITE_END_TITLE = "聚会阅读器"
 
 API_FLAG = settings_json['API_FLAG']
+
+# 全局缓存时间
+CACHE_TIME = settings_json['CACHE_TIME']
