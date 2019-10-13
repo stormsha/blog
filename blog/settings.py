@@ -234,3 +234,6 @@ API_FLAG = settings_json['API_FLAG']
 
 # 全局缓存时间
 CACHE_TIME = settings_json['CACHE_TIME']
+
+# 存放图片的主机
+PIC_HOST = settings_json['PIC_HOST']

@@ -366,6 +366,7 @@ class DetailView(generic.DetailView):
                 TocExtension(slugify=slugify),
             ])
             cache.set(md_key, md, 60 * 60 * 12)
+        body = obj.body.replace('{host}', settings.PIC_HOST)
         obj.body = md.convert(obj.body)
         obj.toc = md.toc
         return obj

@@ -20,6 +20,8 @@ parts/
 sdist/
 var/
 wheels/
+media/
+whoosh_index/
 *.egg-info/
 .installed.cfg
 *.egg
