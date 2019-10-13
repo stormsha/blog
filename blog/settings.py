@@ -137,7 +137,7 @@ USE_TZ = False
 STATICFILES_FINDERS = ('django.contrib.staticfiles.finders.AppDirectoriesFinder',
                        'django.contrib.staticfiles.finders.FileSystemFinder',
                        'compressor.finders.CompressorFinder',)
-COMPRESS_OFFLINE = True
+# COMPRESS_OFFLINE = True
 STATIC_URL = '/static/'
 
 STATIC_ROOT = (
