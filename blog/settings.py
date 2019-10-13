@@ -28,7 +28,10 @@ SECRET_KEY = settings_json['SECRET_KEY']
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = settings_json.get('DEBUG', False)
-ALLOWED_HOSTS = ['*']
+if DEBUG:
+    ALLOWED_HOSTS = ['*']
+else:
+    ALLOWED_HOSTS = ['stormsha.com', 'www.stormsha.com']
 
 INSTALLED_APPS = [
     'django.contrib.admin',
