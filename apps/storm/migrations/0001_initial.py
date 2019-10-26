@@ -4,10 +4,10 @@ from __future__ import unicode_literals
 
 from django.db import migrations, models
 import django.db.models.deletion
+from django.conf import settings
 
 
 class Migration(migrations.Migration):
-
     initial = True
 
     dependencies = [
@@ -32,14 +32,21 @@ class Migration(migrations.Migration):
             fields=[
                 ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('title', models.CharField(max_length=150, verbose_name='文章标题')),
-                ('summary', models.TextField(default='文章摘要等同于网页description内容，请务必填写...', max_length=230, verbose_name='文章摘要')),
+                ('summary',
+                 models.TextField(default='文章摘要等同于网页description内容，请务必填写...', max_length=230, verbose_name='文章摘要')),
                 ('body', models.TextField(verbose_name='文章内容')),
-                ('img_link', models.CharField(default='/static/images/summary.jpg', max_length=255, verbose_name='图片地址')),
+                ('img_link',
+                 models.CharField(default='/static/images/summary.jpg', max_length=255, verbose_name='图片地址')),
                 ('create_date', models.DateTimeField(auto_now_add=True, verbose_name='创建时间')),
                 ('update_date', models.DateTimeField(auto_now=True, verbose_name='修改时间')),
                 ('views', models.IntegerField(default=0, verbose_name='阅览量')),
                 ('loves', models.IntegerField(default=0, verbose_name='喜爱量')),
                 ('slug', models.SlugField(unique=True)),
+                ('tags', models.ManyToManyField(to='storm.Tag', verbose_name='标签')),
+                ('keywords', models.ManyToManyField(help_text='文章关键词，用来作为SEO中keywords，最好使用长尾词，3-4个足够', to='storm.Keyword', verbose_name='文章关键词')),
+                ('category', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='storm.Category', verbose_name='文章分类')),
+                ('author', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL,
+                                             verbose_name='作者')),
             ],
             options={
                 'verbose_name': '文章',
@@ -53,8 +60,12 @@ class Migration(migrations.Migration):
                 ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('name', models.CharField(max_length=20, verbose_name='文章大分类')),
                 ('slug', models.SlugField(unique=True)),
-                ('description', models.TextField(default='StormSha的个人网站，记录生活的瞬间，分享学习的心得，感悟生活，留住感动，静静寻觅生活的美好', help_text='用来作为SEO中description,长度参考SEO标准', max_length=240, verbose_name='描述')),
-                ('keywords', models.TextField(default='StormSha,静觅,网络,IT,技术,博客,Python', help_text='用来作为SEO中keywords,长度参考SEO标准', max_length=240, verbose_name='关键字')),
+                ('description', models.TextField(default='StormSha的个人网站，记录生活的瞬间，分享学习的心得，感悟生活，留住感动，静静寻觅生活的美好',
+                                                 help_text='用来作为SEO中description,长度参考SEO标准', max_length=240,
+                                                 verbose_name='描述')),
+                ('keywords',
+                 models.TextField(default='StormSha,静觅,网络,IT,技术,博客,Python', help_text='用来作为SEO中keywords,长度参考SEO标准',
+                                  max_length=240, verbose_name='关键字')),
             ],
             options={
                 'verbose_name': '大分类',
@@ -66,10 +77,12 @@ class Migration(migrations.Migration):
             fields=[
                 ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('number', models.IntegerField(help_text='编号决定图片播放的顺序，图片不要多于5张', verbose_name='编号')),
-                ('title', models.CharField(blank=True, help_text='标题可以为空', max_length=20, null=True, verbose_name='标题')),
+                (
+                'title', models.CharField(blank=True, help_text='标题可以为空', max_length=20, null=True, verbose_name='标题')),
                 ('content', models.CharField(max_length=80, verbose_name='描述')),
                 ('img_url', models.CharField(max_length=200, verbose_name='图片地址')),
-                ('url', models.CharField(default='#', help_text='图片跳转的超链接，默认#表示不跳转', max_length=200, verbose_name='跳转链接')),
+                ('url',
+                 models.CharField(default='#', help_text='图片跳转的超链接，默认#表示不跳转', max_length=200, verbose_name='跳转链接')),
             ],
             options={
                 'verbose_name': '图片轮播',
@@ -83,8 +96,11 @@ class Migration(migrations.Migration):
                 ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('name', models.CharField(max_length=20, verbose_name='文章分类')),
                 ('slug', models.SlugField(unique=True)),
-                ('description', models.TextField(default='StormSha的个人网站，记录生活的瞬间，分享学习的心得，感悟生活，留住感动，静静寻觅生活的美好', help_text='用来作为SEO中description,长度参考SEO标准', max_length=240, verbose_name='描述')),
-                ('bigcategory', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='storm.BigCategory', verbose_name='大分类')),
+                ('description', models.TextField(default='StormSha的个人网站，记录生活的瞬间，分享学习的心得，感悟生活，留住感动，静静寻觅生活的美好',
+                                                 help_text='用来作为SEO中description,长度参考SEO标准', max_length=240,
+                                                 verbose_name='描述')),
+                ('bigcategory', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='storm.BigCategory',
+                                                  verbose_name='大分类')),
             ],
             options={
                 'verbose_name': '分类',
@@ -142,7 +158,9 @@ class Migration(migrations.Migration):
                 ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('name', models.CharField(max_length=20, verbose_name='文章标签')),
                 ('slug', models.SlugField(unique=True)),
-                ('description', models.TextField(default='StormSha的个人网站，记录生活的瞬间，分享学习的心得，感悟生活，留住感动，静静寻觅生活的美好', help_text='用来作为SEO中description,长度参考SEO标准', max_length=240, verbose_name='描述')),
+                ('description', models.TextField(default='StormSha的个人网站，记录生活的瞬间，分享学习的心得，感悟生活，留住感动，静静寻觅生活的美好',
+                                                 help_text='用来作为SEO中description,长度参考SEO标准', max_length=240,
+                                                 verbose_name='描述')),
             ],
             options={
                 'verbose_name': '标签',

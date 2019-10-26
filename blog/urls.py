@@ -48,7 +48,11 @@ urlpatterns = [
     url(r'^comment/', include('comment.urls', namespace='comment')),  # comment
     url(r'^sitemap\.xml$', sitemap, {'sitemaps': sitemaps}, name='django.contrib.sitemaps.views.sitemap'),  # 网站地图
     url(r'^feed/$', AllArticleRssFeed(), name='rss'),   # rss订阅
-] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)  # 加入这个才能显示media文件
-
+    url(r'^mdeditor/', include('mdeditor.urls')),
+    url(r'^api/', include('api.urls', namespace='api1')),  # comment
+]
+urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)    # 加入这个才能显示media文件
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)    # 加入这个才能显示media文件
 if settings.API_FLAG:
     urlpatterns.append(url(r'^api/v1/', include(router.urls, namespace='api')))    # restframework

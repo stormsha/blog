@@ -1,9 +1,11 @@
 from django.db import models
 from django.conf import settings
 from django.shortcuts import reverse
-
+# from ckeditor_uploader.fields import RichTextUploadingField
+from mdeditor.fields import MDTextField
+from uuid import uuid4
+import os, time
 import markdown
-import emoji
 import re
 
 
@@ -27,7 +29,7 @@ class Tag(models.Model):
     name = models.CharField('文章标签', max_length=20)
     slug = models.SlugField(unique=True)
     description = models.TextField('描述', max_length=240, default=settings.SITE_DESCRIPTION,
-                                 help_text='用来作为SEO中description,长度参考SEO标准')
+                                   help_text='用来作为SEO中description,长度参考SEO标准')
 
     class Meta:
         verbose_name = '标签'
@@ -52,9 +54,9 @@ class BigCategory(models.Model):
     # 用作文章的访问路径，每篇文章有独一无二的标识，下同
     slug = models.SlugField(unique=True)
     description = models.TextField('描述', max_length=240, default=settings.SITE_DESCRIPTION,
-                                 help_text='用来作为SEO中description,长度参考SEO标准')
+                                   help_text='用来作为SEO中description,长度参考SEO标准')
     keywords = models.TextField('关键字', max_length=240, default=settings.SITE_KEYWORDS,
-                              help_text='用来作为SEO中keywords,长度参考SEO标准')
+                                help_text='用来作为SEO中keywords,长度参考SEO标准')
 
     class Meta:
         verbose_name = '大分类'
@@ -69,7 +71,7 @@ class Category(models.Model):
     name = models.CharField('文章分类', max_length=20)
     slug = models.SlugField(unique=True)
     description = models.TextField('描述', max_length=240, default=settings.SITE_DESCRIPTION,
-                                 help_text='用来作为SEO中description,长度参考SEO标准')
+                                   help_text='用来作为SEO中description,长度参考SEO标准')
     bigcategory = models.ForeignKey(BigCategory, verbose_name='大分类')
 
     class Meta:
@@ -87,14 +89,41 @@ class Category(models.Model):
         return Article.objects.filter(category=self)
 
 
+def upload(instance, filename):
+    ext = filename.split('.')[-1]
+    # get filename
+    stamp = time.time()
+    local_time = time.localtime(stamp)
+    str_time = time.strftime("%Y%m%d%H%M", local_time)
+    if instance.id:
+        filename = '{}{}.{}'.format(instance.id, str_time, ext)
+    else:
+        # set filename as random string
+        filename = '{}{}.{}'.format(uuid4().hex, str_time, ext)
+    # return the whole path to the file
+    return os.path.join('summary', filename)
+
+
 # 文章
 class Article(models.Model):
-    IMG_LINK = '/static/images/summary.jpg'
+    IMG_LINK = '/media/summary/summary.jpg'
     author = models.ForeignKey(settings.AUTH_USER_MODEL, verbose_name='作者')
     title = models.CharField(max_length=150, verbose_name='文章标题')
     summary = models.TextField('文章摘要', max_length=230, default='文章摘要等同于网页description内容，请务必填写...')
-    body = models.TextField(verbose_name='文章内容')
-    img_link = models.CharField('图片地址', default=IMG_LINK, max_length=255)
+    body = MDTextField(verbose_name='文章内容')
+    img_link = models.CharField('缩略图地址', max_length=255, null=True, blank=True)
+    img = models.ImageField(
+        verbose_name='上传缩略图',
+        default=IMG_LINK,
+        upload_to=upload,
+        height_field="image_height",
+        width_field="image_width",
+        null=True,
+        blank=True,
+        editable=True,
+    )
+    image_height = models.PositiveIntegerField(null=True, blank=True, editable=False, default="123")
+    image_width = models.PositiveIntegerField(null=True, blank=True, editable=False, default="200")
     create_date = models.DateTimeField(verbose_name='创建时间', auto_now_add=True)
     update_date = models.DateTimeField(verbose_name='修改时间', auto_now=True)
     views = models.IntegerField('阅览量', default=0)
@@ -103,7 +132,7 @@ class Article(models.Model):
     category = models.ForeignKey(Category, verbose_name='文章分类')
     tags = models.ManyToManyField(Tag, verbose_name='标签')
     keywords = models.ManyToManyField(Keyword, verbose_name='文章关键词',
-                                    help_text='文章关键词，用来作为SEO中keywords，最好使用长尾词，3-4个足够')
+                                      help_text='文章关键词，用来作为SEO中keywords，最好使用长尾词，3-4个足够')
 
     class Meta:
         verbose_name = '文章'
@@ -131,6 +160,9 @@ class Article(models.Model):
 
     def get_next(self):
         return Article.objects.filter(id__gt=self.id).order_by('id').first()
+
+    def get_editor(self):
+        return "/admin/storm/article/{}/change/".format(self.id)
 
 
 # 幻灯片
@@ -191,7 +223,7 @@ class FriendLink(models.Model):
         return home_url
 
     def active_to_false(self):
-        self.is_active=False
+        self.is_active = False
         self.save(update_fields=['is_active'])
 
     def show_to_false(self):
@@ -211,5 +243,3 @@ class Activate(models.Model):
 
     def __str__(self):
         return self.id
-
-

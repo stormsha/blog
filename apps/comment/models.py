@@ -1,7 +1,7 @@
 from django.db import models
 from django.conf import settings
 from storm.models import Article
-
+from user.models import Ouser
 import markdown
 import emoji
 
@@ -15,7 +15,7 @@ class CommentUser(models.Model):
 
 # 评论信息表
 class Comment(models.Model):
-    author = models.ForeignKey(CommentUser, related_name='%(class)s_related', verbose_name='评论人')
+    author = models.ForeignKey(Ouser, related_name='%(class)s_related', verbose_name='评论人', null=True, blank=True)
     create_date = models.DateTimeField('创建时间', auto_now_add=True)
     content = models.TextField('评论内容')
     parent = models.ForeignKey('self', verbose_name='父评论', related_name='%(class)s_child_comments', blank=True, null=True)
@@ -43,7 +43,7 @@ class Comment(models.Model):
 # 文章评论区，据继承评论信息表
 class ArticleComment(Comment):
     # 记录评论属于哪篇文章
-    belong = models.ForeignKey(Article, related_name='article_comments', verbose_name='所属文章')
+    belong = models.ForeignKey(Article, related_name='article_comments', verbose_name='所属文章', null=True, blank=True)
 
     class Meta:
         verbose_name = '文章评论'

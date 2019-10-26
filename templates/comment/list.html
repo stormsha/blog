@@ -1,0 +1,40 @@
+{% load comment_tags oauth_tags %}
+{% load humanize %}
+
+<div id="postcomments">
+    <div id="comments">
+        <i class="fa fa-comments-o"></i> <b>
+        ({% get_comment_user_count article %})</b>个小伙伴在吐槽|{% get_comment_count article %}条评论
+    </div>
+    {% get_parent_comments article as comment_list %}
+    {% for comment in comment_list %}
+        <ol class="commentlist">
+            <li class="comment even thread-even depth-1" id="comment--21">
+                <div class="c-avatar">
+                    <img alt="注册用户头像" src="/media/{{ comment.author.avatar }}" class="avatar avatar-54 photo"
+                         height="54"
+                         width="54" style="border-radius: 50%;">
+                    <div class="c-main" id="div-comment--21">
+                        {{ comment.content_to_markdown|safe }}
+                        <div class="c-meta">
+                            <span class="c-author">
+                                <a href="{{ comment.author.link }}" rel="external nofollow" class="url" target="_blank">
+                                    <strong>{{ comment.author.username }}</strong>
+                                    {% if comment.author.is_superuser %}
+                                        <font color="red">「博主」</font></a>
+                                    {% endif %}
+                                    <a href="{{ comment.author.link }}"><i class="fa fa-home" title="个人主页"></i></a>
+                            </span>{{ comment.create_date }}
+                            <a rel="nofollow" class="comment-reply-link" href="#editor-block"
+                               data-repid="{{ each.id }}" data-repuser="{{ each.author.username }}">回复</a>
+                        </div>
+                    </div>
+                </div>
+            </li>
+        </ol>
+    {% empty %}
+        暂时没有评论，欢迎来尬聊！
+    {% endfor %}
+    <div class="commentnav"></div>
+</div>
+

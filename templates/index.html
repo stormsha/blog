@@ -7,6 +7,36 @@
 {% block keywords %}
     <meta name="keywords" content="StormSha,Python,Django,静觅,网络,IT,技术,博客,个人博客"/>
 {% endblock keywords %}
+{% block head %}
+    <script type="text/javascript">
+        $(function () {
+            $('.content').delegate("a[id='add_like']", "click", function () {
+                if ($(this).hasClass("actived")) {
+                    return alert("已经点过赞啦！")
+                } else {
+                    $(this).addClass("actived");
+                    var z = $(this).data("id"), x = $(this).children(".count");
+                    var article = z.split(',')[0];
+                    var loves = z.split(',')[1];
+                    loves = Number(loves) + 1;
+                    x.html(loves);
+                    $.ajax({
+                        type: "POST",//方法类型
+                        url: "/love/",//url
+                        dataType: "JSON",
+                        data: {"article": article, "loves": true},
+                        success: function (data) {
+                            console.log(data);
+                        },
+                        error: function (data) {
+                            console.log(data);
+                        }
+                    });
+                }
+            })
+        })
+    </script>
+{% endblock head %}
 {% block body %}
     <div class="content-wrap">
         <div class="content">
@@ -45,11 +75,11 @@
                         {% get_article_list 'views' 5 as hot_article %}
                         {% for hot in hot_article %}
                             <li>
-                                <p><span class="muted">
-                                    <a href="javascript:;" data-action="ding" data-id="{{ hot.id }}" id="Addlike"
-                                       class="action">
-                                        <i class="fa fa-heart-o"></i><span class="count">{{ hot.loves }}</span> 喜欢</a>
-                                    </span>
+                                <p>
+                                    <span class="muted">
+                            <i class="fa fa-eye"></i>
+                            {{ hot.views }}浏览
+                        </span>
                                 </p>
                                 <span class="label label-1">{{ forloop.counter }}</span>
                                 <a href="/article/{{ hot.slug }}" title="{{ hot.title }}">{{ hot.title }}</a>
@@ -68,25 +98,44 @@
                     </header>
                     <div class="focus">
                         <a target="_blank" href="{{ article.get_absolute_url }}">
-                            <img class="thumb" width="200" height="123" src="{{ article.img_link }}"
+                            <img class="thumb" width="200" height="123"
+                                 src="{% if article.img_link %}{{ article.img_link }}
+                                                    {% else %}/media/{{ article.img }}{% endif %}"
                                  alt="{{ article.title }}"/>
                         </a>
                     </div>
                     <span class="note">{{ article.summary }}</span>
                     <p class="auth-span">
-                    <span class="muted"><i class="fa fa-user"></i>
-                        <a href="{% url 'accounts:profile' %}?next={{ request.path }}">{{ article.author }}</a>
-                    </span>
-                        <span class="muted"><i class="fa fa-clock-o"></i> {{ article.create_date|date:'Y-m-d' }}</span>
-                        <span class="muted"><i class="fa fa-eye"></i> {{ article.views }}浏览</span>
-                        <span class="muted"><i class="fa fa-comments-o"></i>
-                        <a target="_blank"
-                           href="/article/{{ article.slug }}#comments">{% get_comment_count article.id article.id %}评论</a>
-                    </span>
-                        <span class="muted"><a href="javascript:;" data-action="ding" data-id="{{ article.id }}"
-                                               id="Addlike" class="action">
-                        <i class="fa fa-heart-o"></i><span class="count">{{ article.loves }}</span>喜欢</a>
-                    </span>
+                        <span class="muted">
+                            <i class="fa fa-user"></i>
+                            <a href="{% url 'accounts:profile' %}?next={{ request.path }}">{{ article.author }}</a>
+                        </span>
+                        <span class="muted">
+                            <i class="fa fa-clock-o"></i>
+                            {{ article.create_date|date:'Y-m-d' }}
+                        </span>
+                        <span class="muted">
+                            <i class="fa fa-eye"></i>
+                            {{ article.views }}浏览
+                        </span>
+                        <span class="muted">
+                            <i class="fa fa-comments-o"></i>
+                            <a target="_blank" href="/article/{{ article.slug }}#comments">
+                                {% get_comment_count article %}评论
+                            </a>
+                        </span>
+                        <span class="muted">
+                            <a href="javascript:;" data-action="ding" data-id="{{ article.id }},{{ article.loves }}"
+                               id="add_like" class="action">
+                            <i class="fa fa-heart-o"></i>
+                                <span class="count">{{ article.loves }}</span>喜欢</a>
+                        </span>
+                        {% if article.author == user %}
+                            <span class="muted">
+                                <i class="fa fa-pencil" aria-hidden="true"></i>
+                                <a href="{{ article.get_editor }}" target="_blank">编辑</a>
+                            </span>
+                        {% endif %}
                     </p>
                 </article>
             {% empty %}
@@ -121,7 +170,6 @@
                     </ul>
                 </div>
             {% endif %}
-
         </div>
     </div>
 

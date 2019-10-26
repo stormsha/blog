@@ -43,20 +43,46 @@ def get_child_comments(category,com):
     return lis
 
 
+# @register.simple_tag
+# def get_comment_user_count(category, entry=0):
+#     """获取评论人总数"""
+#     p = []
+#     if category == 'about':
+#         lis = AboutComment.objects.all()
+#     elif category == 'message':
+#         lis = MessageComment.objects.all()
+#     else:
+#         lis = ArticleComment.objects.filter(belong_id=entry)
+#     for each in lis:
+#         if each.author not in p:
+#             p.append(each.author)
+#     return len(p)
+
+
 @register.simple_tag
-def get_comment_user_count(category, entry=0):
+def get_comment_user_count(article):
     """获取评论人总数"""
     p = []
-    if category == 'about':
-        lis = AboutComment.objects.all()
-    elif category == 'message':
-        lis = MessageComment.objects.all()
-    else:
-        lis = ArticleComment.objects.filter(belong_id=entry)
+    lis = article.article_comments.all()
+    print(lis)
     for each in lis:
         if each.author not in p:
             p.append(each.author)
     return len(p)
+
+
+@register.simple_tag
+def get_comment_count(article):
+    """获取一个文章的评论总数"""
+    lis = article.article_comments.all()
+    return lis.count()
+
+
+@register.simple_tag
+def get_parent_comments(article):
+    '''获取一个文章的父评论列表'''
+    lis = article.article_comments.filter(parent=None)
+    return lis
 
 
 # 递归查找父评论
@@ -79,13 +105,25 @@ def generate_comment_html(sub_comment_dic, category, path, s=2):
     # 对传入的字典进行循环操作
     for k, v_dic in sub_comment_dic.items():
         html += '''
-<li class="comment odd alt depth-{0}" id="comment-{1}"><div class="c-avatar"><img alt='' data-original='https://cuiqingcai.com/avatar/ee89e6709c344980b7b82d1a13d496fb.png' class='avatar avatar-54 photo' height='54' width='54' /><div class="c-main" id="div-comment-{1}">{2}<div class="c-meta"><span class="c-author"><a href='http://fsfs' rel='external nofollow' class='url'>{3}</a></span>{4}<a rel='nofollow' class='comment-reply-link' href='{6}?replytocom={1}#respond' onclick='return addComment.moveForm( "div-comment-{1}", "{1}", "respond", "{5}" )' aria-label='回复给{3}'>回复</a></div></div></div>'''.format(s,k.id,k.content,k.author.nickname,k.create_date.strftime('%Y-%m-%d %H:%M:%S'),category,path)
+        <div class="c-avatar">
+            <img alt='' data-original='' class='avatar avatar-54 photo' height='54' width='54' />
+            <div class="c-main" id="div-comment-{1}">{2}
+                <div class="c-meta">
+                    <span class="c-author">
+                        <a href='http://fsfs' rel='external nofollow' class='url'>{3}</a></span>{4}
+                            <a rel='nofollow' class='comment-reply-link' href='{6}?replytocom={1}#respond' 
+                            onclick='return addComment.moveForm( "div-comment-{1}", "{1}", "respond", "{5}" )' 
+                            aria-label='回复给{3}'>回复
+                        </a>
+                    </div>
+                </div>
+            </div>'''.format(s, k.id, k.content, k.author.nickname,
+                             k.create_date.strftime('%Y-%m-%d %H:%M:%S'), category, path)
 
         # 有可能v_dic中依然有元素, 递归继续加
         if v_dic:
             s += 1
             html += generate_comment_html(v_dic, category, path, s)
-        html += "</li>"
     # 循环完成最后返回html
     html += "</ul>"
     return html
@@ -119,7 +157,19 @@ def build_comment_tree(category, path, entry=0):
     # 对comment_dic中的每一组元素进行操作
     for k, v in comment_dic.items():
         # 第一层html
-        html += '''<li class="comment even thread-even depth-1" id="comment-{0}"><div class="c-avatar"><img alt='' data-original='https://cuiqingcai.com/avatar/5e43cb2c27191170aaece6a30a9d49f4.png' class='avatar avatar-54 photo' height='54' width='54' /><div class="c-main" id="div-comment-{0}">{1}<div class="c-meta"><span class="c-author">{2}</span>{3}<a rel='nofollow' class='comment-reply-link' href='{5}?replytocom={0}#respond' onclick='return addComment.moveForm( "div-comment-{0}", "{0}", "respond", "{4}" )' aria-label='回复给{2}'>回复</a></div></div></div>'''.format(k.id,k.content,k.author.nickname, k.create_date.strftime('%Y-%m-%d %H:%M:%S'), category, path)
+        html += '''<li class="comment even thread-even depth-1" id="comment-{0}">
+                        <div class="c-avatar">
+                            <img alt='' data-original='' class='avatar avatar-54 photo' height='54' width='54' />
+                            <div class="c-main" id="div-comment-{0}">{1}
+                                <div class="c-meta">
+                                    <span class="c-author">{2}</span>{3}
+                                        <a rel='nofollow' class='comment-reply-link' href='{5}?replytocom={0}#respond' 
+                                        onclick='return addComment.moveForm( "div-comment-{0}", "{0}", "respond", "{4}" )' 
+                                        aria-label='回复给{2}'>回复</a>
+                                </div>
+                            </div>
+                        </div>'''.format(k.id, k.content, k.author.nickname,
+                                         k.create_date.strftime('%Y-%m-%d %H:%M:%S'), category, path)
         # 通过递归把他的儿子加上
         html += generate_comment_html(v, category, path)
     # 最后把ul关上

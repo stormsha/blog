@@ -27,6 +27,7 @@ class CategorySerializer(serializers.ModelSerializer):
 class ArticleSerializer(serializers.ModelSerializer):
     author = serializers.ReadOnlyField(source='author.username')
     category = CategorySerializer(read_only=True)
+    loves = serializers.IntegerField()
     tags = TagSerializer(
         many=True,
         read_only=True,
@@ -39,7 +40,8 @@ class ArticleSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Article
-        # fields = ('id', 'author', 'title', 'views', 'category', 'tags')
-        # fields = '__all__'
+        # # fields = ('id', 'author', 'title', 'views', 'category', 'tags')
+        # # fields = '__all__'
         exclude = ('body',)
+        # fields = ('id', 'loves')
 

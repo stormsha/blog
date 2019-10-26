@@ -363,10 +363,11 @@ class DetailView(generic.DetailView):
             md = markdown.Markdown(extensions=[
                 'markdown.extensions.extra',
                 'markdown.extensions.codehilite',
+                'markdown.extensions.toc',
                 TocExtension(slugify=slugify),
             ])
             cache.set(md_key, md, 60 * 60 * 12)
-        body = obj.body.replace('{host}', settings.PIC_HOST)
+        # body = obj.body.replace('{host}', settings.PIC_HOST)
         obj.body = md.convert(obj.body)
         obj.toc = md.toc
         return obj
@@ -379,9 +380,11 @@ class DetailView(generic.DetailView):
 
 @csrf_exempt
 def LoveView(request):
-    data_id = request.POST.get('um_id', '')
-    if data_id:
-        article = Article.objects.get(id=data_id)
+    loves = request.POST.get('loves', False)
+    article = request.POST.get('article', None)
+    print(loves, article)
+    if article and loves:
+        article = Article.objects.get(id=int(article))
         article.loves += 1
         article.save()
         return HttpResponse(article.loves)

@@ -1,0 +1,74 @@
+
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>MarkDown测试 基于SimpleMDE</title>
+    <link href="https://cdn.bootcss.com/simplemde/1.11.2/simplemde.min.css" rel="stylesheet">
+    <link href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <link href="https://cdn.bootcss.com/highlight.js/9.13.0/styles/github-gist.min.css" rel="stylesheet">
+</head>
+<body>
+<textarea></textarea>
+<script src="https://cdn.bootcss.com/simplemde/1.11.2/simplemde.min.js"></script>
+<script src="https://cdn.bootcss.com/highlight.js/9.13.1/highlight.min.js"></script>
+<script>
+    var simplemde = new SimpleMDE({
+        element: document.querySelector('textarea'),
+        autoDownloadFontAwesome:false,//true从默认地址引入fontawesome依赖 false需自行引入(国内用bootcdn更快点)
+        autofocus:true,
+        autosave: {
+            enabled: true,
+            uniqueId: "SimpleMDE",
+            delay: 1000,
+        },
+        blockStyles: {
+            bold: "**",
+            italic: "*",
+            code: "```"
+        },
+        forceSync: true,
+        hideIcons: false,
+        indentWithTabs: true,
+        lineWrapping: true,
+        renderingConfig:{
+            singleLineBreaks: false,
+            codeSyntaxHighlighting: true // 需要highlight依赖
+        },
+        showIcons: true,
+        spellChecker: true
+    });
+    // 默认开启预览模式
+    simplemde.toggleSideBySide();
+    simplemde.value("" +
+        "## 测试DEMO\n" +
+        "\n" +
+        "----\n" +
+        "#### 图片\n" +
+        "![图片demo](https://alpha.wallhaven.cc/wallpapers/thumb/small/th-729362.jpg)\n" +
+        "\n" +
+        "----\n" +
+        "#### 代码块\n" +
+        "```javascript\n" +
+        "function(){\n" +
+        "\talert('hello wolrd');\n" +
+        "}\n" +
+        "\n" +
+        "```\n" +
+        "\n" +
+        "```java\n" +
+        "public static void main(String args[]){\n" +
+        "\tSystem.out.println(\"hello wolrd\");\n" +
+        "}\n" +
+        "```\n" +
+        "\n" +
+        "```shell\n" +
+        "echo \"hello wolrd\"\n" +
+        "```\n" +
+        "\n" +
+        "----\n" +
+        "## END" +
+        "");
+</script>
+</body>
+</html>

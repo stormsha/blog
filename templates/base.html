@@ -23,73 +23,17 @@
     <script>
         window._deel = {name: '渡', url: '/', ajaxpager: 'on', commenton: 0, roll: [11, 12]}
     </script>
+    <link rel='stylesheet' id='style-css' href='https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css'
+          type='text/css' media='all'/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/simplemde/latest/simplemde.min.css">
+    <link href="{% static 'comment/css/base_comment.css' %}?v=20180114.008" rel="stylesheet">
+
+    <script type='text/javascript' src='https://libs.baidu.com/jquery/1.8.3/jquery.min.js?ver=1.0'></script>
+    <script type='text/javascript' src='https://cuiqingcai.com/wp-content/themes/Yusi/js/jquery.js?ver=1.0'></script>
 
     <!-- /all in one seo pack -->
     <link rel='dns-prefetch' href='//libs.baidu.com'/>
     <link rel='dns-prefetch' href='//s.w.org'/>
-    <script type="text/javascript">
-        window._wpemojiSettings = {
-            "baseUrl": "https:\/\/s.w.org\/images\/core\/emoji\/2.4\/72x72\/",
-            "ext": ".png",
-            "svgUrl": "https:\/\/s.w.org\/images\/core\/emoji\/2.4\/svg\/",
-            "svgExt": ".svg",
-            "source": {"concatemoji": "https:\/\/cuiqingcai.com\/wp-includes\/js\/wp-emoji-release.min.js?ver=4.9.6"}
-        };
-        !function (a, b, c) {
-            function d(a, b) {
-                var c = String.fromCharCode;
-                l.clearRect(0, 0, k.width, k.height), l.fillText(c.apply(this, a), 0, 0);
-                var d = k.toDataURL();
-                l.clearRect(0, 0, k.width, k.height), l.fillText(c.apply(this, b), 0, 0);
-                var e = k.toDataURL();
-                return d === e
-            }
-
-            function e(a) {
-                var b;
-                if (!l || !l.fillText) return !1;
-                switch (l.textBaseline = "top", l.font = "600 32px Arial", a) {
-                    case"flag":
-                        return !(b = d([55356, 56826, 55356, 56819], [55356, 56826, 8203, 55356, 56819])) && (b = d([55356, 57332, 56128, 56423, 56128, 56418, 56128, 56421, 56128, 56430, 56128, 56423, 56128, 56447], [55356, 57332, 8203, 56128, 56423, 8203, 56128, 56418, 8203, 56128, 56421, 8203, 56128, 56430, 8203, 56128, 56423, 8203, 56128, 56447]), !b);
-                    case"emoji":
-                        return b = d([55357, 56692, 8205, 9792, 65039], [55357, 56692, 8203, 9792, 65039]), !b
-                }
-                return !1
-            }
-
-            function f(a) {
-                var c = b.createElement("script");
-                c.src = a, c.defer = c.type = "text/javascript", b.getElementsByTagName("head")[0].appendChild(c)
-            }
-
-            var g, h, i, j, k = b.createElement("canvas"), l = k.getContext && k.getContext("2d");
-            for (j = Array("flag", "emoji"), c.supports = {
-                everything: !0,
-                everythingExceptFlag: !0
-            }, i = 0; i < j.length; i++) c.supports[j[i]] = e(j[i]), c.supports.everything = c.supports.everything && c.supports[j[i]], "flag" !== j[i] && (c.supports.everythingExceptFlag = c.supports.everythingExceptFlag && c.supports[j[i]]);
-            c.supports.everythingExceptFlag = c.supports.everythingExceptFlag && !c.supports.flag, c.DOMReady = !1, c.readyCallback = function () {
-                c.DOMReady = !0
-            }, c.supports.everything || (h = function () {
-                c.readyCallback()
-            }, b.addEventListener ? (b.addEventListener("DOMContentLoaded", h, !1), a.addEventListener("load", h, !1)) : (a.attachEvent("onload", h), b.attachEvent("onreadystatechange", function () {
-                "complete" === b.readyState && c.readyCallback()
-            })), g = c.source || {}, g.concatemoji ? f(g.concatemoji) : g.wpemoji && g.twemoji && (f(g.twemoji), f(g.wpemoji)))
-        }(window, document, window._wpemojiSettings);
-    </script>
-    <style type="text/css">
-        img.wp-smiley,
-        img.emoji {
-            display: inline !important;
-            border: none !important;
-            box-shadow: none !important;
-            height: 1em !important;
-            width: 1em !important;
-            margin: 0 .07em !important;
-            vertical-align: -0.1em !important;
-            background: none !important;
-            padding: 0 !important;
-        }
-    </style>
     {% block head %}{% endblock head %}
     {% compress css %}
         <link rel='stylesheet' id='crayon-css' href='{% static 'css/crayon.min.css' %}' type='text/css' media='all'/>
@@ -104,7 +48,7 @@
         <link rel='stylesheet' id='l2h_print_style-css' href='{% static 'css/print.min.css' %}' type='text/css'
               media='print'/>
         <link rel='stylesheet' id='style-css' href='{% static 'css/style.css' %}' type='text/css' media='all'/>
-        <link rel="stylesheet" href="{% static 'highlights/github.css' %}">
+        <link rel="stylesheet" href="{% static 'highlights/zenburn.css' %}">
         <link rel='stylesheet' id='metaslider-nivo-slider-css' href='{% static 'css/nivo-slider.css' %}' type='text/css'
               media='all' property='stylesheet'/>
         <link rel='stylesheet' id='metaslider-public-css' href='{% static 'css/public.css' %}' type='text/css'
@@ -121,55 +65,9 @@
         <script type='text/javascript' src='{% static 'js/wp-embed.min.js' %}'></script>
         <script type='text/javascript' src='{% static 'js/jquery.nivo.slider.pack.js' %}'></script>
     {% endcompress %}
-    <script type='text/javascript' src='https://libs.baidu.com/jquery/1.8.3/jquery.min.js?ver=1.0'></script>
-    <script type='text/javascript' src='https://cuiqingcai.com/wp-content/themes/Yusi/js/jquery.js?ver=1.0'></script>
-    <link rel='stylesheet' id='style-css' href='https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css'
-          type='text/css' media='all'/>
-    <script type='text/javascript'>
-        /* <![CDATA[ */
-        var CrayonSyntaxSettings = {
-            "version": "_2.7.2_beta",
-            "is_admin": "0",
-            "ajaxurl": "https:\/\/cuiqingcai.com\/wp-admin\/admin-ajax.php",
-            "prefix": "crayon-",
-            "setting": "crayon-setting",
-            "selected": "crayon-setting-selected",
-            "changed": "crayon-setting-changed",
-            "special": "crayon-setting-special",
-            "orig_value": "data-orig-value",
-            "debug": ""
-        };
-        var CrayonSyntaxStrings = {
-            "copy": "\u4f7f\u7528 %s \u590d\u5236\uff0c\u4f7f\u7528 %s \u7c98\u8d34\u3002",
-            "minimize": "\u70b9\u51fb\u5c55\u5f00\u4ee3\u7801"
-        };
-        /* ]]> */
-    </script>
-    <style>
-        .latex_thm, .latex_lem, .latex_cor, .latex_defn, .latex_prop, .latex_rem {
-            margin: 0;
-            padding: 5px;
-            background: lightcyan;
-            border: solid 3px green;
-            -moz-border-radius: 1.0em;
-            -webkit-border-radius: 7px;
-            box-shadow: 0 0 0 green;
-        }
+    <!--评论区，富文本编辑器-->
 
-        .latex_em {
-            font-style: italic;
-        }
-
-        .bibtex_title {
-            font-weight: bold;
-            color: #004b33;
-        }
-
-        a.bibtex_title {
-            text-decoration: none;
-        }
-    </style>
-    <meta name="keywords" content="StormSha,静觅,爬虫,Python,C,Java,Django,HTML,JS,教程">
+    <meta name="keywords" content="StormSha,storm,静觅,爬虫,Python,C,Java,Django,HTML,JS,教程">
     <meta name="description" content="StormSha的个人主页">
     <script type="text/javascript">
         jQuery(document).ready(function () {
@@ -177,7 +75,7 @@
         });
     </script>
     <!--百度统计-->
-    <script type="text/javascript" src="{% static 'js/main.js' %}"></script>
+    {#    <script type="text/javascript" src="{% static 'js/main.js' %}"></script>#}
     <script type="text/javascript"></script>
 </head>
 
@@ -238,17 +136,14 @@
                 <!--搜索框-->
                 <li style="float:right;">
                     <div class="toggle-search"><i class="fa fa-search"></i></div>
-                    <div class="search-expand" style="display: none;">
+                    <div class="search-expand">
                         <div class="search-expand-inner">
                             <form class="nav-item navbar-form mr-2 py-md-2" role="search" method="get" id="searchform"
                                   action="{% url 'blog:search' %}">
                                 <div class="input-group">
-                                    <input type="search" name="q" class="form-control rounded-0 f-15" placeholder="搜索"
-                                           required=True>
-                                    <div class="input-group-btn">
-                                        <button class="btn btn-info rounded-0" type="submit"><i
-                                                class="fa fa-search"></i></button>
-                                    </div>
+                                    <input type="search" name="q" class="search" placeholder="搜索" required=True>
+                                    <button class="search" type="submit" style="position: absolute;height: 30px"><i
+                                            class="fa fa-search"></i></button>
                                 </div><!-- /input-group -->
                             </form>
                         </div>
@@ -279,7 +174,15 @@
     <!--左侧内容区结束-->
 
     <!--右侧信息标签广告区-->
+
     {% block right %}{% endblock %}
+    <script type='text/javascript' src="https://cdn.jsdelivr.net/simplemde/latest/simplemde.min.js"></script>
+    <script type='text/javascript' src="/static/comment/js/editor.js"></script>
+    <script type='text/javascript' src="{% static 'comment/js/activate-power.js' %}?v=20180120"></script>
+<script>
+var sw=window.screen.width;if(sw>1200){POWERMODE.colorful=true;POWERMODE.shake=false;document.body.addEventListener('input',POWERMODE)};
+
+</script>
 </section>
 
 <!--网站底部-->
@@ -297,30 +200,6 @@
     </div>
 </footer>
 <!--网站底部结束-->
-
-
-<script>
-    setTimeout(function () {
-        $('#cpv6_left_lower,#cpv6_right_lower').css({
-            'width': 0
-        });
-    }, 500);
-</script>
-<script type="text/javascript">
-    $(document).ready(function () {
-        var imgs = new Array();
-        imgs[0] = 'http://qiniu.cuiqingcai.com/wp-content/uploads/2015/05/20150525111154.jpg';
-        imgs[1] = 'http://qiniu.cuiqingcai.com/wp-content/uploads/2015/05/20150525111447.jpg';
-        imgs[2] = 'http://qiniu.cuiqingcai.com/wp-content/uploads/2015/05/20150525112058.jpg';
-        imgs[3] = 'http://qiniu.cuiqingcai.com/wp-content/uploads/2015/05/20150525112112.jpg';
-        imgs[4] = 'http://qiniu.cuiqingcai.com/wp-content/uploads/2015/05/20150525112129.jpg';
-        imgs[5] = 'http://qiniu.cuiqingcai.com/wp-content/uploads/2015/05/20150525112155.jpg';
-        $('.ds-avatar img[src*="cdncache"], .ds-avatar img[src*="avatar-50"]').each(function () {
-            var rand = Math.floor(Math.random() * imgs.length);
-            $(this).attr("src", imgs[rand]);
-        })
-    });
-</script>
 </body>
 </html>
 

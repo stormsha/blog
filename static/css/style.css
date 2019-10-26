@@ -2775,6 +2775,10 @@ button,input,label,select,textarea {
 	line-height: 20px
 }
 
+input{
+	height: 40px;
+}
+
 label {
 	display: block;
 	margin-bottom: 5px
@@ -2906,7 +2910,7 @@ input[type=file],select {
 }
 
 input[type=button].btn-block,input[type=reset].btn-block,input[type=submit].btn-block {
-	width: 100%
+	width: 100%;
 }
 
 .btn-primary {
@@ -3843,18 +3847,18 @@ button.btn::-moz-focus-inner,input[type=submit].btn::-moz-focus-inner {
 
 .search-expand {
 	display: none;
-	background: #16a085;
+	background: white;
 	position: absolute;
 	top: 52px;
 	right: 0;
-	width: 360px;
+	width: 285px;
 	-webkit-box-shadow: 0 1px 0 rgba(255,255,255,.1);
 	box-shadow: 0 1px 0 rgba(255,255,255,.1)
 }
 
 .search-expand-inner {
-	border-bottom: 1px solid #d2d6d5;
-	border-left: 1px solid #d2d6d5
+	border-bottom: 0px solid #d2d6d5;
+	border-left: 0px solid #d2d6d5
 }
 
 .search-expand .themeform input {
@@ -6352,7 +6356,8 @@ a.badge-inverse:hover .label-arrow,a.label-inverse:hover .label-arrow {
 	text-indent: 0;
 	background-color: #f8f8f8;
 	border: 1px solid #eee;
-	overflow: hidden;
+	overflow: auto;
+	max-height: 200px;
 	padding: 8px;
 	font-size: 14px
 }
@@ -7699,3 +7704,13 @@ span .action-popover .popover-content .bds_more {
 .highlighted {
     color: #ea6f5a;
 }
+
+
+/*.row {*/
+    /*display: -ms-flexbox;*/
+    /*display: flex;*/
+    /*-ms-flex-wrap: wrap;*/
+    /*flex-wrap: wrap;*/
+    /*margin-right: -15px;*/
+    /*margin-left: -15px*/
+/*}*/

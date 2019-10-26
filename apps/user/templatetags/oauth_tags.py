@@ -26,3 +26,8 @@ def get_tourist_data(uid):
     else:
         return ''
 
+
+@register.inclusion_tag('oauth/tags/user_avatar.html')
+def get_user_avatar_tag(user):
+    '''返回用户的头像，是一个img标签'''
+    return { 'user': user }

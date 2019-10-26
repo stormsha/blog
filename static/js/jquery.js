@@ -1221,7 +1221,6 @@ function() {
                 var z = a(this).data("id"),
                 y = a(this).data("action"),
                 x = a(this).children(".count");
-
                 var w = {
                     action: "bigfa_like",
                     um_id: z,

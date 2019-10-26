@@ -1,0 +1,99 @@
+{% load static %}
+<style type="text/css">
+    .wmd-wrapper  ul {
+        margin-left: 0px !important;
+    }
+    .wmd-wrapper ul li{
+        list-style: disc !important;
+    }
+    .wmd-wrapper ul ul li{
+        list-style: circle !important;
+    }
+    .wmd-wrapper h1,
+    .wmd-wrapper h2,
+    .wmd-wrapper h3,
+    .wmd-wrapper h4,
+    .wmd-wrapper h5,
+    .wmd-wrapper h6 {
+        background: #ffffff !important;
+        color: #000000 !important;
+    }
+    .wmd-wrapper h2,
+    .wmd-wrapper h3,
+    .wmd-wrapper h4{
+        padding: 0px !important;
+    }
+    .wmd-wrapper h5{
+        letter-spacing: 0px !important;
+        text-transform: none !important;
+        font-size: 1em !important;
+    }
+    .wmd-wrapper h6{
+        font-size: 1em !important;
+        color: #777 !important;
+    }
+</style>
+
+<div class="wmd-wrapper"  id="{{ id }}-wmd-wrapper"><textarea {{ final_attrs|safe }}>{{ value }}</textarea></div>
+
+{% if config.language == 'en' %}
+<script src="{% static 'mdeditor/languages/en.js' %}"></script>
+{% elif config.language == 'de' %}
+<script src="{% static 'mdeditor/languages/de.js' %}"></script>
+{% endif %}
+<script type="text/javascript">
+
+    $(function () {
+        editormd("{{ id }}-wmd-wrapper", {
+            watch: {{ config.watch|lower }}, // 关闭实时预览
+            lineNumbers: {{ config.lineNumbers|lower }},
+            lineWrapping: {{ config.lineWrapping|lower }},
+            width: "{{ config.width }}",
+            height: {{ config.height }},
+            // 当有多个mdeditor时，全屏后，其他mdeditor仍然显示，解决此问题。
+            onfullscreen : function() {
+                this.editor.css("border-radius", 0).css("z-index", 9999);
+            },
+            onfullscreenExit : function() {
+                this.editor.css({
+                    zIndex : 10,
+                    border : "1px solid rgb(221,221,221)"
+                })
+            },
+            syncScrolling: "single",
+            path: "{% static  'mdeditor/js/lib/' %}",
+            // theme
+            theme : "{{ config.theme|safe }}",
+            previewTheme : "{{ config.preview_theme|safe }}",
+            editorTheme : "{{ config.editor_theme }}",
+
+            saveHTMLToTextarea: true, // editor.md 有问题没有测试成功
+            toolbarAutoFixed: {{ config.toolbar_autofixed|lower }},
+            searchReplace: {{ config.search_replace|lower }},
+            emoji: {{ config.emoji|lower }},
+            tex: {{ config.tex|lower }},
+            flowChart: {{ config.flow_chart|lower }},
+            sequenceDiagram: {{ config.sequence|lower }},
+
+            // image upload
+            imageUpload: true,
+            imageFormats: {{ config.upload_image_formats|safe }},
+            imageUploadURL: "/mdeditor/uploads/",
+            toolbarIcons: function () {
+                return {{ config.toolbar|safe }}
+            },
+            onload: function () {
+                console.log('onload', this);
+                //this.fullscreen();
+                //this.unwatch();
+                //this.watch().fullscreen();
+
+                //this.setMarkdown("#PHP");
+                //this.width("100%");
+                //this.height(480);
+                //this.resize("100%", 640);
+            }
+        });
+
+    });
+</script>
