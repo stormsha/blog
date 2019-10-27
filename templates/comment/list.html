@@ -11,7 +11,7 @@
         <ol class="commentlist">
             <li class="comment even thread-even depth-1" id="com-{{ comment.id }}">
                 <div class="c-avatar">
-                    <img alt="注册用户头像" src="{% if each.author.avatar %}/media/{{ each.author.avatar }}{% else %}
+                    <img alt="注册用户头像" src="{% if comment.author.avatar %}/media/{{ comment.author.avatar }}{% else %}
                                          /media/avatar/default.png{% endif %}" class="avatar avatar-54 photo"
                          height="54"
                          width="54" style="border-radius: 50%;">

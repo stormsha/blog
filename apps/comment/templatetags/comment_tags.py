@@ -30,12 +30,12 @@ def get_parent_comments(category, entry=0):
     elif category == 'message':
         lis = MessageComment.objects.filter(parent=None)
     else:
-        lis = ArticleComment.objects.filter(belong_id=entry,parent=None)
+        lis = ArticleComment.objects.filter(belong_id=entry, parent=None)
     return lis
 
 
 @register.simple_tag
-def get_child_comments(category,com):
+def get_child_comments(category, com):
     """获取一个父评论的子评论列表"""
     if category == 'about':
         lis = AboutComment.objects.filter(parent=com)
@@ -82,14 +82,14 @@ def get_comment_count(article):
 
 @register.simple_tag
 def get_parent_comments(article):
-    '''获取一个文章的父评论列表'''
-    lis = article.article_comments.filter(parent=None)
+    """获取一个文章的父评论列表"""
+    lis = article.article_comments.filter(parent=None).order_by('-create_date')
     return lis
 
 
 @register.simple_tag
 def get_child_comments(com):
-    '''获取一个父评论的子平路列表'''
+    """获取一个父评论的子平路列表"""
     lis = com.articlecomment_child_comments.all()
     return lis
 
