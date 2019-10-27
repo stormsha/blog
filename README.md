@@ -63,5 +63,5 @@ https://stormsha.com
 ```cmd
 $ pip install rcssmin==1.0.6 --install-option="--without-c-extensions"
 $ pip install rjsmin==1.0.12 --install-option="--without-c-extensions"
-pip install -r requirements.txt
+$ pip install -r requirements.txt
 ```
