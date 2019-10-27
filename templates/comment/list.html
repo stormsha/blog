@@ -11,7 +11,8 @@
         <ol class="commentlist">
             <li class="comment even thread-even depth-1" id="com-{{ comment.id }}">
                 <div class="c-avatar">
-                    <img alt="注册用户头像" src="/media/{{ comment.author.avatar }}" class="avatar avatar-54 photo"
+                    <img alt="注册用户头像" src="{% if each.author.avatar %}/media/{{ each.author.avatar }}{% else %}
+                                         /media/avatar/default.png{% endif %}" class="avatar avatar-54 photo"
                          height="54"
                          width="54" style="border-radius: 50%;">
                     <div class="c-main" id="div-comment--21">
@@ -37,25 +38,26 @@
                             <li class="comment odd alt depth-2" id="com-{{ each.id }}">
                                 <div class="c-avatar">
                                     <img alt="" class="avatar avatar-54 photo" height="54" width="54"
-                                         src="/media/{{ each.author.avatar }}"
+                                         src="{% if each.author.avatar %}/media/{{ each.author.avatar }}{% else %}
+                                         /media/avatar/default.png{% endif %}"
                                          style="display: block;">
                                     <div class="c-main" id="div-comment-{{ each.id }}">
-                                        <div style="word-break: break-all; word-wrap: break-word;">{{ comment.content_to_markdown|safe }}</div>
+                                        <div style="word-break: break-all; word-wrap: break-word;">{{ each.content_to_markdown|safe }}</div>
                                         <div class="c-meta">
                             <span class="c-author">
-                                <a href="{{ comment.author.link }}" rel="external nofollow" class="url" target="_blank">
-                                    <strong>{{ comment.author.username }}</strong>
-                                    {% if comment.author.is_superuser %}
+                                <a href="{{ each.author.link }}" rel="external nofollow" class="url" target="_blank">
+                                    <strong>{{ each.author.username }}</strong>
+                                    {% if each.author.is_superuser %}
                                         <font color="red">「博主」</font></a>
                                     {% endif %}
-                                    <a href="{{ comment.author.link }}"><i class="fa fa-home" title="个人主页"></i></a>
+                                    <a href="{{ each.author.link }}"><i class="fa fa-home" title="个人主页"></i></a>
                             <a href="#com-{{ each.rep_to.id }}"><i class="fa fa-share"></i></a>
                             @{{ each.rep_to.author.username }}
-                            </span>{{ comment.create_date }}
+                            </span>{{ each.create_date }}
                                             <a rel="nofollow" class="comment-reply-link rep-btn"
                                                href="#editor-block"
-                                               data-repid="{{ comment.id }}"
-                                               data-repuser="{{ comment.author.username }}">回复</a>
+                                               data-repid="{{ each.id }}"
+                                               data-repuser="{{ each.author.username }}">回复</a>
                                         </div>
                                     </div>
                                 </div>
