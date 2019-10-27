@@ -1,5 +1,5 @@
 ﻿{% extends 'base_right.html' %}
-{% load blog_tags static %}
+{% load blog_tags static comment_tags %}
 {% block title %}{{ object.title }}{% endblock title %}
 {% block description %}
     <meta name="description" content="{{ object.summary }}"/>
@@ -35,7 +35,7 @@
                     <span class="muted"><i class="fa fa-eye"></i> {{ object.views }}浏览</span>
                     <span class="muted">
                         <i class="fa fa-comments-o"></i>
-                        <a href="/article/{{ object.slug }}#respond">0评论</a>
+                        <a href="/article/{{ object.slug }}#respond">{% get_comment_count article %}评论</a>
                     </span>
                     {% if article.author == user %}
                         <span class="muted">
