@@ -140,7 +140,6 @@ def CommentView(request):
             new_comment = ArticleComment(author=new_user, content=new_content, belong=article, parent=None,
                                          rep_to=None)
         else:
-            print(rep_to)
             new_rep_to = ArticleComment.objects.get(id=rep_to)
             new_parent = new_rep_to.parent if new_rep_to.parent else new_rep_to
             new_comment = ArticleComment(author=new_user, content=new_content, belong=article, parent=new_parent,

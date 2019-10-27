@@ -143,7 +143,15 @@
     if(sessionStorage.getItem('new_point')){
         var top = $(sessionStorage.getItem('new_point')).offset().top-100;
         $('body,html').animate({scrollTop:top}, 200);
-        window.location.hash = sessionStorage.getItem('new_point');
+        current=window.location.href;
+        if (current.indexOf('#')==-1){
+        	current=current.slice(0,current.length-1)
+		}
+        else {
+        	current=current.replace(new RegExp("/#.*",'g'),'')+sessionStorage.getItem('new_point');
+		}
+        window.location.href=current;
+        // window.location.hash = sessionStorage.getItem('new_point');
         sessionStorage.removeItem('new_point');
     };
     sessionStorage.removeItem('rep_id');
