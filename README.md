@@ -60,7 +60,7 @@ https://stormsha.com
 由于版本问题直接安装django_compressor时rcssmin、rjsmin这两个依赖包不能自动安装，
 所以在执行安装依赖前需要先安装rcssmin、rjsmin 
 
-```cmd
+```bash
 $ pip install rcssmin==1.0.6 --install-option="--without-c-extensions"
 $ pip install rjsmin==1.0.12 --install-option="--without-c-extensions"
 $ pip install -r requirements.txt
