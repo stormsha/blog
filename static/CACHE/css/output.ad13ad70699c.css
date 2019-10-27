@@ -1,5 +1,5 @@
-﻿﻿@font-face {
-	font-family:FontAwesome;src:url(../fonts/fontawesome-webfont.eot);src:url(../fonts/fontawesome-webfont.eot) format('embedded-opentype'),url(../fonts/fontawesome-webfont.woff) format('woff'),url(../fonts/fontawesome-webfont.ttf) format('truetype'),url(../fonts/fontawesome-webfont.svg) format('svg');font-weight:400;font-style:normal
+﻿@font-face {
+	font-family:FontAwesome;src:url(/static/fonts/fontawesome-webfont.eot?c30cfdfedc2a);src:url(/static/fonts/fontawesome-webfont.eot?c30cfdfedc2a) format('embedded-opentype'),url(/static/fonts/fontawesome-webfont.woff?c30cfdfedc2a) format('woff'),url(/static/fonts/fontawesome-webfont.ttf?c30cfdfedc2a) format('truetype'),url(/static/fonts/fontawesome-webfont.svg?c30cfdfedc2a) format('svg');font-weight:400;font-style:normal
 }
 
 .fa {
@@ -2050,9 +2050,7 @@ textarea {
 }
 
 p {
-	margin: 0 0 10px;
-	word-break: break-all;
-	word-wrap: break-word;
+	margin: 0 0 10px
 }
 
 .lead {
@@ -7098,7 +7096,7 @@ a.badge-inverse:hover .label-arrow,a.label-inverse:hover .label-arrow {
 	z-index: 60;
 	height: 7.1em;
 	width: 7.1em;
-	background-image: url(../images/arrows.png);
+	background-image: url(/static/images/arrows.png?c30cfdfedc2a);
 	background-size: 200%
 }
 
@@ -7146,11 +7144,11 @@ a.badge-inverse:hover .label-arrow,a.label-inverse:hover .label-arrow {
 }
 
 #wowslider-container1 .ws_pause {
-	background-image: url(../images/pause.png)
+	background-image: url(/static/images/pause.png?c30cfdfedc2a)
 }
 
 #wowslider-container1 .ws_play {
-	background-image: url(../images/play.png)
+	background-image: url(/static/images/play.png?c30cfdfedc2a)
 }
 
 #wowslider-container1 .ws_pause:hover,#wowslider-container1 .ws_play:hover {

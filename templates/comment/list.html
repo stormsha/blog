@@ -9,13 +9,13 @@
     {% get_parent_comments article as comment_list %}
     {% for comment in comment_list %}
         <ol class="commentlist">
-            <li class="comment even thread-even depth-1" id="comment--21">
+            <li class="comment even thread-even depth-1" id="com-{{ comment.id }}">
                 <div class="c-avatar">
                     <img alt="注册用户头像" src="/media/{{ comment.author.avatar }}" class="avatar avatar-54 photo"
                          height="54"
                          width="54" style="border-radius: 50%;">
                     <div class="c-main" id="div-comment--21">
-                        {{ comment.content_to_markdown|safe }}
+                        <div style="word-break: break-all; word-wrap: break-word;">{{ comment.content_to_markdown|safe }}</div>
                         <div class="c-meta">
                             <span class="c-author">
                                 <a href="{{ comment.author.link }}" rel="external nofollow" class="url" target="_blank">
@@ -25,11 +25,44 @@
                                     {% endif %}
                                     <a href="{{ comment.author.link }}"><i class="fa fa-home" title="个人主页"></i></a>
                             </span>{{ comment.create_date }}
-                            <a rel="nofollow" class="comment-reply-link" href="#editor-block"
-                               data-repid="{{ each.id }}" data-repuser="{{ each.author.username }}">回复</a>
+                            <a rel="nofollow" class="comment-reply-link rep-btn" href="#editor-block"
+                               data-repid="{{ comment.id }}" data-repuser="{{ comment.author.username }}">回复</a>
                         </div>
                     </div>
                 </div>
+                {% get_child_comments comment as child_comments %}
+                {% if child_comments %}
+                    <ul class="children">
+                        {% for each in child_comments %}
+                            <li class="comment odd alt depth-2" id="com-{{ each.id }}">
+                                <div class="c-avatar">
+                                    <img alt="" class="avatar avatar-54 photo" height="54" width="54"
+                                         src="/media/{{ each.author.avatar }}"
+                                         style="display: block;">
+                                    <div class="c-main" id="div-comment-{{ each.id }}">
+                                        <div style="word-break: break-all; word-wrap: break-word;">{{ comment.content_to_markdown|safe }}</div>
+                                        <div class="c-meta">
+                            <span class="c-author">
+                                <a href="{{ comment.author.link }}" rel="external nofollow" class="url" target="_blank">
+                                    <strong>{{ comment.author.username }}</strong>
+                                    {% if comment.author.is_superuser %}
+                                        <font color="red">「博主」</font></a>
+                                    {% endif %}
+                                    <a href="{{ comment.author.link }}"><i class="fa fa-home" title="个人主页"></i></a>
+                            <a href="#com-{{ each.rep_to.id }}"><i class="fa fa-share"></i></a>
+                            @{{ each.rep_to.author.username }}
+                            </span>{{ comment.create_date }}
+                                            <a rel="nofollow" class="comment-reply-link rep-btn"
+                                               href="#editor-block"
+                                               data-repid="{{ comment.id }}"
+                                               data-repuser="{{ comment.author.username }}">回复</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </li>
+                        {% endfor %}
+                    </ul>
+                {% endif %}
             </li>
         </ol>
     {% empty %}

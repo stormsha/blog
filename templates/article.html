@@ -53,14 +53,16 @@
                 </p>
             </article>
             <div style="background:#fff;padding-bottom:20px;font-size:14px;">
-                <p style="text-align: center;margin-bottom:20px;padding:0px 20px">
-                    您的支持是博主写作最大的动力，如果您喜欢我的文章，感觉我的文章对您有帮助，请狠狠点击下面的</p>
-                <p style="text-align: center;">
-                    <a href="{% url 'blog:category' 'donate' '' %}">
-                        <input style="width: 310px; margin: 10px auto 0px; background-color: #f58a87; color: #ffffff; height: 40px; border: none; font-family: 'Microsoft Yahei'; font-size: 16px; letter-spacing: 2px;"
-                               type="button" value="我要小额赞助"/>
-                    </a>
-                </p>
+                <div class="text-center">
+                    <button class="btn btn-danger rounded-0" data-toggle="collapse" data-target=".multi-collapse"
+                            aria-expanded="true" aria-controls="sponsor-zfb sponsor-wx"
+                            style="line-height: 1;font-size: .8rem;">
+                        <i class="fa fa-cny"></i>
+                        如果文章对你有所帮助，可以赞助本站
+                        <i class="fa fa-chevron-down"></i>
+                    </button>
+                </div>
+
             </div>
             <footer class="article-footer">
                 <!--文章标签-->

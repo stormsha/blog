@@ -1,10 +1,13 @@
-from storm.models import Article
-from .models import ArticleComment, CommentUser, AboutComment, MessageComment
+import re
 from django.conf import settings
 from django.http import HttpResponse
 from django.views.decorators.http import require_POST
 from django.views.decorators.csrf import csrf_exempt
-import re
+from django.shortcuts import render
+from django.shortcuts import get_object_or_404
+from storm.models import Article
+from user.models import Ouser
+from .models import ArticleComment, CommentUser, AboutComment, MessageComment
 
 # 获取用户模型
 user_model = settings.AUTH_USER_MODEL
@@ -127,22 +130,58 @@ def CommentView(request):
     if request.is_ajax():
         data = request.POST
         new_user = request.user
-        new_content = data.get('content')
-        article_id = data.get('article_id')
-        rep_id = data.get('rep_id')
-        the_article = Article.objects.get(id=article_id)
-        if not rep_id:
-            new_comment = ArticleComment(author=new_user, content=new_content, belong=the_article, parent=None,
+        new_content = data.get('content', None)
+        article_id = data.get('article_id', None)
+        rep_to = data.get('rep_id', None)
+        article = Article.objects.get(id=int(article_id))
+        if "script" in new_content:
+            new_content = new_content.replace("script", '')
+        if not rep_to:
+            new_comment = ArticleComment(author=new_user, content=new_content, belong=article, parent=None,
                                          rep_to=None)
         else:
-            new_rep_to = ArticleComment.objects.get(id=rep_id)
+            print(rep_to)
+            new_rep_to = ArticleComment.objects.get(id=rep_to)
             new_parent = new_rep_to.parent if new_rep_to.parent else new_rep_to
-            new_comment = ArticleComment(author=new_user, content=new_content, belong=the_article, parent=new_parent,
+            new_comment = ArticleComment(author=new_user, content=new_content, belong=article, parent=new_parent,
                                          rep_to=new_rep_to)
         new_comment.save()
         new_point = '#com-' + str(new_comment.id)
         return JsonResponse({'msg': '评论提交成功！', 'new_point': new_point})
     return JsonResponse({'msg': '评论失败！'})
+
+
+@login_required
+def note_view(request):
+    if request.method == "GET":
+        fun = request.GET.get('fun', '')
+        username = request.session['username']
+        uid = request.session['uid']
+        email = Ouser.objects.get(id=uid).email
+        user = Ouser.objects.get(username=username, id=uid)
+        if fun == "me-comment":
+            my_comment = ArticleComment.objects.filter(author__nickname=username, author__email=email).order_by('-create_date')
+            return render(request, 'comment/block/my_comment.html', {"my_comment": my_comment, "fun": fun})
+        if fun == "me-article":
+            author = Ouser.objects.get(username=username, id=uid)
+            my_article = Article.objects.filter(author=author)
+            comments = ArticleComment.objects.filter(belong__author=author).order_by()
+            return render(request, 'comment/block/my_article.html', {"my_article": my_article, "comments": comments, "fun": fun})
+        if fun == "notice":
+            return render(request, 'comment/block/notice.html', {"fun": fun})
+        if fun == "to_webmaster":
+            return render(request, 'comment/block/to_webmaster.html', {"fun": fun})
+        if fun == "read":
+            comment_user = CommentUser.objects.get(nickname=username, email=email)
+            ArticleComment.objects.filter(Q(belong__author=user, parent=None) | Q(parent__author=comment_user) | Q(author=comment_user)).update(is_read=True)
+            return JsonResponse({"msg": "全部标记已读"})
+        if fun == "unread":
+            return render(request, 'comment/block/unread.html', {"fun": fun})
+        if fun == "one-unread":
+            number = request.GET.get("id")
+            get_object_or_404(ArticleComment, id=number).mark_to_read()
+        if not fun:
+            return render(request, 'comment/note.html', context={'fun': ""})
 
 
 @login_required
@@ -178,3 +217,5 @@ def mark_to_delete(request):
         info.delete()
         return JsonResponse({'msg': 'delete success'})
     return JsonResponse({'msg': 'miss'})
+
+

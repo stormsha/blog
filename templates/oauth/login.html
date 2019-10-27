@@ -2,7 +2,7 @@
     function login() {
         $.ajax({
             type: "POST",//方法类型
-            url: "/",//url
+            url: "/account/login/",//url
             dataType: "HTML",
             data: $('#login-form').serialize(),
             success: function (data) {
@@ -10,7 +10,10 @@
                     var result = JSON.parse(data);
                     if (result.ok == '1') {
                         window.location.reload()  //刷新页面
-                    } else {
+                    }else if (result.inactive){
+                        $("#pull-login").html(data);
+                    }
+                    else {
                         $("#pull-login").html(data);
                     }
                 } catch (e) {
@@ -43,11 +46,10 @@
                 <!--   以下是登录的form表单 -->
                 <form class="form-horizontal" role="form" name="f" id="login-form" method="POST">
                     {% csrf_token %}
-                    {{ test }}
                     {% if login_error %}
                         <div class="alert alert-danger">
                             <ul>
-                                <li>您提供的用户名或密码不正确</li>
+                                <li>您提供的用户名或密码不正确或者你的账号还没激活</li>
                             </ul>
                         </div>
                     {% endif %}

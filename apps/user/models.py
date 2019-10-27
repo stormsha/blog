@@ -24,3 +24,23 @@ class Ouser(AbstractUser):
     def __str__(self):
         return self.username
 
+
+class VerifyRecord(models.Model):
+    VERIFY_TYPE = [
+        ('1', 'register'),
+        ('2', 'forget'),
+        ('3', 'chat')
+    ]
+    code = models.CharField(max_length=20, verbose_name=u"验证码")
+    key = models.EmailField(max_length=50, verbose_name=u"邮箱")
+    # 包含注册验证和找回验证
+    v_type = models.CharField(verbose_name=u"验证码类型", max_length=10, choices=VERIFY_TYPE)
+    v_time = models.DateTimeField(verbose_name=u"发送时间", auto_now_add=True)
+
+    class Meta:
+        verbose_name = u"用户验证"
+        verbose_name_plural = verbose_name
+
+    def __unicode__(self):
+        return '{0}({1})'.format(self.code, self.key)
+

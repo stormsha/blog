@@ -1,30 +1,103 @@
 <script type="text/javascript">
     function register() {
+        check_user_name();
+        check_pwd();
+        check_pwd2();
+        check_email();
         $.ajax({
             type: "POST",//方法类型
-            url: "/",//url
-            dataType: "HTML",
+            url: "/account/register/",//url
+            dataType: "JSON",
             data: $('#register-form').serialize(),
-            success: function (data) {
+            success: function (result) {
                 try {
-                    var result = JSON.parse(data);
-                    if (result.ok == '1') {
-                        window.location.reload()  //刷新页面
-                    } else {
-                        $("#pull-login").html(data);
+                    console.log(result);
+                    if (result.error) {
+                        if (result.n) {
+                            console.log(result.n);
+                            $('#re_username').next().html('用户名已经存在')
+                        }
+                        if (result.e) {
+                             $('#email').next().html('邮箱已经被占用')
+                        }
+                    }
+                    else {
+                        if (result.active == false) {
+                            $('#error').html("请登录注册邮箱，激活你的账号，" +
+                                "如果不激活可能部分功能无法对你开放，如果长时间未收到激活账号的邮件" +
+                                "你可以选择去个人中心重新发送激活邮件")
+                        } else {
+                            window.location.reload()
+                        }
                     }
                 } catch (e) {
-                    $("#pull-login").html(data);
+                    $('#error').text("注册失败")
                 }
             },
             error: function (data) {
-                console.log(data);
+                console.log(data)
             }
         });
     }
+
+    function check_user_name() {
+        var len = $('#re_username').val().length;
+        if (len < 5 || len > 20) {
+            $('#re_username').next().html('请输入5-20个字符的用户名');
+            $('#re_username').next().show();
+            error_name = true;
+        }
+    }
+    function check_pwd(){
+		var len = $('#pwd').val().length;
+		if(len<8||len>20)
+		{
+			$('#pwd').next().html('密码最少8位，最长20位')
+			$('#pwd').next().show();
+			error_password = true;
+		}
+		else
+		{
+			$('#pwd').next().hide();
+			error_password = false;
+		}
+	}
+	function check_pwd2(){
+		var pass = $('#pwd').val();
+		var pass2 = $('#pwd2').val();
+
+		if(pass!=pass2)
+		{
+			$('#pwd2').next().html('两次输入的密码不一致');
+			$('#pwd2').next().show();
+			error_check_password = true;
+		}
+		else
+		{
+			$('#pwd2').next().hide();
+			error_check_password = false;
+		}
+	}
+	function check_email(){
+		var re = /^[a-z0-9][\w\.\-]*@[a-z0-9\-]+(\.[a-z]{2,5}){1,2}$/;
+
+		if(re.test($('#re_email').val()))
+		{
+			$('#re_email').next().hide();
+			error_email = false;
+		}
+		else
+		{
+			$('#re_email').next().html('你输入的邮箱格式不正确')
+			$('#re_email').next().show();
+			error_email = true;
+		}
+
+	}
 </script>
 
-<div class="{% if register_error %}modal fade in {% else %} modal fade {% endif %}" id="register" tabindex="-1" role="dialog"
+<div class="{% if register_error %}modal fade in {% else %} modal fade {% endif %}" id="register" tabindex="-1"
+     role="dialog"
      aria-labelledby="myModalLabel"
      aria-hidden="{% if modal %}false{% else %} true {% endif %}"
      style="display: {% if register_error %}block{% else %}none{% endif %}">
@@ -43,14 +116,6 @@
                 <!--   以下是登录的form表单 -->
                 <form class="form-horizontal" role="form" name="f" id="register-form" method="POST">
                     {% csrf_token %}
-                    {{ test }}
-                    {% if register_error %}
-                        <div class="alert alert-block alert-danger">
-                            <ul>
-                                <li>您提供的用户名或密码不正确。</li>
-                            </ul>
-                        </div>
-                    {% endif %}
                     <div class="form-group" id="div1">
                         <label for="firstname" class="col-sm-2 control-label">用户名：</label>
                         <div class="col-sm-10" id="user">
@@ -60,23 +125,23 @@
                                    class="tooltip-test"
                                    data-toggle="tooltip" data-placement="bottom"
                                    title="请输入6——8位的字母或数字任意组合"
-                                   data-trigger="focus"
-                            >
+                                   data-trigger="focus">
                             <label id="n" style="color: red;"></label>
                         </div>
+
                     </div>
                     <div class="form-group" id="div3">
                         <label for="firstname" class="col-sm-2 control-label">邮箱：</label>
                         <div class="col-sm-10" id="email">
-                            <input type="text" class="form-control" id="re_email" placeholder="请输入名字"
+                            <input type="text" class="form-control" id="re_email" placeholder="请输入邮箱"
                                    style="width:300px"
-                                   name="eamil"
+                                   name="email"
                                    class="tooltip-test"
                                    data-toggle="tooltip" data-placement="bottom"
                                    title="请输入邮箱"
                                    data-trigger="focus"
                             >
-                            <label id="n" style="color: red;"></label>
+                            <label id="e" style="color: red;"></label>
                         </div>
                     </div>
                     <div class="form-group " id="div2">
@@ -89,6 +154,20 @@
                                    title="请输入6位密码"
                                    data-trigger="focus"
                             >
+                            <label id="p" style="color: red;">
+                            </label>
+                        </div>
+                    </div>
+                    <div class="form-group " id="div2">
+                        <label for="lastname" class="col-sm-2 control-label">确 认 密 码：</label>
+                        <div class="col-sm-10" id="pd">
+                            <input type="password" class="form-control" id="pwd2" placeholder="请输入密码"
+                                   style="width: 300px" name="password2"
+                                   class="tooltip-test"
+                                   data-toggle="tooltip" data-placement="bottom"
+                                   title="请输入6位密码"
+                                   data-trigger="focus"
+                            >
                             <label id="p" style="color: red;"></label>
                         </div>
                     </div>
@@ -96,8 +175,8 @@
                     <div class="login-title">
                         <span><a data-toggle="modal" data-dismiss="modal" aria-hidden="true" data-target="#login">已经有账号了？去登录</a></span>
                     </div>
-                    <label style="color: red">由于网站升级，暂时停用</label>
-                    <a class="pull-right btn btn-info btn-sm rounded-0">注册</a>
+                    <label style="color: red" id="error"></label>
+                    <a class="pull-right btn btn-info btn-sm rounded-0" onclick="register()">注册</a>
                 </form>
             </div>
             <div class="modal-footer" style="background-color:#ffffff;">

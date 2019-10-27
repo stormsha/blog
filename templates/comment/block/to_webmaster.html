@@ -1,0 +1,35 @@
+{% load comment_tags oauth_tags %}
+<script>
+function addBlockLink_notice() {
+    if(!$('#deletepmform'))
+        return false;var a = $('ul');
+        var taglist = {'A':1, 'INPUT':1, 'IMG':1};
+        for(var i = 0, len = a.length; i < len; i++) {
+            a[i].onmouseover = function () {
+                if(this.className.indexOf(' hover') == -1) {
+                    this.className = this.className + ' hover';
+                }};
+            a[i].onmouseout = function () {
+                        this.className = this.className.replace(' hover', '');
+            };
+            a[i].onclick = function (e) {e = e ? e : window.event;var target = e.target || e.srcElement;if(!taglist[target.tagName]) {
+                window.location.href = $(this.id + '_a').href;
+            }
+        };
+    }
+}
+</script>
+<div class="xld xlda pml mtm mbm" id="comment-table">
+    <form id="deletepmform" method="post" autocomplete="off" name="deletepmform">
+       <div>
+           <div style="float: left">
+                   <ul>站长正在连夜开发中，敬请期待~~~~~</ul>
+               <br>
+                   <ul>站长正在连夜开发中，敬请期待~~~~~</ul>
+               <br>
+                   <ul>站长正在连夜开发中，敬请期待~~~~~</ul>
+            </div>
+       </div>
+    </form>
+    <script type="text/javascript"> addBlockLink_notice();</script>
+</div>

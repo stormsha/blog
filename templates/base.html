@@ -11,6 +11,7 @@
     <meta name="viewport"
           content="width=device-width, initial-scale=1.0, user-scalable=0, minimum-scale=1.0, maximum-scale=1.0">
     <!-- All in One SEO Pack 2.3.12.2.1 by Michael Torbert of Semper Fi Web Design[392,409] -->
+    {% block head %}{% endblock head %}
     {% block description %}
     {% endblock description %}
     {% block keywords %}
@@ -30,11 +31,11 @@
 
     <script type='text/javascript' src='https://libs.baidu.com/jquery/1.8.3/jquery.min.js?ver=1.0'></script>
     <script type='text/javascript' src='https://cuiqingcai.com/wp-content/themes/Yusi/js/jquery.js?ver=1.0'></script>
-
+{#    <script type="text/javascript" src="{% static 'js/register.js' %}"></script>#}
     <!-- /all in one seo pack -->
     <link rel='dns-prefetch' href='//libs.baidu.com'/>
     <link rel='dns-prefetch' href='//s.w.org'/>
-    {% block head %}{% endblock head %}
+
     {% compress css %}
         <link rel='stylesheet' id='crayon-css' href='{% static 'css/crayon.min.css' %}' type='text/css' media='all'/>
         <link rel='stylesheet' id='crayon-theme-github-css' href='{% static 'css/github.css' %}' type='text/css'
@@ -77,6 +78,16 @@
     <!--百度统计-->
     {#    <script type="text/javascript" src="{% static 'js/main.js' %}"></script>#}
     <script type="text/javascript"></script>
+<style>
+    .codehilite pre{
+    color:#fdce93;
+    background-color:#3f3f3f;
+    overflow: auto;
+	max-height: 200px;
+    word-break: break-all;
+    word-wrap: break-word;
+}
+</style>
 </head>
 
 <body class="home blog">
@@ -179,10 +190,14 @@
     <script type='text/javascript' src="https://cdn.jsdelivr.net/simplemde/latest/simplemde.min.js"></script>
     <script type='text/javascript' src="/static/comment/js/editor.js"></script>
     <script type='text/javascript' src="{% static 'comment/js/activate-power.js' %}?v=20180120"></script>
-<script>
-var sw=window.screen.width;if(sw>1200){POWERMODE.colorful=true;POWERMODE.shake=false;document.body.addEventListener('input',POWERMODE)};
-
-</script>
+    <script>
+        var sw = window.screen.width;
+        if (sw > 1200) {
+            POWERMODE.colorful = true;
+            POWERMODE.shake = false;
+            document.body.addEventListener('input', POWERMODE)
+        }
+    </script>
 </section>
 
 <!--网站底部-->

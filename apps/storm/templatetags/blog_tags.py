@@ -240,3 +240,12 @@ def my_highlight(text, q):
             pass
     return text
 
+
+@register.simple_tag
+def get_announcement_count():
+    announcement = Activate.objects.filter(is_active=True)
+    if announcement:
+        count = len(announcement)
+    else:
+        count = ""
+    return count

@@ -1,0 +1,42 @@
+{% load comment_tags oauth_tags %}
+<script type="text/javascript">
+
+
+$('a').each(function () {
+    if ($(this).prev().attr('class') == 'show'){
+        $(this).click(function () {
+            $(this).prev().toggle()
+        })
+    }
+})
+
+
+</script>
+<div class="xld xlda pml mtm mbm" id="comment-table">
+    {% for article in my_article %}
+        <dl id="pmlist_2268797" class="bbda cur1 cl">
+            <dd class="m avt">
+                <div class="newpm_avt" title="有未读消息"></div>
+                    <a href="{{ article.get_absolute_url }}" target="_blank"><img src="{{ article.img_link }}"></a>
+            </dd>
+            <dd class="ptm pm_c">
+                <span class="xi2 xw1">{{ article.title }}</span><br>
+                <br>
+                {{ article.summary | slice:":100"}} &nbsp;
+                <div id = "{{ forloop.counter }}" class="show" style="display:none;">{{ article.summary | slice:"100:"}}</div>
+                <a href="javascript:;" id="more">查看更多</a><br><br>
+                <i class="fa fa-calendar" aria-hidden="true"></i>
+                <span class="xg1">{{ article.create_date }}</span> &nbsp;
+                <i class="fa fa-eye" aria-hidden="true"></i>
+                <span class="xg1">{{ article.views }}</span> &nbsp;
+                <i class="fa fa-heart-o" aria-hidden="true"></i>
+                <span class="xg1">{{ article.loves }}</span> &nbsp;
+                {% get_article_comment_count article as count %}
+                <i class="fa fa-comments-o" aria-hidden="true"></i>
+                <span class="xg1">{{ count }}</span> &nbsp;
+
+            </dd>
+        </dl>
+        <script type="text/javascript">addBlockLink();</script>
+    {% endfor %}
+</div>

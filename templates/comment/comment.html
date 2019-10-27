@@ -1,49 +1,80 @@
 {% load staticfiles %}
 {% load comment_tags oauth_tags %}
 <div id="respond" class="no_webshot">
-    <form action="/comment/add/" method="post" id="commentform">
+    <div method="post" id="commentform">
         <div class="comt">
-			<div class="comt-box">
+            <div class="comt-box">
                 <h3>发表我的评论</h3>
                 <div class="card mt-2 rounded-0 border-0" id="comment-block">
                     {% include 'comment/editor.html' %}
                 </div>
-				<div class="comt-ctrl">
-					<button class="btn btn-primary pull-right" type="submit" name="submit" id="push-com" tabindex="5"
-                            data-ajax-url="{% url 'comment:add_comment' %}">
+                <div class="comt-ctrl">
+                    <button class="btn btn-primary pull-right" id="push-com"
+                            data-csrf="{{ csrf_token }}"
+                            data-ajax-url="{% url 'comment:add_comment' %}"
+                            data-article-id="{{ article.id }}"
+                            {% if not user.is_authenticated %}title="请登录后再愉快的尬聊~~~~~"{% endif %}
+                            {% if not user.is_authenticated %}disabled="disabled"{% endif %}>
                         <i class="fa fa-check-square-o"></i> 提交评论
                     </button>
-					<div class="comt-tips pull-right">
-                        <input type='hidden' name='comment_post_ID' value='{{ category }}' id='comment_post_ID' />
-                        <input type='hidden' name='comment_parent' id='comment_parent' value='0' /><p style="display: none;">
-                        <input type="hidden" id="akismet_comment_nonce" name="akismet_comment_nonce" value="da9dc5c77a" /></p><p style="display: none;"><input type="hidden" id="ak_js" name="ak_js" value="50"/></p>
-                    </div>
-					<span data-type="comment-insert-smilie" class="muted comt-smilie"><i class="fa fa-smile-o"></i> 表情</span>
-				</div>
-			</div>
+                    <span data-type="comment-insert-smilie" class="muted comt-smilie"><i class="fa fa-smile-o"></i> 表情</span>
+                </div>
+                <div id="comment-smilies" class="hide" style="display: block;">
+                    <img data-simle="mrgreen" data-type="comment-smilie"
+                         src="{% static 'comment/img/icon_mrgreen.gif' %}">
+                    <img data-simle="razz" data-type="comment-smilie" src="{% static '/comment/img/icon_razz.gif' %}">
+                    <img data-simle="sad" data-type="comment-smilie" src="{% static '/comment/img/icon_sad.gif' %}">
+                    <img data-simle="smile" data-type="comment-smilie" src="{% static '/comment/img/icon_smile.gif' %}">
+                    <img data-simle="oops" data-type="comment-smilie"
+                         src="{% static '/comment/img/icon_redface.gif' %}">
+                    <img data-simle="grin" data-type="comment-smilie"
+                         src="{% static '/comment/img/icon_biggrin.gif' %}">
+                    <img data-simle="eek" data-type="comment-smilie"
+                         src="{% static '/comment/img/icon_surprised.gif' %}">
+                    <img data-simle="???" data-type="comment-smilie"
+                         src="{% static '/comment/img/icon_confused.gif' %}">
+                    <img data-simle="cool" data-type="comment-smilie" src="{% static '/comment/img/icon_cool.gif' %}">
+                    <img data-simle="lol" data-type="comment-smilie" src="{% static '/comment/img/icon_lol.gif' %}">
+                    <img data-simle="mad" data-type="comment-smilie" src="{% static '/comment/img/icon_mad.gif' %}">
+                    <img data-simle="twisted" data-type="comment-smilie"
+                         src="{% static '/comment/img/icon_twisted.gif' %}">
+                    <img data-simle="roll" data-type="comment-smilie"
+                         src="{% static '/comment/img/icon_rolleyes.gif' %}">
+                    <img data-simle="wink" data-type="comment-smilie" src="{% static '/comment/img/icon_wink.gif' %}">
+                    <img data-simle="idea" data-type="comment-smilie" src="{% static '/comment/img/icon_idea.gif' %}">
+                    <img data-simle="arrow" data-type="comment-smilie" src="{% static '/comment/img/icon_arrow.gif' %}">
+                    <img data-simle="neutral" data-type="comment-smilie"
+                         src="{% static '/comment/img/icon_neutral.gif' %}">
+                    <img data-simle="cry" data-type="comment-smilie" src="{% static '/comment/img/icon_cry.gif' %}">
+                    <img data-simle="?" data-type="comment-smilie" src="{% static '/comment/img/icon_question.gif' %}">
+                    <img data-simle="evil" data-type="comment-smilie" src="{% static '/comment/img/icon_evil.gif' %}">
+                    <img data-simle="shock" data-type="comment-smilie" src="{% static '/comment/img/icon_eek.gif' %}">
+                    <img data-simle="!" data-type="comment-smilie" src="{% static '/comment/img/icon_exclaim.gif' %}">
+                </div>
+            </div>
 
         </div>
-	</form>
+    </div>
 </div>
 
 <div id="postcomments">
 
-{#{% if category == 'message'%}#}
-{#    {% get_comment_user_count category as  user_num %}#}
-{#    {% build_comment_tree category request.path as htm %}#}
-{#{% elif category == 'about' %}#}
-{#    {% get_comment_user_count category as  user_num%}#}
-{#    {% build_comment_tree category request.path as htm %}#}
-{#{% else %}#}
-{#    {% get_comment_user_count category category as  user_num%}#}
-{#    {% build_comment_tree category  request.path category as htm %}#}
-{#{% endif %}#}
-{#<div id="comments">#}
-{#		<i class="fa fa-comments-o"></i> <b> ({{ user_num }})</b>个小伙伴在吐槽#}
-{#	</div>#}
-{#   {{ htm|safe }}#}
+    {#{% if category == 'message'%}#}
+    {#    {% get_comment_user_count category as  user_num %}#}
+    {#    {% build_comment_tree category request.path as htm %}#}
+    {#{% elif category == 'about' %}#}
+    {#    {% get_comment_user_count category as  user_num%}#}
+    {#    {% build_comment_tree category request.path as htm %}#}
+    {#{% else %}#}
+    {#    {% get_comment_user_count category category as  user_num%}#}
+    {#    {% build_comment_tree category  request.path category as htm %}#}
+    {#{% endif %}#}
+    {#<div id="comments">#}
+    {#		<i class="fa fa-comments-o"></i> <b> ({{ user_num }})</b>个小伙伴在吐槽#}
+    {#	</div>#}
+    {#   {{ htm|safe }}#}
 
-{% include 'comment/list.html' %}
-<div class="commentnav"	></div>
+    {% include 'comment/list.html' %}
+    <div class="commentnav"></div>
 
 </div>

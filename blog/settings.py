@@ -241,6 +241,7 @@ CACHE_TIME = settings_json['CACHE_TIME']
 
 # 存放图片的主机
 PIC_HOST = settings_json['PIC_HOST']
+WEB_SITE = settings_json['WEB_SITE']
 
 MDEDITOR_CONFIGS = {
     'default': {
@@ -271,3 +272,36 @@ MDEDITOR_CONFIGS = {
         'lineNumbers': False  # lineNumbers
     }
 }
+
+# 表情
+SMILES = {
+    "mrgreen": "mrgreen",
+    "razz": "razz",
+    "sad": "sad",
+    "smile": "smile",
+    "oops": "redface",
+    "grin": "biggrin",
+    "eek": "surprised",
+    "???": "confused",
+    "cool": "cool",
+    "lol": "lol",
+    "mad": "mad",
+    "twisted": "twisted",
+    "roll": "rolleyes",
+    "wink": "wink",
+    "idea": "idea",
+    "arrow": "arrow",
+    "neutral": "neutral",
+    "cry": "cry",
+    "?": "question",
+    "evil": "evil",
+    "shock": "eek",
+    "!": "exclaim"
+}
+
+EMAIL_HOST = settings_json['EMAIL_HOST']  # 服务器
+EMAIL_PORT = settings_json['EMAIL_PORT']  # 一般情况下都为25
+EMAIL_HOST_USER = settings_json['EMAIL_HOST_USER']  # 账号
+EMAIL_HOST_PASSWORD = settings_json['EMAIL_HOST_PASSWORD']  # 密码
+EMAIL_USE_TLS = settings_json['EMAIL_USE_TLS']  # 一般都为False
+EMAIL_FROM = settings_json['EMAIL_FROM']  # 邮箱来自

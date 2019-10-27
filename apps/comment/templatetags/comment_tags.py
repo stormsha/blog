@@ -1,7 +1,10 @@
 # 创建了新的tags标签文件后必须重启服务器
 from django.utils.safestring import mark_safe
 from django import template
-from ..models import ArticleComment,AboutComment, MessageComment
+from django.db.models import Q
+from django.conf import settings
+from ..models import ArticleComment, AboutComment, MessageComment
+from user.models import Ouser
 
 
 register = template.Library()
@@ -64,7 +67,6 @@ def get_comment_user_count(article):
     """获取评论人总数"""
     p = []
     lis = article.article_comments.all()
-    print(lis)
     for each in lis:
         if each.author not in p:
             p.append(each.author)
@@ -82,6 +84,13 @@ def get_comment_count(article):
 def get_parent_comments(article):
     '''获取一个文章的父评论列表'''
     lis = article.article_comments.filter(parent=None)
+    return lis
+
+
+@register.simple_tag
+def get_child_comments(com):
+    '''获取一个父评论的子平路列表'''
+    lis = com.articlecomment_child_comments.all()
     return lis
 
 
@@ -176,4 +185,42 @@ def build_comment_tree(category, path, entry=0):
     html += " </ol>"
     # 关掉转义
     return mark_safe(html)
+
+
+@register.simple_tag
+def get_unread_count(user, f=None):
+    try:
+        comments = ArticleComment.objects.filter(
+            Q(belong__author=user, parent=None, is_read=False) | Q(parent__author=user, is_read=False)
+            | Q(author=user, is_read=False))
+        if comments:
+            count = len(comments)
+        else:
+            count = ""
+    except:
+        count = ""
+    return count
+
+
+@register.simple_tag
+def get_comment_user(user):
+    return user
+
+
+@register.simple_tag
+def get_article_comment_count(article):
+    count = ArticleComment.objects.filter(belong=article).count()
+    return count
+
+
+@register.simple_tag
+def get_all_comments(user, f=None):
+    if f == 'false':
+        comments = ArticleComment.objects.filter(Q(belong__author=user, parent=None, is_read=False) |
+                                                 Q(parent__author=user, is_read=False) |
+                                                 Q(author=user, is_read=False)).order_by('-create_date')
+    else:
+        comments = ArticleComment.objects.filter(
+            Q(belong__author=user, parent=None) | Q(parent__author=user) | Q(author=user)).order_by('-create_date')
+    return comments
 

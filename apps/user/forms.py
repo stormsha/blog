@@ -3,9 +3,9 @@ from .models import Ouser
 
 
 class UserForm(forms.Form):
-    username = forms.CharField(max_length=30)
-    password = forms.CharField(max_length=50)
-    password2 = forms.CharField(max_length=50)
+    username = forms.CharField(min_length=2, max_length=30)
+    password = forms.CharField(min_length=6, max_length=50)
+    password2 = forms.CharField(min_length=6, max_length=50)
     email = forms.CharField(max_length=50)
 
 

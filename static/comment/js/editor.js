@@ -54,7 +54,7 @@
 			className: "fa fa-eye no-disable",
 			title: "预览",
 			"default": !0
-		}],
+		}]
 	});
 	$(".editor-statusbar").append("<span class='float-left text-info ml-0 hidden' id='rep-to'></span>");
 	$("#editor-footer").append("<button type='button' class='btn btn-danger btn-sm float-right mr-4 f-16 hidden' id='no-rep'>取消回复</button>");
@@ -62,15 +62,14 @@
 	var emoji_tag = $("#comment-smilies img");
 	emoji_tag.click(function() {
 		var e = ':' + $(this).data('simle') + ':';
-		console.log('sssssssssssssssssssss', e)
 		simplemde.value(simplemde.value()+e);
 	});
 
 //    点击回复
 	$(".rep-btn").click(function(){
-	    simplemde.value('')
-	    var u = $(this).data('repuser')
-	    var i = $(this).data('repid')
+	    simplemde.value('');
+	    var u = $(this).data('repuser');
+	    var i = $(this).data('repid');
 	    sessionStorage.setItem('rep_id',i);
 	    $("#rep-to").text("回复 @"+u).removeClass('hidden');
 		$("#no-rep").removeClass('hidden');
@@ -83,7 +82,7 @@
 
 //    点击取消回复
 	$("#no-rep").click(function(){
-	    simplemde.value('')
+	    simplemde.value('');
 	    sessionStorage.removeItem('rep_id');
 	    $("#rep-to").text('').addClass('hidden');
 		$("#no-rep").addClass('hidden');
@@ -97,18 +96,18 @@
             alert("评论内容不能为空！");
             return;
         }
-        var base_t = sessionStorage.getItem('base_t');
-        var now_t = Date.parse(new Date());
-        if (base_t) {
-            var tt = now_t - base_t;
-            if (tt < 40000) {
+        var start = sessionStorage.getItem('start');
+        var current = Date.parse(new Date());
+        if (start) {
+            var tt = current - start;
+            if (tt < 4000) {
                 alert('两次评论时间间隔必须大于40秒，还需等待' + (40 - parseInt(tt / 1000)) + '秒');
                 return;
             } else {
-                sessionStorage.setItem('base_t', now_t);
+                sessionStorage.setItem('start', current);
             }
         } else {
-            sessionStorage.setItem('base_t', now_t)
+            sessionStorage.setItem('start', current)
         };
         var csrf = $(this).data('csrf');
         var article_id = $(this).data('article-id');
@@ -121,7 +120,7 @@
         });
         $.ajax({
             type: 'post',
-            url: URL,
+            url: '/comment/add/',
             data: {
                 'rep_id': rep_id,
                 'content': content,
@@ -129,7 +128,7 @@
             },
             dataType: 'json',
             success: function(ret) {
-                simplemde.value('')
+                simplemde.value('');
                 sessionStorage.removeItem('rep_id');
                 sessionStorage.setItem('new_point', ret.new_point);
                 window.location.reload();
