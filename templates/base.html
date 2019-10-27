@@ -20,9 +20,9 @@
     <title>
         {% block title %}{% endblock title %}
     </title>
-
     <script>
         window._deel = {name: '渡', url: '/', ajaxpager: 'on', commenton: 0, roll: [11, 12]}
+        window._deel.commenton=1
     </script>
     <link rel='stylesheet' id='style-css' href='https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css'
           type='text/css' media='all'/>
@@ -32,11 +32,7 @@
     <script type='text/javascript' src='https://libs.baidu.com/jquery/1.8.3/jquery.min.js?ver=1.0'></script>
     <script type='text/javascript' src='https://cuiqingcai.com/wp-content/themes/Yusi/js/jquery.js?ver=1.0'></script>
 {% block head %}{% endblock head %}
-{#    <script type="text/javascript" src="{% static 'js/register.js' %}"></script>#}
     <!-- /all in one seo pack -->
-    <link rel='dns-prefetch' href='//libs.baidu.com'/>
-    <link rel='dns-prefetch' href='//s.w.org'/>
-
     {% compress css %}
         <link rel='stylesheet' id='crayon-css' href='{% static 'css/crayon.min.css' %}' type='text/css' media='all'/>
         <link rel='stylesheet' id='crayon-theme-github-css' href='{% static 'css/github.css' %}' type='text/css'

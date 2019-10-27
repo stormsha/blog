@@ -382,7 +382,6 @@ class DetailView(generic.DetailView):
 def LoveView(request):
     loves = request.POST.get('loves', False)
     article = request.POST.get('article', None)
-    print(loves, article)
     if article and loves:
         article = Article.objects.get(id=int(article))
         article.loves += 1

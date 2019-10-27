@@ -53,3 +53,15 @@ https://stormsha.com
 
 - 由于本项目分为几个不同的分支，每个分支的功能有所不同，但是运行的方式基本相同，所以需要根据分支查看对应的运行wiki
 - 指导 wiki：https://github.com/stormsha/blog/wiki
+
+## 特别提醒
+
+在安装依赖时，会出现django_compressor安装出错，因为这个压缩静态资源的包有两个依赖包rcssmin、rjsmin
+由于版本问题直接安装django_compressor时rcssmin、rjsmin这两个依赖包不能自动安装，
+所以在执行安装依赖前需要先安装rcssmin、rjsmin 
+
+```cmd
+$ pip install rcssmin==1.0.6 --install-option="--without-c-extensions"
+$ pip install rjsmin==1.0.12 --install-option="--without-c-extensions"
+pip install -r requirements.txt
+```

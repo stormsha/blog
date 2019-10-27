@@ -1177,7 +1177,8 @@ function() {
         a("body").append('' +
             '<div class="rollto">' +
             '<button class="btn btn-inverse" data-type="totop" title="回顶部">' +
-            '<i class="fa fa-arrow-up"></i></button>' + (_deel.commenton ? '<button class="btn btn-inverse" data-type="torespond" title="发评论">' +
+            '<i class="fa fa-arrow-up"></i></button>' + (_deel.commenton ? '<button class="btn btn-inverse" data-type="torespond" ' +
+                'href="#editor-block" title="发评论">' +
                 '<i class="fa fa-comment-o"></i></button>': "") + "</div>"); (function(w) {
             w.extend({
                 tipsBox: function(x) {

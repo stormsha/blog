@@ -123,7 +123,6 @@ def login_view(req):
             else:
                 # 比较失败，还在login
                 context['error'] = True
-                print(context)
                 return JsonResponse(context)
     else:
         # next_to = req.GET.get('next', '/')

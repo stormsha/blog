@@ -190,7 +190,6 @@ if DEBUG:
     COMPRESS_OFFLINE = True
 else:
     DEBUG_PROPAGATE_EXCEPTIONS = True
-
 # 静态文件收集
 STATICFILES_FINDERS = ('django.contrib.staticfiles.finders.AppDirectoriesFinder',
                        'django.contrib.staticfiles.finders.FileSystemFinder',
