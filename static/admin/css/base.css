@@ -366,7 +366,7 @@ table thead th.sorted .sortoptions a.sortremove {
 }
 
 table thead th.sorted .sortoptions a.sortremove:after {
-    content: '\\';
+    /*content: '\\';*/
     position: absolute;
     top: -6px;
     left: 3px;

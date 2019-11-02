@@ -249,3 +249,4 @@ def get_announcement_count():
     else:
         count = ""
     return count
+

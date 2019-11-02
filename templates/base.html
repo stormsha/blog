@@ -27,13 +27,15 @@
     <link rel='stylesheet' id='style-css' href='https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css'
           type='text/css' media='all'/>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/simplemde/latest/simplemde.min.css">
-    <link href="{% static 'comment/css/base_comment.css' %}?v=20180114.008" rel="stylesheet">
 
     <script type='text/javascript' src='https://libs.baidu.com/jquery/1.8.3/jquery.min.js?ver=1.0'></script>
     <script type='text/javascript' src='https://cuiqingcai.com/wp-content/themes/Yusi/js/jquery.js?ver=1.0'></script>
 {% block head %}{% endblock head %}
     <!-- /all in one seo pack -->
     {% compress css %}
+        <link href="{% static 'comment/css/base_comment.css' %}?v=20180114.008" rel="stylesheet">
+        <link type="text/css" href="{% static 'comment/css/style_1_common.css' %}" rel="stylesheet">
+        <link type="text/css" href="{% static 'comment/css/style_1_home_space.css' %}" rel="stylesheet">
         <link rel='stylesheet' id='crayon-css' href='{% static 'css/crayon.min.css' %}' type='text/css' media='all'/>
         <link rel='stylesheet' id='crayon-theme-github-css' href='{% static 'css/github.css' %}' type='text/css'
               media='all'/>
@@ -64,7 +66,6 @@
         <script type='text/javascript' src='{% static 'js/jquery.nivo.slider.pack.js' %}'></script>
     {% endcompress %}
     <!--评论区，富文本编辑器-->
-
     <meta name="keywords" content="StormSha,storm,静觅,爬虫,Python,C,Java,Django,HTML,JS,教程">
     <meta name="description" content="StormSha的个人主页">
     <script type="text/javascript">
@@ -73,18 +74,7 @@
         });
     </script>
     <!--百度统计-->
-    {#    <script type="text/javascript" src="{% static 'js/main.js' %}"></script>#}
     <script type="text/javascript"></script>
-<style>
-    .codehilite pre{
-    color:#fdce93;
-    background-color:#3f3f3f;
-    overflow: auto;
-	max-height: 200px;
-    word-break: break-all;
-    word-wrap: break-word;
-}
-</style>
 </head>
 
 <body class="home blog">

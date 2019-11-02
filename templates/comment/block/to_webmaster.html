@@ -1,35 +1,124 @@
 {% load comment_tags oauth_tags %}
-<script>
-function addBlockLink_notice() {
-    if(!$('#deletepmform'))
-        return false;var a = $('ul');
-        var taglist = {'A':1, 'INPUT':1, 'IMG':1};
-        for(var i = 0, len = a.length; i < len; i++) {
-            a[i].onmouseover = function () {
-                if(this.className.indexOf(' hover') == -1) {
-                    this.className = this.className + ' hover';
-                }};
-            a[i].onmouseout = function () {
-                        this.className = this.className.replace(' hover', '');
-            };
-            a[i].onclick = function (e) {e = e ? e : window.event;var target = e.target || e.srcElement;if(!taglist[target.tagName]) {
-                window.location.href = $(this.id + '_a').href;
+    <script type="text/javascript">
+        //    点击提交评论
+        $("#webmaster").click(function() {
+            var content = simplemde.value();
+            console.log(content);
+            if (content.length == 0) {
+                alert("评论内容不能为空！");
+                return;
             }
-        };
-    }
-}
-</script>
+            if(content.length > 1024){
+                alert("评论内容不能超过1024个字符！");
+                return;
+            }
+            var start = sessionStorage.getItem('start');
+            var current = Date.parse(new Date());
+            if (start) {
+                var tt = current - start;
+                if (tt < 4000) {
+                    alert('两次提交时间间隔必须大于40秒，还需等待' + (40 - parseInt(tt / 1000)) + '秒');
+                    return;
+                } else {
+                    sessionStorage.setItem('start', current);
+                }
+            } else {
+                sessionStorage.setItem('start', current)
+            };
+            var csrf = $(this).data('csrf');
+            $.ajaxSetup({
+                data: {
+                    'csrfmiddlewaretoken': csrf
+                }
+            });
+            var _data={
+                'fun': 'webmaster',
+                'content': content
+            }
+            $.get('/comment/note', _data, function (data) {
+                    $('#comment-table').html(data)
+                })
+        });
+    </script>
 <div class="xld xlda pml mtm mbm" id="comment-table">
-    <form id="deletepmform" method="post" autocomplete="off" name="deletepmform">
        <div>
-           <div style="float: left">
-                   <ul>站长正在连夜开发中，敬请期待~~~~~</ul>
-               <br>
-                   <ul>站长正在连夜开发中，敬请期待~~~~~</ul>
-               <br>
-                   <ul>站长正在连夜开发中，敬请期待~~~~~</ul>
+           <div class="comt">
+            <div class="comt-box">
+                <div class="card mt-2 rounded-0 border-0" id="comment-block" style="width: 100%!important;">
+                    <div class="card border-0 rounded-0 f-16" id="editor-block" style="width: 100%!important;">
+                        <div class="card-body p-2 p-md-3">
+                        <span>请在内容中留下自己的邮箱或者其它连方式方便作者回复，联系你</span>
+                            <textarea class="form-control rounded-0" id="comment-form" name="to_webmaster"
+                                      placeholder="{% if msg %}{{ msg }}{% else %}支持 markdown 语法{% endif %}" cols="100%" rows="5"></textarea>
+                        </div>
+                </div>
+                </div>
+                <div class="comt-ctrl">
+                    <button type="button" class="btn btn-primary pull-right" id="webmaster"
+                            data-csrf="{{ csrf_token }}">
+                        <i class="fa fa-check-square-o"></i> 提交
+                    </button>
+                </div>
             </div>
+        </div>
        </div>
-    </form>
-    <script type="text/javascript"> addBlockLink_notice();</script>
+    <script>
+        var simplemde = new SimpleMDE({
+		element: document.getElementById("comment-form"),
+		autoDownloadFontAwesome:false,
+		insertTexts: {
+		horizontalRule: ["", "\n\n-----\n\n"],
+		image: ["![图片Alt](http://", ")"],
+		link: ["[链接描述](http://", ")"],
+		table: ["", "\n\n| Column 1 | Column 2 | Column 3 |\n| -------- | -------- | -------- |\n| Text     | Text      | Text     |\n\n"],
+	    },
+		toolbar: [{
+			name: "bold",
+			action: SimpleMDE.toggleBold,
+			className: "fa fa-bold",
+			title: "粗体",
+			"default": !0
+		}, {
+			name: "italic",
+			action: SimpleMDE.toggleItalic,
+			className: "fa fa-italic",
+			title: "斜体",
+			"default": !0
+		}, {
+			name: "quote",
+			action: SimpleMDE.toggleBlockquote,
+			className: "fa fa-quote-left",
+			title: "引用",
+			"default": !0
+		}, {
+			name: "code",
+			action: SimpleMDE.toggleCodeBlock,
+			className: "fa fa-code",
+			title: "代码"
+		}, {
+			name: "link",
+			action: SimpleMDE.drawLink,
+			className: "fa fa-link",
+			title: "插入链接",
+			"default": !0
+		}, {
+			name: "image",
+			action: SimpleMDE.drawImage,
+			className: "fa fa-picture-o",
+			title: "插入图片",
+			"default": !0
+		}, {
+			name: "table",
+			action: SimpleMDE.drawTable,
+			className: "fa fa-table",
+			title: "插入表格"
+		}, {
+			name: "preview",
+			action: SimpleMDE.togglePreview,
+			className: "fa fa-eye no-disable",
+			title: "预览",
+			"default": !0
+		}]
+	});
+    </script>
 </div>

@@ -1,5 +1,5 @@
 {% load static %}
-<div class="card border-0 rounded-0 f-16" id="editor-block">
+<div class="card border-0 rounded-0 f-16" id="editor-block" style="width: 100%!important;">
     <div class="card-body p-2 p-md-3">
         <textarea class="form-control rounded-0" id="comment-form" name="next"
                   placeholder="{% if user.is_authenticated %}评论请使用 markdown 语法{% else %}请登录后再来愉快地尬聊{% endif %}"

@@ -1,0 +1,84 @@
+{% load comment_tags oauth_tags %}
+{% load humanize %}
+<script type="text/javascript">
+    $('#paginator').delegate("a[id='page']", "click", function () {
+        var number = $(this).data("id");
+        $.get('/comment/note/', {'fun': 'comment', 'page': number}, function (data) {
+            $('#comment-table').html(data)
+        })
+    })
+</script>
+<div class="xld xlda pml mtm mbm" id="comment-table">
+    {% for comment in page %}
+        {% if comment.content %}
+            <dl id="pmlist_2268797" class="bbda cur1 cl">
+            <dd class="m avt">
+                <div class="newpm_avt" title="有未读消息"></div>
+                    <a href="{{ user.link }}" target="_blank"><img src="/media/{{ user.get_avatar }}"></a>
+                {% ifnotequal comment.is_read 1 %}
+                    <i class="fa fa-lightbulb-o" aria-hidden="true" style="color: red"></i>
+                {% endifnotequal %}
+            </dd>
+            <dd class="ptm pm_c">
+                <span class="xi2 xw1">您</span>
+                {% if comment.parent %}
+                        <i class="fa fa-share"></i>
+                        <a href="/" target="_blank">『{{ comment.parent.author.username }}』</a>
+                    {% if comment.belong.author == user %}[<font color="#5f9ea0" size="3">作者</font>]{% endif %}
+                {% else %}
+                        <i class="fa fa-share"></i>
+                        <a href="/" target="_blank">『{{ comment.belong.author.username }}』</a>
+                        [<font color="#5f9ea0" size="3">作者</font>]<br/><br/>
+                {% endif %}
+                {{ comment.content_to_markdown | safe }} &nbsp;  <br/>
+                <i class="fa fa-calendar" aria-hidden="true"></i>
+                <span class="xg1">{{ comment.create_date }}</span> &nbsp;
+                <span class="pm_o y">
+                    <i class="fa fa-trash" aria-hidden="true" title="删除评论"></i> |
+                    <i class="fa fa-check-square" aria-hidden="true" title="标记为已读"></i> |
+                    <a href="/">回复</a>
+                </span>
+            </dd>
+        </dl>
+        {% endif %}
+        <script type="text/javascript">addBlockLink();</script>
+    {% endfor %}
+    {% if page %}
+        <ul class="tb cl" id="paginator" style="width: auto;margin:0 10% auto;">
+        {# 如果当前页还有上一页 #}
+        {% if page.has_previous %}
+            <li>
+                {# 点击a标签，跳转到上一页链接 ?index  为地址后面拼接的参数 #}
+                <a href="javascript:;" data-id="{{ page.previous_page_number }}" id="page">上一页</a>
+            </li>
+        {% else %}
+            {# 如果没有上一页， 则上一页按钮不可点击 #}
+            <li class="disabled">
+                <a href="#">上一页</a>
+            </li>
+        {% endif %}
+        {% for page_number in paginator.page_range %}
+            {# 获取当前页的页码 #}
+            {% if page_number == page.number %}
+                {# 如果是当前页的话，选中 #}
+                <li class="active">
+                    <a style="color: red" href="javascript:;" data-id="{{ page_number }}" id="page">{{page_number}}</a>
+                </li>
+            {% else %}
+                <li>
+                    <a href="javascript:;" data-id="{{ page_number }}" id="page">{{page_number}}</a>
+                </li>
+            {% endif %}
+        {% endfor %}
+        {% if page.has_next %}
+            <li>
+                <a href="javascript:;" data-id="{{ page.next_page_number }}" id="page">下一页</a>
+            </li>
+        {% else %}
+        <li class="disabled">
+            <a href="#">下一页</a>
+        </li>
+        {% endif %}
+    </ul>
+    {% endif %}
+</div>

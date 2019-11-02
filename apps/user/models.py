@@ -24,14 +24,27 @@ class Ouser(AbstractUser):
     def __str__(self):
         return self.username
 
+    def is_webmaster(self):
+        if self.is_superuser and self.username=='stormsha':
+            return True
+        else:
+            return False
+
+    def get_avatar(self):
+        if self.avatar:
+            return self.avatar
+        else:
+            return 'avatar/default.png'
+
 
 class VerifyRecord(models.Model):
     VERIFY_TYPE = [
         ('1', 'register'),
         ('2', 'forget'),
-        ('3', 'chat')
+        ('3', 'chat'),
+        ('4', 'email')
     ]
-    code = models.CharField(max_length=20, verbose_name=u"验证码")
+    code = models.CharField(max_length=1024, verbose_name=u"验证码")
     key = models.EmailField(max_length=50, verbose_name=u"邮箱")
     # 包含注册验证和找回验证
     v_type = models.CharField(verbose_name=u"验证码类型", max_length=10, choices=VERIFY_TYPE)

@@ -39,28 +39,9 @@ def get_user_avatar_tag(name, email):
     re_user = Ouser.objects.filter(username=name, email=email)
     if re_user:
         re_user = re_user.first()
-        return {"me_avatar": re_user.avatar, "me_link": re_user.link}
-    else:
-        return 'avatar/default.png'
-
-
-@register.simple_tag
-def confirm_user_webmaster(username, email):
-    """确认此用户是否为站长"""
-    if Ouser.objects.get(username=username, email=email).is_superuser and username == "stormsha":
-        return True
-    else:
-        return False
-
-
-@register.simple_tag
-def confirm_user_author(article, to_user):
-    """确认此用户是否为作者"""
-    r_user = Ouser.objects.filter(username=to_user.author.nickname, email=to_user.author.email)
-    if r_user:
-        if article.author == r_user.first():
-            return r_user.first()
+        if re_user.avatar:
+            return {"me_avatar": re_user.avatar, "me_link": re_user.link}
         else:
-            return
+            return {"me_avatar": 'avatar/default.png', "me_link": re_user.link}
     else:
-        return
+        return None

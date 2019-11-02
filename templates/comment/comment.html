@@ -5,7 +5,7 @@
         <div class="comt">
             <div class="comt-box">
                 <h3>发表我的评论</h3>
-                <div class="card mt-2 rounded-0 border-0" id="comment-block">
+                <div class="card mt-2 rounded-0 border-0" id="comment-block" style="width: 100%!important;">
                     {% include 'comment/editor.html' %}
                 </div>
                 <div class="comt-ctrl">
@@ -58,23 +58,6 @@
 </div>
 
 <div id="postcomments">
-
-    {#{% if category == 'message'%}#}
-    {#    {% get_comment_user_count category as  user_num %}#}
-    {#    {% build_comment_tree category request.path as htm %}#}
-    {#{% elif category == 'about' %}#}
-    {#    {% get_comment_user_count category as  user_num%}#}
-    {#    {% build_comment_tree category request.path as htm %}#}
-    {#{% else %}#}
-    {#    {% get_comment_user_count category category as  user_num%}#}
-    {#    {% build_comment_tree category  request.path category as htm %}#}
-    {#{% endif %}#}
-    {#<div id="comments">#}
-    {#		<i class="fa fa-comments-o"></i> <b> ({{ user_num }})</b>个小伙伴在吐槽#}
-    {#	</div>#}
-    {#   {{ htm|safe }}#}
-
     {% include 'comment/list.html' %}
     <div class="commentnav"></div>
-
 </div>

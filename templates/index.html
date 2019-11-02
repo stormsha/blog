@@ -108,7 +108,7 @@
                     <p class="auth-span">
                         <span class="muted">
                             <i class="fa fa-user"></i>
-                            <a href="{% url 'accounts:profile' %}?next={{ request.path }}">{{ article.author }}</a>
+                            <a href="{% url 'comment:note' %}?next={{ request.path }}">{{ article.author }}</a>
                         </span>
                         <span class="muted">
                             <i class="fa fa-clock-o"></i>

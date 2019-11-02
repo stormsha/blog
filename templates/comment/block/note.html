@@ -1,29 +1,13 @@
 {% load comment_tags oauth_tags %}
 {% load humanize %}
-<script>
-    $('a').each(function () {
-        if ($(this).attr('class') == 'show') {
-            $(this).click(function () {
-                $(this).prev().toggle()
+    <script type="text/javascript">
+        $('#paginator').delegate("a[id='page']", "click", function () {
+            var number = $(this).data("id");
+            $.get('/comment/note/', {'fun': 'note', 'page': number}, function (data) {
+                $('#comment-table').html(data)
             })
-        }
-        if ($(this).attr('name') == 'one-unread') {
-            $(this).click(function () {
-                if ($(this).parent().parent().prev().find('i')) {
-                    $(this).parent().parent().prev().find('i').hide()
-                }
-                var number = $(this).attr('id');
-                $.get('/comment/note', {'fun': "one-unread", "id": number})
-            })
-        }
-    });
-    $('#paginator').delegate("a[id='page']", "click", function () {
-        var number = $(this).data("id");
-        $.get('/comment/note/', {'fun': "unread", 'page': number}, function (data) {
-            $('#comment-table').html(data)
         })
-    })
-</script>
+    </script>
 <div class="xld xlda pml mtm mbm" id="comment-table">
     <form id="deletepmform" method="post" autocomplete="off" name="deletepmform">
        <div>
@@ -40,7 +24,8 @@
                         {% endifnotequal %}
                     </dd>
                     <dd class="ptm pm_c">
-                        {% if comment.belong.author == user and comment.parent == None and comment.author != user %}
+                    {{ comment.author }} {{ comment.belong.author }} {{ comment.parent }}{{ comment.parent.author }}
+                        {% if comment.belong.author == user and comment.parent != None and comment.author != user %}
                             <span class="xi2 xw1">
                                 <a href="{{ user.link }}" target="_blank">{{ comment.author.username }}</a>
                             </span>
@@ -118,7 +103,8 @@
                 </dl>
                  {% endif %}
             {% endfor %}
-            <ul class="tb cl" id="paginator" style="width: auto;margin:0 10% auto;">
+            {% if page %}
+                <ul class="tb cl" id="paginator" style="width: auto;margin:0 10% auto;">
                 {# 如果当前页还有上一页 #}
                 {% if page.has_previous %}
                     <li>
@@ -144,7 +130,6 @@
                         </li>
                     {% endif %}
                 {% endfor %}
-
                 {% if page.has_next %}
                     <li>
                         <a href="javascript:;" data-id="{{ page.next_page_number }}" id="page">下一页</a>
@@ -155,6 +140,7 @@
                 </li>
                 {% endif %}
             </ul>
+            {% endif %}
        </div>
     </form>
     <script type="text/javascript"> addBlockLink_notice();</script>

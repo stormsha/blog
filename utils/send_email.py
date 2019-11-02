@@ -1,5 +1,6 @@
+import markdown
 from random import Random  # 用于生成随机码
-from django.core.mail import send_mail  # 发送邮件模块
+from django.core.mail import send_mail, EmailMessage  # 发送邮件模块
 from django.conf import settings
 from user.models import VerifyRecord, Ouser  # 邮箱验证model
 
@@ -15,25 +16,36 @@ def random_str(code_len=8):
     return str_code
 
 
-def send_register_email(email, v_type=None):
-    users = Ouser.objects.count()
-    email_record = VerifyRecord()
-    # 将给用户发的信息保存在数据库中
-    code = random_str(8)
-    email_record.code = code
-    email_record.key = email
-    email_record.v_type = v_type
-    email_record.save()
+def common_send_email(email, s_type=None, username=None, content=None):
     # 如果为注册类型
-    if v_type == "1":
-        email_title = "欢迎注册StormSha的个人主页。你好，很高兴能成为你你学习路上的小伙伴".format(users)
-        email_body = "请点击下面的链接激活你的账号:{0}/account/active/{1}/".format(settings.WEB_SITE, code)
+    if s_type == "1":
+        email_record = VerifyRecord()
+        # # 将给用户发的信息保存在数据库中
+        code = random_str(8)
+        email_record.code = code
+        email_record.key = email
+        email_record.v_type = s_type
+        email_record.save()
+        email_title = "欢迎注册StormSha的个人主页"
+        html = open('../common/html/email.html', 'r', encoding="utf-8")
+        content = html.read()
+        url = '{0}/account/active/{1}/'.format(settings.WEB_SITE, code)
+        content = content.replace('(title)', email_title)
+        content = content.replace('(username)', username)
+        content = content.replace('(url)', url)
         # 发送邮件
-        print(email_title, email_body, settings.EMAIL_FROM, [email])
-        send_status = send_mail(email_title, email_body, settings.EMAIL_FROM, [email])
-        print(send_status)
-        if send_status:
-            return True
-        else:
-            return False
+        msg = EmailMessage(email_title, content, settings.EMAIL_FROM, [email])
+        msg.content_subtype = "html"
+        msg.send()
+    if s_type == "4":
+        email_record = VerifyRecord()
+        email_record.key = email
+        email_title = "{}-个人主页私信".format(username)
+        body = content
+        msg = EmailMessage(email_title, body, settings.EMAIL_FROM, [settings.EMAIL_FROM])
+        msg.content_subtype = "html"
+        msg.send()
+
+
+
 

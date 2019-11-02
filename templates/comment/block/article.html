@@ -1,0 +1,87 @@
+{% load comment_tags oauth_tags %}
+<script type="text/javascript">
+    $('#paginator').delegate("a[id='page']", "click", function () {
+        var number = $(this).data("id");
+        $.get('/comment/note/', {'fun': "article", 'page': number}, function (data) {
+            $('#comment-table').html(data)
+        })
+    });
+    $('a').each(function () {
+    if ($(this).prev().attr('class') == 'show'){
+        $(this).click(function () {
+            $(this).prev().toggle()
+        })
+    }
+})
+</script>
+
+<div class="xld xlda pml mtm mbm" id="comment-table">
+    <form id="deletepmform" method="post" autocomplete="off" name="deletepmform">
+       <div>
+           {% for article in page %}
+                <dl id="pmlist_2268797" class="bbda cur1 cl">
+            <dd class="m avt">
+                <div class="newpm_avt" title="有未读消息"></div>
+                    <a href="{{ article.get_absolute_url }}" target="_blank"><img src="{{ article.img_link }}"></a>
+            </dd>
+            <dd class="ptm pm_c">
+                <span class="xi2 xw1">{{ article.title }}</span><br>
+                <br>
+                {{ article.summary | slice:":100"}} &nbsp;
+                <div id = "{{ forloop.counter }}" class="show" style="display:none;">{{ article.summary | slice:"100:"}}</div>
+                <a href="javascript:;" id="more">查看更多</a><br><br>
+                <i class="fa fa-calendar" aria-hidden="true"></i>
+                <span class="xg1">{{ article.create_date }}</span> &nbsp;
+                <i class="fa fa-eye" aria-hidden="true"></i>
+                <span class="xg1">{{ article.views }}</span> &nbsp;
+                <i class="fa fa-heart-o" aria-hidden="true"></i>
+                <span class="xg1">{{ article.loves }}</span> &nbsp;
+                {% get_article_comment_count article as count %}
+                <i class="fa fa-comments-o" aria-hidden="true"></i>
+                <span class="xg1">{{ count }}</span> &nbsp;
+
+            </dd>
+        </dl>
+                <script type="text/javascript">addBlockLink();</script>
+            {% endfor %}
+            {% if page %}
+                <ul class="tb cl" id="paginator" style="width: auto;margin:0 10% auto;">
+                {# 如果当前页还有上一页 #}
+                {% if page.has_previous %}
+                    <li>
+                        {# 点击a标签，跳转到上一页链接 ?index  为地址后面拼接的参数 #}
+                        <a href="javascript:;" data-id="{{ page.previous_page_number }}" id="page">上一页</a>
+                    </li>
+                {% else %}
+                    {# 如果没有上一页， 则上一页按钮不可点击 #}
+                    <li class="disabled">
+                        <a href="#">上一页</a>
+                    </li>
+                {% endif %}
+                {% for page_number in paginator.page_range %}
+                    {# 获取当前页的页码 #}
+                    {% if page_number == page.number %}
+                        {# 如果是当前页的话，选中 #}
+                        <li class="active">
+                            <a style="color: red" href="javascript:;" data-id="{{ page_number }}" id="page">{{page_number}}</a>
+                        </li>
+                    {% else %}
+                        <li>
+                            <a href="javascript:;" data-id="{{ page_number }}" id="page">{{page_number}}</a>
+                        </li>
+                    {% endif %}
+                {% endfor %}
+                {% if page.has_next %}
+                    <li>
+                        <a href="javascript:;" data-id="{{ page.next_page_number }}" id="page">下一页</a>
+                    </li>
+                {% else %}
+                <li class="disabled">
+                    <a href="#">下一页</a>
+                </li>
+                {% endif %}
+            </ul>
+            {% endif %}
+       </div>
+    </form>
+</div>
