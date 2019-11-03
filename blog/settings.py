@@ -29,7 +29,7 @@ SECRET_KEY = settings_json['SECRET_KEY']
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = settings_json.get('DEBUG', False)
 if DEBUG:
-    ALLOWED_HOSTS = ['*']
+    ALLOWED_HOSTS = ['*', 'hao.stormsha.com']
 else:
     ALLOWED_HOSTS = ['stormsha.com', 'www.stormsha.com']
 

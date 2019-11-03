@@ -1,16 +1,16 @@
 /*
 Navicat MySQL Data Transfer
 
-Source Server         : localhost
-Source Server Version : 50717
-Source Host           : localhost:3306
+Source Server         : 118.89.244.82
+Source Server Version : 50727
+Source Host           : 118.89.244.82:9100
 Source Database       : blog
 
 Target Server Type    : MYSQL
-Target Server Version : 50717
+Target Server Version : 50727
 File Encoding         : 65001
 
-Date: 2019-10-27 21:42:43
+Date: 2019-11-04 02:09:59
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -56,7 +56,7 @@ CREATE TABLE `auth_group` (
   `name` varchar(80) NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `name` (`name`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Table structure for auth_group_permissions
@@ -71,7 +71,7 @@ CREATE TABLE `auth_group_permissions` (
   KEY `auth_group_permissio_permission_id_84c5c92e_fk_auth_perm` (`permission_id`),
   CONSTRAINT `auth_group_permissio_permission_id_84c5c92e_fk_auth_perm` FOREIGN KEY (`permission_id`) REFERENCES `auth_permission` (`id`),
   CONSTRAINT `auth_group_permissions_group_id_b120cbf9_fk_auth_group_id` FOREIGN KEY (`group_id`) REFERENCES `auth_group` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=82 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Table structure for auth_permission
@@ -85,7 +85,7 @@ CREATE TABLE `auth_permission` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `auth_permission_content_type_id_codename_01ab375a_uniq` (`content_type_id`,`codename`),
   CONSTRAINT `auth_permission_content_type_id_2f476e4b_fk_django_co` FOREIGN KEY (`content_type_id`) REFERENCES `django_content_type` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=88 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=93 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Table structure for comment_aboutcomment
@@ -128,9 +128,8 @@ CREATE TABLE `comment_articlecomment` (
   KEY `comment_articlecomme_rep_to_id_84dab3d5_fk_comment_a` (`rep_to_id`),
   CONSTRAINT `comment_articlecomme_parent_id_f0ab594d_fk_comment_a` FOREIGN KEY (`parent_id`) REFERENCES `comment_articlecomment` (`id`),
   CONSTRAINT `comment_articlecomme_rep_to_id_84dab3d5_fk_comment_a` FOREIGN KEY (`rep_to_id`) REFERENCES `comment_articlecomment` (`id`),
-  CONSTRAINT `comment_articlecomment_author_id_46e6fdb8_fk_user_ouser_id` FOREIGN KEY (`author_id`) REFERENCES `user_ouser` (`id`),
   CONSTRAINT `comment_articlecomment_belong_id_58e0232c_fk_storm_article_id` FOREIGN KEY (`belong_id`) REFERENCES `storm_article` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=56 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=202 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Table structure for comment_commentuser
@@ -142,7 +141,7 @@ CREATE TABLE `comment_commentuser` (
   `email` varchar(30) NOT NULL,
   `address` varchar(200) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=133 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=136 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Table structure for comment_messagecomment
@@ -183,7 +182,7 @@ CREATE TABLE `django_admin_log` (
   KEY `django_admin_log_user_id_c564eba6_fk_oauth_ouser_id` (`user_id`),
   CONSTRAINT `django_admin_log_content_type_id_c4bce8eb_fk_django_co` FOREIGN KEY (`content_type_id`) REFERENCES `django_content_type` (`id`),
   CONSTRAINT `django_admin_log_user_id_c564eba6_fk_oauth_ouser_id` FOREIGN KEY (`user_id`) REFERENCES `user_ouser` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=39 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Table structure for django_content_type
@@ -195,7 +194,7 @@ CREATE TABLE `django_content_type` (
   `model` varchar(100) NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `django_content_type_app_label_model_76bd3d3b_uniq` (`app_label`,`model`)
-) ENGINE=InnoDB AUTO_INCREMENT=30 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=31 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Table structure for django_migrations
@@ -207,7 +206,7 @@ CREATE TABLE `django_migrations` (
   `name` varchar(255) NOT NULL,
   `applied` datetime(6) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=51 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=45 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Table structure for django_session
@@ -232,6 +231,39 @@ CREATE TABLE `django_site` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `django_site_domain_a2e37b91_uniq` (`domain`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Table structure for extend_attachment
+-- ----------------------------
+DROP TABLE IF EXISTS `extend_attachment`;
+CREATE TABLE `extend_attachment` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(500) DEFAULT NULL,
+  `type_of` varchar(50) DEFAULT NULL,
+  `mime_type` varchar(100) DEFAULT NULL,
+  `size` varchar(100) DEFAULT NULL,
+  `file` varchar(1000) NOT NULL,
+  `url` varchar(255) DEFAULT NULL,
+  `desc` varchar(1024) DEFAULT NULL,
+  `is_public` tinyint(1) NOT NULL,
+  `created_on` datetime(6) NOT NULL,
+  `updated_on` datetime(6) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Table structure for extend_templatevalue
+-- ----------------------------
+DROP TABLE IF EXISTS `extend_templatevalue`;
+CREATE TABLE `extend_templatevalue` (
+  `order` int(11) NOT NULL,
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `model` varchar(1) NOT NULL,
+  `object_id` int(11) NOT NULL,
+  `value` longtext NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `extend_templatevalue_object_id_7c2654f6` (`object_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Table structure for socialaccount_socialaccount
@@ -327,16 +359,16 @@ CREATE TABLE `storm_article` (
   `author_id` int(11) NOT NULL,
   `category_id` int(11) NOT NULL,
   `loves` int(11) NOT NULL,
-  `img` varchar(100),
   `image_height` int(10) unsigned,
   `image_width` int(10) unsigned,
+  `img` varchar(100),
   PRIMARY KEY (`id`),
   UNIQUE KEY `slug` (`slug`),
   KEY `storm_article_author_id_113892f7_fk_oauth_ouser_id` (`author_id`),
   KEY `storm_article_category_id_c56e32c4_fk_storm_category_id` (`category_id`),
   CONSTRAINT `storm_article_author_id_113892f7_fk_oauth_ouser_id` FOREIGN KEY (`author_id`) REFERENCES `user_ouser` (`id`),
   CONSTRAINT `storm_article_category_id_c56e32c4_fk_storm_category_id` FOREIGN KEY (`category_id`) REFERENCES `storm_category` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=69 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=67 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Table structure for storm_article_keywords
@@ -351,7 +383,7 @@ CREATE TABLE `storm_article_keywords` (
   KEY `storm_article_keywords_keyword_id_a563777a_fk_storm_keyword_id` (`keyword_id`),
   CONSTRAINT `storm_article_keywords_article_id_5df25258_fk_storm_article_id` FOREIGN KEY (`article_id`) REFERENCES `storm_article` (`id`),
   CONSTRAINT `storm_article_keywords_keyword_id_a563777a_fk_storm_keyword_id` FOREIGN KEY (`keyword_id`) REFERENCES `storm_keyword` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=135 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=132 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Table structure for storm_article_tags
@@ -366,7 +398,7 @@ CREATE TABLE `storm_article_tags` (
   KEY `storm_article_tags_tag_id_e8380d38_fk_storm_tag_id` (`tag_id`),
   CONSTRAINT `storm_article_tags_article_id_15b9f147_fk_storm_article_id` FOREIGN KEY (`article_id`) REFERENCES `storm_article` (`id`),
   CONSTRAINT `storm_article_tags_tag_id_e8380d38_fk_storm_tag_id` FOREIGN KEY (`tag_id`) REFERENCES `storm_tag` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=69 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=67 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Table structure for storm_bigcategory
@@ -461,7 +493,7 @@ CREATE TABLE `storm_tag` (
   `description` longtext NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `slug` (`slug`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Table structure for storm_timeline
@@ -499,7 +531,7 @@ CREATE TABLE `user_ouser` (
   `avatar` varchar(100) NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `username` (`username`)
-) ENGINE=InnoDB AUTO_INCREMENT=139 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=142 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Table structure for user_ouser_groups
@@ -537,9 +569,9 @@ CREATE TABLE `user_ouser_user_permissions` (
 DROP TABLE IF EXISTS `user_verifyrecord`;
 CREATE TABLE `user_verifyrecord` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `code` varchar(20) NOT NULL,
+  `code` varchar(1024) NOT NULL,
   `key` varchar(50) NOT NULL,
   `v_type` varchar(10) NOT NULL,
   `v_time` datetime(6) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8;
