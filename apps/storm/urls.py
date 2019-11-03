@@ -3,10 +3,9 @@ __author__='stormsha'
 __date__='2019/3/10 21:03'
 # ---------------------------
 
-
-
 from django.conf.urls import url
-from .views import (IndexView, DetailView, MessageView, AboutView, DonateView, ExchangeView, ProjectView, QuestionView, MySearchView, LoveView, LinkView)
+from .views import (IndexView, DetailView, MessageView, AboutView, DonateView, ExchangeView,
+                    ProjectView, QuestionView, MySearchView, LoveView, LinkView)
 
 urlpatterns = [
     # 首页

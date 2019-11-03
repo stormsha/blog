@@ -9,6 +9,8 @@ from django.http import HttpResponse
 from django.views.decorators.csrf import csrf_exempt
 from django.utils.decorators import method_decorator
 from .configs import MDConfig
+from extend.models import TemplateValue
+from utils.files import upload_attachment
 
 # TODO 此处获取default配置，当用户设置了其他配置时，此处无效，需要进一步完善
 MDEDITOR_CONFIGS = MDConfig('default')
@@ -36,7 +38,6 @@ class UploadView(generic.View):
         # image format check
         file_name_list = upload_image.name.split('.')
         file_extension = file_name_list.pop(-1)
-        file_name = '.'.join(file_name_list)
         if file_extension not in MDEDITOR_CONFIGS['upload_image_formats']:
             return HttpResponse(json.dumps({
                 'success': 0,
@@ -58,12 +59,13 @@ class UploadView(generic.View):
                 }))
 
         # save image
-        file_full_name = '%s.%s' % ('{0:%Y%m%d%H%M%S}'.format(datetime.datetime.now()),
-                                    file_extension)
-        with open(os.path.join(file_path, file_full_name), 'wb+') as file:
-            for chunk in upload_image.chunks():
-                file.write(chunk)
 
+        attachment = upload_attachment(upload_image)
+        # with open(os.path.join(file_path, file_full_name), 'wb+') as file:
+        #     for chunk in upload_image.chunks():
+        #         file.write(chunk)
+        f_name_list = attachment.file.name.split('/')
+        file_full_name = f_name_list.pop(-1)
         return HttpResponse(json.dumps({'success': 1,
                                         'message': "上传成功！",
                                         'url': '{0}{1}/{2}'.format(settings.MEDIA_URL,

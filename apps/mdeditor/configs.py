@@ -18,7 +18,7 @@ DEFAULT_CONFIG = {
                              "PNG", "bmp", "BMP", "webp", "WEBP"],
     'image_folder': 'upload',
     'theme': 'default',  # dark / default
-    'preview_theme': 'default',  # dark / default
+    'preview_theme': None,  # dark / default
     'editor_theme': 'default',  # pastel-on-dark / default
     'toolbar_autofixed': True,
     'search_replace': True,
@@ -27,7 +27,7 @@ DEFAULT_CONFIG = {
     'flow_chart': True,
     'sequence': True,
     'language': 'zh',  # zh / en
-    'watch': True,  # Live preview
+    'watch': False,  # Live preview
     'lineWrapping': False,  # lineWrapping
     'lineNumbers': False  # lineNumbers
 }

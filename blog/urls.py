@@ -50,6 +50,7 @@ urlpatterns = [
     url(r'^feed/$', AllArticleRssFeed(), name='rss'),   # rss订阅
     url(r'^mdeditor/', include('mdeditor.urls')),
     url(r'^api/', include('api.urls', namespace='api1')),  # comment
+    url(r'^extend/', include('extend.urls', namespace='extend')),  # comment
 ]
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)    # 加入这个才能显示media文件
 if settings.DEBUG:

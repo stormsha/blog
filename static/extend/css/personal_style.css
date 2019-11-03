@@ -1,0 +1,335 @@
+/*固定底部导航栏*/
+
+/*https://css-tricks.com/couple-takes-sticky-footer/?utm_source=caibaojian.com*/
+
+html,
+body {
+    height: 100%;
+    margin: 0;
+}
+
+.ml13 {
+    position: absolute;
+    top: -30px;
+}
+
+.ml13 .letter {
+    display: inline-block;
+    line-height: 1em;
+    color: #FF6767;
+}
+
+.no-underline {
+    vertical-align: inherit;
+}
+
+.no-underline:hover {
+    text-decoration: none;
+}
+
+#wrapper {
+    min-height: 100%;
+    /* Equal to height of footer */
+    /* But also accounting for potential margin-bottom of last child */
+    margin-bottom: -120px;
+}
+
+#nav-footer,
+#push {
+    height: 120px;
+}
+
+#unfold_link {
+    background-image: -webkit-linear-gradient(top, #0055a5, rgb(253, 253, 253) 25%, rgb(26, 83, 189) 50%, rgb(253, 253, 253) 75%, #0055a5);
+    -webkit-background-clip: text;
+    -moz-background-clip: text;
+    -o-background-clip: text;
+    -ms-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    background-size: 100% 200%;
+    animation: flowlight 6s linear infinite;
+}
+
+@keyframes flowlight {
+    0% {
+        background-position: 0 0;
+    }
+
+    100% {
+        background-position: 0 -100%;
+    }
+}
+
+#gradient_layer {
+    height: 60px;
+    position: relative;
+    top: -60px;
+    color: cornflowerblue;
+    background: linear-gradient(to bottom, rgba(255, 255, 255, 0), rgb(255, 255, 255));
+    z-index: 100000;
+}
+
+.comment-hidden {
+    overflow: hidden;
+}
+
+.font_gradient {
+    background-color: rgb(241, 241, 241);
+    border-radius: 5px;
+    padding: 2px;
+    color: #f35626;
+    -webkit-animation: hue 30s infinite linear;
+    -moz-animation: hue 30s infinite linear;
+    -ms-animation: hue 30s infinite linear;
+    -o-animation: hue 30s infinite linear;
+    animation: hue 30s infinite linear;
+}
+
+@-webkit-keyframes hue {
+    0% {
+        color: #a70000;
+    }
+
+    25% {
+        color: #288f00;
+    }
+
+    50% {
+        color: #0055a5;
+    }
+
+    75% {
+        color: #5900a1;
+    }
+
+    100% {
+        color: #a70000;
+    }
+}
+
+@-moz-keyframes hue {
+    0% {
+        color: #a70000;
+    }
+
+    25% {
+        color: #288f00;
+    }
+
+    50% {
+        color: #0055a5;
+    }
+
+    75% {
+        color: #5900a1;
+    }
+
+    100% {
+        color: #a70000;
+    }
+}
+
+@-ms-keyframes hue {
+    0% {
+        color: #a70000;
+    }
+
+    25% {
+        color: #288f00;
+    }
+
+    50% {
+        color: #0055a5;
+    }
+
+    75% {
+        color: #5900a1;
+    }
+
+    100% {
+        color: #a70000;
+    }
+}
+
+@-o-keyframes hue {
+    0% {
+        color: #a70000;
+    }
+
+    25% {
+        color: #288f00;
+    }
+
+    50% {
+        color: #0055a5;
+    }
+
+    75% {
+        color: #5900a1;
+    }
+
+    100% {
+        color: #a70000;
+    }
+}
+
+@keyframes hue {
+    0% {
+        color: #a70000;
+    }
+
+    25% {
+        color: #288f00;
+    }
+
+    50% {
+        color: #0055a5;
+    }
+
+    75% {
+        color: #5900a1;
+    }
+
+    100% {
+        color: #a70000;
+    }
+}
+
+/*Author: rozbo*/
+
+.breath-box input:focus {
+    -webkit-animation: glow 800ms ease-out infinite alternate;
+    -moz-animation: glow 800ms ease-out infinite alternate;
+    -o-animation: glow 800ms ease-out infinite alternate;
+    -ms-animation: glow 800ms ease-out infinite alternate;
+    animation: glow 800ms ease-out infinite alternate;
+    border-color: #393;
+    box-shadow: 0 0 5px rgba(0, 255, 0, .2), inset 0 0 5px rgba(0, 255, 0, .1), 0 2px 0 #000;
+    outline: none;
+}
+
+/*动画帧*/
+
+@-webkit-keyframes glow {
+    0% {
+        border-color: #393;
+        box-shadow: 0 0 5px rgba(0, 255, 0, .2), inset 0 0 5px rgba(0, 255, 0, .1), 0 2px 0 #000;
+    }
+    100% {
+        border-color: #6f6;
+        box-shadow: 0 0 20px rgba(0, 255, 0, .6), inset 0 0 10px rgba(0, 255, 0, .4), 0 2px 0 #000;
+    }
+}
+
+@-moz-keyframes glow {
+    0% {
+        border-color: #393;
+        box-shadow: 0 0 5px rgba(0, 255, 0, .2), inset 0 0 5px rgba(0, 255, 0, .1), 0 2px 0 #000;
+    }
+    100% {
+        border-color: #6f6;
+        box-shadow: 0 0 20px rgba(0, 255, 0, .6), inset 0 0 10px rgba(0, 255, 0, .4), 0 2px 0 #000;
+    }
+}
+
+@-o-keyframes glow {
+    0% {
+        border-color: #393;
+        box-shadow: 0 0 5px rgba(0, 255, 0, .2), inset 0 0 5px rgba(0, 255, 0, .1), 0 2px 0 #000;
+    }
+    100% {
+        border-color: #6f6;
+        box-shadow: 0 0 20px rgba(0, 255, 0, .6), inset 0 0 10px rgba(0, 255, 0, .4), 0 2px 0 #000;
+    }
+}
+
+@-ms-keyframes glow {
+    0% {
+        border-color: #393;
+        box-shadow: 0 0 5px rgba(0, 255, 0, .2), inset 0 0 5px rgba(0, 255, 0, .1), 0 2px 0 #000;
+    }
+    100% {
+        border-color: #6f6;
+        box-shadow: 0 0 20px rgba(0, 255, 0, .6), inset 0 0 10px rgba(0, 255, 0, .4), 0 2px 0 #000;
+    }
+}
+
+@keyframes glow {
+    0% {
+        border-color: #393;
+        box-shadow: 0 0 5px rgba(0, 255, 0, .2), inset 0 0 5px rgba(0, 255, 0, .1), 0 2px 0 #000;
+    }
+    100% {
+        border-color: #6f6;
+        box-shadow: 0 0 20px rgba(0, 255, 0, .6), inset 0 0 10px rgba(0, 255, 0, .4), 0 2px 0 #000;
+    }
+}
+
+.breath-input {
+    -webkit-animation: glow-red 800ms ease-out infinite alternate;
+    -moz-animation: glow-red 800ms ease-out infinite alternate;
+    -o-animation: glow-red 800ms ease-out infinite alternate;
+    -ms-animation: glow-red 800ms ease-out infinite alternate;
+    animation: glow-red 800ms ease-out infinite alternate;
+    border-color: rgb(153, 51, 51);
+    box-shadow: 0 0 5px rgba(255, 0, 0, 0.2);
+    outline: none;
+}
+
+/*动画帧*/
+
+@-webkit-keyframes glow-red {
+    0% {
+        border-color: rgb(153, 51, 51);
+        box-shadow: 0 0 5px rgba(255, 0, 0, 0.2);
+    }
+    100% {
+        border-color: rgb(255, 102, 102);
+        box-shadow: 0 0 20px rgba(255, 0, 0, 0.6);
+    }
+}
+
+@-moz-keyframes glow-red {
+    0% {
+        border-color: rgb(153, 51, 51);
+        box-shadow: 0 0 5px rgba(255, 0, 0, 0.2);
+    }
+    100% {
+        border-color: rgb(255, 102, 102);
+        box-shadow: 0 0 20px rgba(255, 0, 0, 0.6);
+    }
+}
+
+@-o-keyframes glow-red {
+    0% {
+        border-color: rgb(153, 51, 51);
+        box-shadow: 0 0 5px rgba(255, 0, 0, 0.2);
+    }
+    100% {
+        border-color: rgb(255, 102, 102);
+        box-shadow: 0 0 20px rgba(255, 0, 0, 0.6);
+    }
+}
+
+@-ms-keyframes glow-red {
+    0% {
+        border-color: rgb(153, 51, 51);
+        box-shadow: 0 0 5px rgba(255, 0, 0, 0.2);
+    }
+    100% {
+        border-color: rgb(255, 102, 102);
+        box-shadow: 0 0 20px rgba(255, 0, 0, 0.6);
+    }
+}
+
+@keyframes glow-red {
+    0% {
+        border-color: rgb(153, 51, 51);
+        box-shadow: 0 0 5px rgba(255, 0, 0, 0.2);
+    }
+    100% {
+        border-color: rgb(255, 102, 102);
+        box-shadow: 0 0 20px rgba(255, 0, 0, 0.6);
+    }
+}

@@ -10,3 +10,4 @@ Pillow==5.4.1
 Whoosh==2.7.4
 jieba==0.39
 django-redis==4.10.0
+pyperclip==1.7.0

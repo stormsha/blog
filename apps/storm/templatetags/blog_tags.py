@@ -250,3 +250,5 @@ def get_announcement_count():
         count = ""
     return count
 
+
+

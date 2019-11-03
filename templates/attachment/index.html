@@ -1,0 +1,211 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="format-detection" content="telephone=no">
+    <link rel="bookmark" type="image/x-icon" href="/static/images/picture.ico"/>
+    <link rel="shortcut icon" href="/static/images/picture.ico">
+    <title>资源库 - StormSha的个人网站</title>
+    <link href="https://cdn.bootcss.com/twitter-bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.bootcss.com/font-awesome/5.8.2/css/all.min.css" rel="stylesheet">
+    <link href="https://cdn.bootcss.com/hover.css/2.3.1/css/hover-min.css" rel="stylesheet">
+    <script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://cdn.bootcss.com/popper.js/1.15.0/umd/popper.min.js"></script>
+    <script src="https://cdn.bootcss.com/twitter-bootstrap/4.3.1/js/bootstrap.min.js"></script>
+
+</head>
+<body>
+<style>
+    /* 56px */
+    .toTop-arrow {
+        width: 3.5rem;
+        height: 3.5rem;
+        padding: 0;
+        margin: 0;
+        border: 0;
+        border-radius: 33%;
+        opacity: 0.7;
+        background: black;
+        cursor: pointer;
+        position: fixed;
+        right: 1.5rem;
+        bottom: 1.5rem;
+        display: none;
+    }
+
+    .toTop-arrow::before, .toTop-arrow::after {
+        width: 31px;
+        height: 7px;
+        border-radius: 3px;
+        background: orange;
+        position: absolute;
+        content: "";
+    }
+
+    .toTop-arrow::before {
+        transform: rotate(-45deg) translate(0, -50%);
+        left: 0.4rem;
+    }
+
+    .toTop-arrow::after {
+        transform: rotate(45deg) translate(0, -50%);
+        right: 0.4rem;
+    }
+
+    .toTop-arrow:focus {
+        outline: none;
+    }
+</style>
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <!-- 导航 -->
+    <a class="navbar-brand hvr-grow-rotate" href="/" style="font-size: 1.2em;">
+        福利中心
+    </a>
+    <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav">
+            <li class="nav-item">
+                <a class="nav-link mr-2" href="{% url 'blog:index' %}">
+                    首页
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link mr-2" href="{% url 'extend:attachment' %}">
+                    私有资源
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link mr-2" href="/">
+                    福利
+                </a>
+            </li>
+        </ul>
+    </div>
+</nav>
+<div id="wrapper">
+    <div class="container" id="container">
+        <div class="row mt-3">
+            {% if user %}
+                <div class="card-columns" id="attachment">
+                    {% for attachment in page %}
+                        <div class="card hvr-float-shadow" style="word-break: break-all;">
+                            <!-- Button trigger modal -->
+                            <a href="javascript:"
+                               data-toggle="modal"
+                               data-target="#img_{{ attachment.id }}"
+                               class="card-link text-muted">
+                                <div style="overflow: hidden">
+                                </div>
+                                <div class="card-body">
+                                    <h5 class="card-title">
+                                        {{ attachment.name }}
+                                        <span>
+                                        <a href="javascript:;" id="delete" data-id="{{ attachment.id }}"
+                                           class="hvr-icon-buzz-out no-underline" style="color: #C0C1C3; float: right">
+                                            <button class="icobutton icobutton_{{ attachment.id }}">
+                                                <i class="fas fa-trash hvr-icon"></i>
+
+                                            </button>
+                                        </a>
+                                            <a href="javascript:;" id="copy" data-id="{{ attachment.id }}"
+                                               class="hvr-icon-buzz-out no-underline"
+                                               style="color: #C0C1C3; float: right">
+                                            <button class="icobutton icobutton_{{ attachment.id }}">
+                                                <i class="fas fa-clipboard"></i>
+                                            </button>
+                                        </a>
+                                    </span>
+                                    </h5>
+                                </div>
+                            </a>
+                        </div>
+                        <!-- Modal -->
+                        <div class="modal fade" id="img_{{ attachment.id }}" tabindex="-1" role="dialog"
+                             aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                            <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-body">
+                                        <img src="{{ attachment.get_url }}"
+                                             style="max-width: 100%"
+                                             alt="img">
+                                    </div>
+                                    <div class="modal-body text-muted">
+                                        <p>
+                                            {% if attachment.desc %}
+                                                {{ attachment.desc }}
+                                            {% endif %}
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            {% endif %}
+            {% if page %}
+                <ul class="pagination" id="paginator">
+                    {# 如果当前页还有上一页 #}
+                    {% if page.has_previous %}
+                        <li>
+                            {# 点击a标签，跳转到上一页链接 ?index  为地址后面拼接的参数 #}
+                            <a href="/extend/attachments/?page={{ page.previous_page_number }}"
+                               data-id="{{ page.previous_page_number }}" id="page">上一页</a>
+                        </li>
+                    {% else %}
+                        {# 如果没有上一页， 则上一页按钮不可点击 #}
+                        <li class="disabled">
+                            <a href="#">上一页</a>
+                        </li>
+                    {% endif %}
+                    {% for page_number in paginator.page_range %}
+                        {# 获取当前页的页码 #}
+                        {% if page_number == page.number %}
+                            {# 如果是当前页的话，选中 #}
+                            <li class="active">
+                                <a style="color: red" href="/extend/attachments/?page={{ page_number }}"
+                                   data-id="{{ page_number }}"
+                                   id="page">{{ page_number }}</a>
+                            </li>
+                        {% else %}
+                            <li>
+                                <a href="/extend/attachments/?page={{ page_number }}" data-id="{{ page_number }}"
+                                   id="page">{{ page_number }}</a>
+                            </li>
+                        {% endif %}
+                    {% endfor %}
+                    {% if page.has_next %}
+                        <li>
+                            <a href="/extend/attachments/?page={{ page.next_page_number }}"
+                               data-id="{{ page.next_page_number }}" id="page">下一页</a>
+                        </li>
+                    {% else %}
+                        <li class="disabled">
+                            <a href="#">下一页</a>
+                        </li>
+                    {% endif %}
+                </ul>
+            {% endif %}
+        </div>
+    </div>
+    <div id="push"></div>
+</div>
+<script type="text/javascript">
+    $('#container').delegate("a[id='delete']", "click", function () {
+        var pk = $(this).data("id");
+        $.get('/extend/attachments/', {'fun': 'delete', 'pk': pk}, function (data) {
+            window.location.reload()
+        })
+    });
+     $('#attachment').delegate("a[id='copy']", "click", function () {
+        var pk = $(this).data("id");
+        $.get('/extend/attachments/', {'fun': 'copy', 'pk': pk}, function (data) {
+            alert('复制完成')
+        })
+    });
+</script>
+</body>
+</html>

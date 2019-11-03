@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     'storm',  # 博客应用
     'user',  # 自定义用户应用
     'comment',  # 评论
+    'extend',
     'haystack',  # 全文搜索应用 这个要放在其他应用之前
     'rest_framework',  # API
     'compressor',  # 压缩js、css文件
@@ -266,7 +267,7 @@ MDEDITOR_CONFIGS = {
         'tex': True,  # whether to open the tex chart function
         'flow_chart': True,  # whether to open the flow chart function
         'sequence': True,  # Whether to open the sequence diagram function
-        'watch': True,  # Live preview
+        'watch': False,  # Live preview
         'lineWrapping': False,  # lineWrapping
         'lineNumbers': False  # lineNumbers
     }

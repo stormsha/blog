@@ -108,7 +108,7 @@
         gotoLine             : true,
         codeFold             : false,
         autoHeight           : false,
-		autoFocus            : true,
+		autoFocus            : false,
         autoCloseTags        : true,
         searchReplace        : true,
         syncScrolling        : true,           // true | false | "single", default true
