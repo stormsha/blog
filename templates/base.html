@@ -28,7 +28,6 @@
     <link rel='stylesheet' id='style-css' href='https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css'
           type='text/css' media='all'/>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/simplemde/latest/simplemde.min.css">
-
     <script type='text/javascript' src='https://libs.baidu.com/jquery/1.8.3/jquery.min.js?ver=1.0'></script>
     <script type='text/javascript' src='https://cuiqingcai.com/wp-content/themes/Yusi/js/jquery.js?ver=1.0'></script>
     {% block head %}{% endblock head %}
@@ -178,8 +177,11 @@
     <!--右侧信息标签广告区-->
 
     {% block right %}{% endblock %}
+    <!--评论区输入框相关js代码，必须放在页面底部引入，在评论框标签未加载出来之前，js代码是不生效的-->
     <script type='text/javascript' src="https://cdn.jsdelivr.net/simplemde/latest/simplemde.min.js"></script>
+    <!--操作评论框-->
     <script type='text/javascript' src="/static/comment/js/editor.js"></script>
+    <!--评论框输入特效-->
     <script type='text/javascript' src="{% static 'comment/js/activate-power.js' %}?v=20180120"></script>
     <script>
         var sw = window.screen.width;

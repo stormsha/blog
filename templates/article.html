@@ -10,6 +10,7 @@
 {% block head %}
 <script>
     $(function(){
+        // 还原文章插图
         $("article").find('img').each(function () {
             var realWidth = this.width;     //获取图片真实宽度
             if(realWidth>780){
@@ -27,6 +28,44 @@
                 imgShow("#outerdiv", "#innerdiv", "#bigimg", _this);
         });
         });
+        // 点击喜欢
+        $('.muted').delegate("a[id='in_add_like']", "click", function () {
+                if ($(this).hasClass("actived")) {
+                    return alert("已经点过赞啦！")
+                } else {
+                    $(this).addClass("actived");
+                    var z = $(this).data("id"), x = $(this).children(".count");
+                    var article = z.split(',')[0];
+                    var loves = z.split(',')[1];
+                    loves = Number(loves) + 1;
+                    x.html(loves);
+                    $.ajax({
+                        type: "POST",//方法类型
+                        url: "/love/",//url
+                        dataType: "JSON",
+                        data: {"article": article, "loves": true},
+                        success: function (data) {
+                            console.log(data);
+                        },
+                        error: function (data) {
+                            console.log(data);
+                        }
+                    });
+                }
+        })
+        //点击赞赏
+        var flag = true;
+        $('#support').on('click', function () {
+            if (flag){
+                $('#sponsor-wx').addClass("show");
+                $('#sponsor-zfb').addClass("show");
+                flag = false
+            }else {
+                $('#sponsor-wx').removeClass('show');
+                $('#sponsor-zfb').removeClass('show');
+                flag = true
+            }
+        })
     });
     function imgShow(outerdiv, innerdiv, bigimg, _this){
         var src = _this.attr("src");//获取当前点击的pimg元素中的src属性
@@ -93,6 +132,12 @@
                     <time class="muted"><i class="fa fa-clock-o"></i> {{ object.create_date|date:'y-m-d' }}</time>
                     <span class="muted"><i class="fa fa-eye"></i> {{ object.views }}浏览</span>
                     <span class="muted">
+                        <a href="javascript:;" data-action="ding" data-id="{{ article.id }},{{ article.loves }}"
+                           id="in_add_like">
+                        <i class="fa fa-heart-o"></i>
+                            <span class="count">{{ article.loves }}</span>喜欢</a>
+                    </span>
+                    <span class="muted">
                         <i class="fa fa-comments-o"></i>
                         <a href="/article/{{ object.slug }}#respond">{% get_comment_count article %}评论</a>
                     </span>
@@ -110,6 +155,7 @@
                     <a href="{% url 'blog:article' object.slug %}">StormSha</a> &raquo;
                     <a href="{% url 'blog:article' object.slug %}">{{ object.title }}</a>
                 </p>
+                <!--文章插图还原-->
                 <div id="outerdiv" style="position:fixed;top:0;left:0;background:rgba(0,0,0,0.7);z-index:2;width:100%;height:100%;display:none;">
 		            <div id="innerdiv" style="position:absolute;">
 			            <img id="bigimg" style="border:5px solid #fff;" src="" />
@@ -118,15 +164,66 @@
             </article>
             <div style="background:#fff;padding-bottom:20px;font-size:14px;">
                 <div class="text-center">
-                    <button class="btn btn-danger rounded-0" data-toggle="collapse" data-target=".multi-collapse"
-                            aria-expanded="true" aria-controls="sponsor-zfb sponsor-wx"
-                            style="line-height: 1;font-size: .8rem;">
+                    <button class="btn btn-danger rounded-0" style="line-height: 1;font-size: .8rem;" id="support">
                         <i class="fa fa-cny"></i>
                         如果文章对你有所帮助，可以赞助本站
                         <i class="fa fa-chevron-down"></i>
                     </button>
                 </div>
-
+                <!--赞赏吗样式-->
+                <style>
+                    .p-3 {
+                        padding: 1rem!important;
+                    }
+                    .row {
+                        display: -ms-flexbox;
+                        display: flex;
+                        -ms-flex-wrap: wrap;
+                        flex-wrap: wrap;
+                        margin-right: -15px;
+                        margin-left: -15px;
+                    }
+                    .col {
+                        -ms-flex-preferred-size: 0;
+                        flex-basis: 0;
+                        -ms-flex-positive: 1;
+                        flex-grow: 1;
+                        max-width: 100%;
+                    }
+                    .text-success {
+                        color: #28a745!important;
+                    }
+                    .p-1 {
+                        padding: .25rem!important;
+                    }
+                    .w-75 {
+                        width: 75%!important;
+                    }
+                    img {
+                        vertical-align: middle;
+                        border-style: none;
+                    }
+                    .multi-collapse {
+                        display: none;
+                    }
+                    .show {
+                        display: block!important;
+                    }
+                </style>
+                <div class="row p-3">
+                    <div class="col text-center">
+                        <div class="multi-collapse collapse" id="sponsor-wx" style="">
+                            <div class="p-1 text-success">微信</div>
+                            <img class="w-75" src="/static/images/reward_wx.png">
+                        </div>
+                    </div>
+                    <div class="col text-center">
+                        <div class="multi-collapse collapse" id="sponsor-zfb" style="">
+                            <div class="p-1 text-primary">支付宝</div>
+                            <img class="w-75" src="/static/images/reward_zfb.png">
+                        </div>
+                    </div>
+                </div>
             </div>
             <footer class="article-footer">
                 <!--文章标签-->
@@ -138,24 +235,22 @@
                     {% endfor %}
                 </div>
                 <!--文章标签结束-->
-
             </footer>
             <!--推荐文章-->
             <nav class="article-nav">
-                        <span class="article-nav-prev">
-                            <i class="fa fa-angle-double-left"></i>
-                            {% get_article_previous object.id as article_previous %}
-                            <a href="{% url 'blog:article'  article.get_pre.slug %}"
-                               rel="prev">{{ article.get_pre.title }}</a>
-                        </span>
+                <span class="article-nav-prev">
+                    <i class="fa fa-angle-double-left"></i>
+                    {% get_article_previous object.id as article_previous %}
+                    <a href="{% url 'blog:article'  article.get_pre.slug %}"
+                       rel="prev">{{ article.get_pre.title }}</a>
+                </span>
                 <span class="article-nav-next">
-                            {% get_article_next object.id as article_next %}
-                            <a href="{% url 'blog:article'  article.get_next.slug %}"
-                               rel="prev">{{ article.get_next.title }}</a>
-                            <i class="fa fa-angle-double-right"></i>
-                        </span>
+                    {% get_article_next object.id as article_next %}
+                    <a href="{% url 'blog:article'  article.get_next.slug %}"
+                       rel="prev">{{ article.get_next.title }}</a>
+                    <i class="fa fa-angle-double-right"></i>
+                </span>
             </nav>
-
             <div class="related_top">
                 <div class="related_posts">
                     <ul class="related_img">
@@ -182,9 +277,7 @@
                     </div>
                 </div>
             </div>
-
             {% include 'comment/comment.html' %}
-
         </div>
     </div>
 
