@@ -1,9 +1,9 @@
-﻿﻿
+﻿
 
 @font-face {
     font-family: FontAwesome;
-    src: url(../fonts/fontawesome-webfont.eot);
-    src: url(../fonts/fontawesome-webfont.eot) format('embedded-opentype'), url(../fonts/fontawesome-webfont.woff) format('woff'), url(../fonts/fontawesome-webfont.ttf) format('truetype'), url(../fonts/fontawesome-webfont.svg) format('svg');
+    src: url(/static/fonts/fontawesome-webfont.eot?c30cfdfedc2a);
+    src: url(/static/fonts/fontawesome-webfont.eot?c30cfdfedc2a) format('embedded-opentype'), url(/static/fonts/fontawesome-webfont.woff?c30cfdfedc2a) format('woff'), url(/static/fonts/fontawesome-webfont.ttf?c30cfdfedc2a) format('truetype'), url(/static/fonts/fontawesome-webfont.svg?c30cfdfedc2a) format('svg');
     font-weight: 400;
     font-style: normal
 }
@@ -3641,15 +3641,6 @@ button.btn::-moz-focus-inner, input[type=submit].btn::-moz-focus-inner {
     -o-transform: none;
     transform: none
 }
-
-.nav li:hover .sub-menu li:nth-child(1) {
-    -webkit-transition-delay: 0;
-    -moz-transition-delay: 0;
-    -ms-transition-delay: 0;
-    -o-transition-delay: 0;
-    transition-delay: 0
-}
-
 .nav li:hover .sub-menu li:nth-child(2) {
     -webkit-transition-delay: 50ms;
     -moz-transition-delay: 50ms;
@@ -3760,14 +3751,6 @@ button.btn::-moz-focus-inner, input[type=submit].btn::-moz-focus-inner {
     -ms-transition-delay: 50ms;
     -o-transition-delay: 50ms;
     transition-delay: 50ms
-}
-
-.sub-menu li:nth-child(8) {
-    -webkit-transition-delay: 0;
-    -moz-transition-delay: 0;
-    -ms-transition-delay: 0;
-    -o-transition-delay: 0;
-    transition-delay: 0
 }
 
 .navbar .btn-navbar {
@@ -4082,24 +4065,6 @@ button.btn::-moz-focus-inner, input[type=submit].btn::-moz-focus-inner {
 .modal-backdrop, .modal-backdrop.fade.in {
     opacity: .8;
     filter: alpha(opacity=80)
-}
-
-.modal {
-    position: fixed;
-    top: 10%;
-    left: 50%;
-    z-index: 1050;
-    width: 560px;
-    margin-left: -280px;
-    background-color: #fff;
-    border: 1px solid #999;
-    border: 1px solid rgba(0, 0, 0, .3);
-    border-radius: 4px;
-    box-shadow: 0 3px 7px rgba(0, 0, 0, .3);
-    -webkit-background-clip: padding-box;
-    -moz-background-clip: padding-box;
-    background-clip: padding-box;
-    outline: 0
 }
 
 .modal.fade {
@@ -4960,26 +4925,6 @@ a.badge-inverse:hover .label-arrow, a.label-inverse:hover .label-arrow {
     background-color: #fff
 }
 
-.article-content h2 {
-    font-size: 18px;
-    font-weight: blod;
-    margin: 20px -20px 20px -24px;
-    padding: 10px 20px 9px 10px;
-    line-height: 18px;
-    border-left: 4px solid #00a67c;
-    background-color: #fbfbfb
-}
-
-.article-content h3 {
-    font-size: 16px;
-    font-weight: blod;
-    margin-bottom: 10px
-}
-
-.article-content h4 {
-    font-size: 15px;
-    font-weight: blod
-}
 
 .article-content p {
     margin: 0 0 15px 0
@@ -6356,10 +6301,6 @@ a.badge-inverse:hover .label-arrow, a.label-inverse:hover .label-arrow {
     -o-border-radius: 100px
 }
 
-@-ms-viewport {
-    width: device-width
-}
-
 .postcomments pre {
     text-indent: 0;
     background-color: #f8f8f8;
@@ -7094,7 +7035,7 @@ a.badge-inverse:hover .label-arrow, a.label-inverse:hover .label-arrow {
     z-index: 60;
     height: 7.1em;
     width: 7.1em;
-    background-image: url(../images/arrows.png);
+    background-image: url(/static/images/arrows.png?c30cfdfedc2a);
     background-size: 200%
 }
 
@@ -7142,11 +7083,11 @@ a.badge-inverse:hover .label-arrow, a.label-inverse:hover .label-arrow {
 }
 
 #wowslider-container1 .ws_pause {
-    background-image: url(../images/pause.png)
+    background-image: url(/static/images/pause.png?c30cfdfedc2a)
 }
 
 #wowslider-container1 .ws_play {
-    background-image: url(../images/play.png)
+    background-image: url(/static/images/play.png?c30cfdfedc2a)
 }
 
 #wowslider-container1 .ws_pause:hover, #wowslider-container1 .ws_play:hover {
@@ -7353,17 +7294,6 @@ a.badge-inverse:hover .label-arrow, a.label-inverse:hover .label-arrow {
     height: 45px;
     padding: 10px 6px;
     background-color: #fff
-}
-
-.social i {
-    font-size: 2.5em;
-    width: 45px;
-    height: 38px;
-    padding-top: 7px;
-    -webkit-border-radius: 4px;
-    -moz-border-radius: 4px;
-    border-radius: 4px;
-    -webkit-box-shadow: inset 0 -1px 0 #3333sf
 }
 
 .sinaweibo {

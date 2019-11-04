@@ -206,96 +206,48 @@ class IndexView(generic.ListView):
 
         return data
 
-    def post(self, request):
-        context = {}
-        form = loginForm(request.POST)
-        fun = request.POST.get('fun', None)
-        if fun == 'login':
-            remember = request.POST.get('remember', 0)
-            if form.is_valid():
-                # 获取表单用户密码
-                username = form.cleaned_data['username']
-                password = form.cleaned_data['password']
-                context = {'username': username, 'pwd': password}
-                # 获取的表单数据与数据库进行比较
-                user = authenticate(username=username, password=password)
-                if user:
-                    if user.is_active:
-                        # 比较成功，跳转index
-                        auth.login(request, user)
-                        request.session['username'] = username
-                        request.session['uid'] = user.id
-                        request.session['nick'] = None
-                        request.session['tid'] = None
-                        response = JsonResponse({"ok": "1"})
-                        if remember != 0:
-                            response.set_cookie('username', username)
-                        else:
-                            response.set_cookie('username', '', max_age=-1)
-                        return response
-                    else:
-                        context['inactive'] = True
-                        return render(request, 'oauth/user.html', context)
-                else:
-                    # 比较失败，还在login
-                    context['login_error'] = 'true'
-                    context['error'] = 'true'
-                    username = request.POST.get('username', None)
-                    pwd = request.POST.get('password', None)
-                    context['username'] = username
-                    context['pwd'] = pwd
-                    return render(request, 'oauth/user.html', context)
-            else:
-                context['login_error'] = 'true'
-                context['error'] = 'true'
-                return render(request, 'oauth/user.html', context)
-        if fun == 'register':
-            pass
-        if fun == 'forget':
-            pass
 
-
-class DetailView(generic.DetailView):
-    """
-        Django有基于类的视图DetailView,用于显示一个对象的详情页，我们继承它
-    """
-    # 获取数据库中的文章列表
-    model = Article
-    # template_name属性用于指定使用哪个模板进行渲染
-    template_name = 'article.html'
-    # context_object_name属性用于给上下文变量取名（在模板中使用该名字）
-    context_object_name = 'article'
-
-    def get_object(self):
-        obj = super(DetailView, self).get_object()
-        # 设置浏览量增加时间判断,同一篇文章两次浏览超过半小时才重新统计阅览量,作者浏览忽略
-        u = self.request.user
-        ses = self.request.session
-        the_key = 'is_read_{}'.format(obj.id)
-        is_read_time = ses.get(the_key)
-        if u != obj.author:
-            if not is_read_time:
-                obj.update_views()
-                ses[the_key] = time.time()
-            else:
-                now_time = time.time()
-                t = now_time - is_read_time
-                if t > 60 * 30:
-                    obj.update_views()
-                    ses[the_key] = time.time()
-        md = markdown.Markdown(extensions=[
-            'markdown.extensions.extra',
-            'markdown.extensions.codehilite',
-            TocExtension(slugify=slugify),
-        ])
-        obj.body = md.convert(obj.body)
-        obj.toc = md.toc
-        return obj
-
-    def get_context_data(self, **kwargs):
-        context = super(DetailView, self).get_context_data(**kwargs)
-        context['category'] = self.object.id
-        return context
+# class DetailView(generic.DetailView):
+#     """
+#         Django有基于类的视图DetailView,用于显示一个对象的详情页，我们继承它
+#     """
+#     # 获取数据库中的文章列表
+#     model = Article
+#     # template_name属性用于指定使用哪个模板进行渲染
+#     template_name = 'article.html'
+#     # context_object_name属性用于给上下文变量取名（在模板中使用该名字）
+#     context_object_name = 'article'
+#
+#     def get_object(self):
+#         obj = super(DetailView, self).get_object()
+#         # 设置浏览量增加时间判断,同一篇文章两次浏览超过半小时才重新统计阅览量,作者浏览忽略
+#         u = self.request.user
+#         ses = self.request.session
+#         the_key = 'is_read_{}'.format(obj.id)
+#         is_read_time = ses.get(the_key)
+#         if u != obj.author:
+#             if not is_read_time:
+#                 obj.update_views()
+#                 ses[the_key] = time.time()
+#             else:
+#                 now_time = time.time()
+#                 t = now_time - is_read_time
+#                 if t > 60 * 30:
+#                     obj.update_views()
+#                     ses[the_key] = time.time()
+#         # md = markdown.Markdown(extensions=[
+#         #     'markdown.extensions.extra',
+#         #     'markdown.extensions.codehilite',
+#         #     TocExtension(slugify=slugify),
+#         # ])
+#         # obj.body = md.convert(obj.body)
+#         # obj.toc = md.toc
+#         return obj
+#
+#     def get_context_data(self, **kwargs):
+#         context = super(DetailView, self).get_context_data(**kwargs)
+#         context['category'] = self.object.id
+#         return context
 
 
 def MessageView(request):
@@ -354,22 +306,22 @@ class DetailView(generic.DetailView):
                 if t > 60 * 30:
                     obj.update_views()
                     ses[the_key] = time.time()
+                # 获取文章更新的时间，判断是否从缓存中取文章的markdown,可以避免每次都转换
         ud = obj.update_date.strftime("%Y%m%d%H%M%S")
         md_key = '{}_md_{}'.format(obj.id, ud)
         cache_md = cache.get(md_key)
         if cache_md:
-            md = cache_md
+            body = cache_md
         else:
             md = markdown.Markdown(extensions=[
                 'markdown.extensions.extra',
                 'markdown.extensions.codehilite',
-                'markdown.extensions.toc',
                 TocExtension(slugify=slugify),
             ])
-            cache.set(md_key, md, 60 * 60 * 12)
-        # body = obj.body.replace('{host}', settings.PIC_HOST)
-        obj.body = md.convert(obj.body)
-        obj.toc = md.toc
+            body = md.convert(obj.body)
+            # cache.set(md_key, body, 60 * 60 * 12)
+        print(body)
+        obj.body = body
         return obj
 
     def get_context_data(self, **kwargs):

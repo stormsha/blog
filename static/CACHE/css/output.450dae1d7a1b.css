@@ -5,16 +5,15 @@
     overflow: auto;
 	max-height: 200px;
 }
-.article-content pre {
-    text-indent: 0;
-    color:#fdce93;
-    background-color:#3f3f3f;
-    border: 1px solid #eee;
-    overflow: auto;
-    max-height: 200px;
-    padding: 8px;
-    font-size: 14px
-}
+/*.article-content pre {*/
+    /*text-indent: 0;*/
+    /*background-color: #f8f8f8;*/
+    /*border: 1px solid #eee;*/
+    /*overflow: auto;*/
+    /*max-height: 200px;*/
+    /*padding: 8px;*/
+    /*font-size: 14px*/
+/*}*/
 .codehilite .hll{background-color:#222}
 .codehilite .c{color:#7f9f7f}
 .codehilite .err{color:#e37170;background-color:#3d3535}

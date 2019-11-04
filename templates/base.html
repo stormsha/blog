@@ -5,6 +5,7 @@
 <html>
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="baidu-tc-verification" content="0fb041a64ee71333c957d8c784961cc8"/>
     <meta property="qc:admins" content="145637425211673116375"/>
     <meta http-equiv="X-UA-Compatible" content="IE=10,IE=9,IE=8">
@@ -30,15 +31,12 @@
 
     <script type='text/javascript' src='https://libs.baidu.com/jquery/1.8.3/jquery.min.js?ver=1.0'></script>
     <script type='text/javascript' src='https://cuiqingcai.com/wp-content/themes/Yusi/js/jquery.js?ver=1.0'></script>
-{% block head %}{% endblock head %}
+    {% block head %}{% endblock head %}
     <!-- /all in one seo pack -->
     {% compress css %}
         <link href="{% static 'comment/css/base_comment.css' %}?v=20180114.008" rel="stylesheet">
         <link type="text/css" href="{% static 'comment/css/style_1_common.css' %}" rel="stylesheet">
-        <link type="text/css" href="{% static 'comment/css/style_1_home_space.css' %}" rel="stylesheet">
         <link rel='stylesheet' id='crayon-css' href='{% static 'css/crayon.min.css' %}' type='text/css' media='all'/>
-        <link rel='stylesheet' id='crayon-theme-github-css' href='{% static 'css/github.css' %}' type='text/css'
-              media='all'/>
         <link rel='stylesheet' id='crayon-font-monaco-css' href='{% static 'css/monaco.css' %}' type='text/css'
               media='all'/>
         <link rel='stylesheet' id='page-list-style-css' href='{% static 'css/page-list.css' %}' type='text/css'
@@ -75,10 +73,16 @@
     </script>
     <!--百度统计-->
     <script type="text/javascript"></script>
+    <style>
+        *{
+            padding:0;
+            margin:0
+        }
+    </style>
 </head>
 
 <body class="home blog">
-
+<div class="page">
 <header id="header" class="header">
     <div class="container-inner">
         <!--头部-->
@@ -186,9 +190,8 @@
         }
     </script>
 </section>
-
 <!--网站底部-->
-<footer class="footer">
+<footer class="footer" style="flex: 0 0 auto;">
     <div class="footer-inner">
         <div class="copyright pull-left">
             <a href="/" title="静觅">StormSha</a> 版权所有丨采用
@@ -201,185 +204,185 @@
 
     </div>
 </footer>
+</div>
 <!--网站底部结束-->
 <!--侧边栏跟随-->
 <script type="text/javascript">
-
-        SidebarFollow = function () {
-            this.config = {
-                element: null, // 处理的节点
-                compare: null,
-                distanceToTop: 0, // 节点上边到页面顶部的距离
-                _distanceRight: 0
-            };
-            this.cache = {
-                originalToTop: 0, // 原本到页面顶部的距离
-                prevElement: null, // 上一个节点
-                parentToTop: 0, // 父节点的上边到顶部距离
-                placeholder: document.createElement('div') // 占位节点
-            }
+    SidebarFollow = function () {
+        this.config = {
+            element: null, // 处理的节点
+            compare: null,
+            distanceToTop: 0, // 节点上边到页面顶部的距离
+            _distanceRight: 0
         };
-        SidebarFollow.prototype = {
-            init: function (config) {
-                this.config = config || this.config;
-                var _self = this;
-                var element = document.getElementById(_self.config.element);
-                // 如果没有找到节点, 不进行处理
-                if (!element) {
-                    return;
+        this.cache = {
+            originalToTop: 0, // 原本到页面顶部的距离
+            prevElement: null, // 上一个节点
+            parentToTop: 0, // 父节点的上边到顶部距离
+            placeholder: document.createElement('div') // 占位节点
+        }
+    };
+    SidebarFollow.prototype = {
+        init: function (config) {
+            this.config = config || this.config;
+            var _self = this;
+            var element = document.getElementById(_self.config.element);
+            // 如果没有找到节点, 不进行处理
+            if (!element) {
+                return;
+            }
+            // 获取上一个节点
+            var _prevElement = _self._getPrevElement(element);
+            var prevElement = _self._getPrevElement(_prevElement);
+            while (prevElement.offsetHeight < 0) {
+                prevElement = _self._getPrevElement(prevElement);
+                if (!prevElement) {
+                    break;
                 }
-                // 获取上一个节点
-                var _prevElement = _self._getPrevElement(element);
-                var prevElement = _self._getPrevElement(_prevElement);
-                while (prevElement.offsetHeight < 0) {
-                    prevElement = _self._getPrevElement(prevElement);
-                    if (!prevElement) {
-                        break;
-                    }
-                }
-                _self.cache.prevElement = prevElement;
-                // 计算父节点的上边到顶部距离
-                var parent = element.parentNode;
-                var parentToTop = _self._getCumulativeOffset(parent).top;
-                var parentBorderTop = parseInt(parent.style.borderTop, 10);
-                var parentPaddingTop = parseInt(parent.style.paddingTop, 10);
-                _self.cache.parentToTop = parentToTop + parentBorderTop + parentPaddingTop;
-                // 滚动屏幕
-                var speed_bar = document.getElementById(_self.config.compare);
-                _self.config._distanceRight = document.body.clientWidth - _self._getCumulativeOffset(element).right;
-                element.style.position = 'static';
-                if (_self.config._distanceRight < 0){
-                    element.style.right = 0 - _self.config._distanceRight + 'px';
+            }
+            _self.cache.prevElement = prevElement;
+            // 计算父节点的上边到顶部距离
+            var parent = element.parentNode;
+            var parentToTop = _self._getCumulativeOffset(parent).top;
+            var parentBorderTop = parseInt(parent.style.borderTop, 10);
+            var parentPaddingTop = parseInt(parent.style.paddingTop, 10);
+            _self.cache.parentToTop = parentToTop + parentBorderTop + parentPaddingTop;
+            // 滚动屏幕
+            var speed_bar = document.getElementById(_self.config.compare);
+            _self.config._distanceRight = document.body.clientWidth - _self._getCumulativeOffset(element).right;
+            element.style.position = 'static';
+            if (_self.config._distanceRight < 0){
+                element.style.right = 0 - _self.config._distanceRight + 'px';
+            }else {
+                element.style.right = _self.config._distanceRight + 'px';
+            }
+            _self._addListener(window, 'scroll', function () {
+                _self._scrollScreen({element: element, speed_bar: speed_bar, prevElement: prevElement, _self: _self});
+            });
+            // 改变屏幕尺寸
+            _self._addListener(window, 'resize', function () {
+                _self._scrollScreen({element: element, speed_bar: speed_bar, prevElement: prevElement, _self: _self});
+            });
+        },
+        _scrollScreen: function (args) {
+            var _self = args._self;
+            var element = args.element;
+            var speed_bar = args.speed_bar;
+            var prevElement = args.prevElement;
+            var toTop = _self.config.distanceToTop;
+            var parentToBottom = _self._getCumulativeOffset(element).bottom;
+            // 如果 body 有 top 属性, 消除这些位移
+            var bodyToTop = parseInt(document.getElementsByTagName('body')[0].style.top, 10);
+            if (!isNaN(bodyToTop)) {
+                toTop += bodyToTop;
+            }
+            var elementToTop = 0;
+            if (element.style.position === 'fixed') {
+                elementToTop = _self._getScrollY();
+            } else {
+                elementToTop = _self._getCumulativeOffset(element).top - toTop;
+            }
+            var elementToPrev = _self._getCumulativeOffset(prevElement).top + _self._getVisibleSize(prevElement).height;
+            // 当节点进入跟随区域, 跟随滚动
+            var distanceRight = document.body.clientWidth - _self._getCumulativeOffset(speed_bar).right;
+            if (distanceRight != _self.config._distanceRight || distanceRight < 0){
+                if (distanceRight < 0){
+                    element.style.right = - distanceRight  + 'px';
                 }else {
-                    element.style.right = _self.config._distanceRight + 'px';
-                }
-                _self._addListener(window, 'scroll', function () {
-                    _self._scrollScreen({element: element, speed_bar: speed_bar, prevElement: prevElement, _self: _self});
-                });
-                // 改变屏幕尺寸
-                _self._addListener(window, 'resize', function () {
-                    _self._scrollScreen({element: element, speed_bar: speed_bar, prevElement: prevElement, _self: _self});
-                });
-            },
-            _scrollScreen: function (args) {
-                var _self = args._self;
-                var element = args.element;
-                var speed_bar = args.speed_bar;
-                var prevElement = args.prevElement;
-                var toTop = _self.config.distanceToTop;
-                var parentToBottom = _self._getCumulativeOffset(element).bottom;
-                // 如果 body 有 top 属性, 消除这些位移
-                var bodyToTop = parseInt(document.getElementsByTagName('body')[0].style.top, 10);
-                if (!isNaN(bodyToTop)) {
-                    toTop += bodyToTop;
-                }
-                var elementToTop = 0;
-                if (element.style.position === 'fixed') {
-                    elementToTop = _self._getScrollY();
-                } else {
-                    elementToTop = _self._getCumulativeOffset(element).top - toTop;
-                }
-                var elementToPrev = _self._getCumulativeOffset(prevElement).top + _self._getVisibleSize(prevElement).height;
-                // 当节点进入跟随区域, 跟随滚动
-                var distanceRight = document.body.clientWidth - _self._getCumulativeOffset(speed_bar).right;
-                if (distanceRight != _self.config._distanceRight || distanceRight < 0){
-                    if (distanceRight < 0){
-                        element.style.right = - distanceRight  + 'px';
-                    }else {
-                        element.style.right = distanceRight  + 'px';
-                    }
-                }
-                if (_self._getScrollY() > elementToTop + parentToBottom) {
-                    // 添加占位节点
-                    var elementHeight = _self._getVisibleSize(element).height;
-                    _self.cache.placeholder.style.height = elementHeight + 'px';
-                    element.parentNode.insertBefore(_self.cache.placeholder, element);
-                    // 记录原位置
-                    _self.cache.originalToTop = elementToTop;
-                    // 修改样式
-                    element.style.bottom = 0;
-                    element.style.position = 'fixed';
-                    {#while ()#}
                     element.style.right = distanceRight  + 'px';
-                    // 否则回到原位
-                } else if (_self.cache.originalToTop > elementToTop || elementToPrev > elementToTop) {
-                    var parent = _self.cache.placeholder.parentNode;
-                    if (parent) {
-                        // 删除占位节点
-                        parent.removeChild(_self.cache.placeholder);
-                        // 修改样式
-                        element.style.position = 'static';
-                    }
                 }
-            },
-            _getCumulativeOffset: function (element) {
-                var rect = element.getBoundingClientRect();
-                var offset = {
-                    left: 0,
-                    top: 0,
-                    right: rect.right - document.documentElement.clientLeft,
-                    bottom: rect.bottom - document.documentElement.clientTop
-                };
-                do {
-                    offset.left += element.offsetLeft || 0;
-                    offset.top += element.offsetTop || 0;
-                    element = element.offsetParent;
-                } while (element);
-                return offset;
-            },
-
-            _getVisibleSize: function (element) {
-                var dimension = {
-                    width: 0,
-                    height: 0
-                };
-                dimension.width = element.offsetWidth;
-                dimension.height = element.offsetHeight;
-                return dimension;
-            },
-
-            _getScrollY: function () {
-                if (typeof window.pageYOffset != 'undefined') {
-                    return window.pageYOffset;
-                }
-                if (typeof document.compatMode != 'undefined' && document.compatMode != 'BackCompat') {
-                    {#return document.documentElement.scrollTop;#}
-                    return document.documentElement.scrollTop;
-                }
-                return document.body.scrollTop;
-            },
-
-            _addListener: function (node, type, listener) {
-                if (node.addEventListener) {
-                    node.addEventListener(type, listener, false);
-                    return true;
-                } else if (node.attachEvent) {
-                    node['e' + type + listener] = listener;
-                    node[type + listener] = function () {
-                        node['e' + type + listener](window.event);
-                    };
-                    node.attachEvent('on' + type, node[type + listener]);
-                    return true;
-                }
-                return false;
-            },
-
-            _getPrevElement: function (element) {
-                var prev = element.previousSibling;
-                while (prev.nodeType !== 1) {
-                    prev = prev.previousSibling;
-                }
-                return prev;
             }
-        };
-    </script>
-    <script>
-        (new SidebarFollow()).init({
-            element: 'sidebar',
-            compare: 'speedbar',
-            distanceToTop: 0
-        });
-    </script>
+            if (_self._getScrollY() > elementToTop + parentToBottom) {
+                // 添加占位节点
+                var elementHeight = _self._getVisibleSize(element).height;
+                _self.cache.placeholder.style.height = elementHeight + 'px';
+                element.parentNode.insertBefore(_self.cache.placeholder, element);
+                // 记录原位置
+                _self.cache.originalToTop = elementToTop;
+                // 修改样式
+                element.style.bottom = 0;
+                element.style.position = 'fixed';
+                {#while ()#}
+                element.style.right = distanceRight  + 'px';
+                // 否则回到原位
+            } else if (_self.cache.originalToTop > elementToTop || elementToPrev > elementToTop) {
+                var parent = _self.cache.placeholder.parentNode;
+                if (parent) {
+                    // 删除占位节点
+                    parent.removeChild(_self.cache.placeholder);
+                    // 修改样式
+                    element.style.position = 'static';
+                }
+            }
+        },
+        _getCumulativeOffset: function (element) {
+            var rect = element.getBoundingClientRect();
+            var offset = {
+                left: 0,
+                top: 0,
+                right: rect.right - document.documentElement.clientLeft,
+                bottom: rect.bottom - document.documentElement.clientTop
+            };
+            do {
+                offset.left += element.offsetLeft || 0;
+                offset.top += element.offsetTop || 0;
+                element = element.offsetParent;
+            } while (element);
+            return offset;
+        },
+
+        _getVisibleSize: function (element) {
+            var dimension = {
+                width: 0,
+                height: 0
+            };
+            dimension.width = element.offsetWidth;
+            dimension.height = element.offsetHeight;
+            return dimension;
+        },
+
+        _getScrollY: function () {
+            if (typeof window.pageYOffset != 'undefined') {
+                return window.pageYOffset;
+            }
+            if (typeof document.compatMode != 'undefined' && document.compatMode != 'BackCompat') {
+                {#return document.documentElement.scrollTop;#}
+                return document.documentElement.scrollTop;
+            }
+            return document.body.scrollTop;
+        },
+
+        _addListener: function (node, type, listener) {
+            if (node.addEventListener) {
+                node.addEventListener(type, listener, false);
+                return true;
+            } else if (node.attachEvent) {
+                node['e' + type + listener] = listener;
+                node[type + listener] = function () {
+                    node['e' + type + listener](window.event);
+                };
+                node.attachEvent('on' + type, node[type + listener]);
+                return true;
+            }
+            return false;
+        },
+
+        _getPrevElement: function (element) {
+            var prev = element.previousSibling;
+            while (prev.nodeType !== 1) {
+                prev = prev.previousSibling;
+            }
+            return prev;
+        }
+    };
+</script>
+<script>
+    (new SidebarFollow()).init({
+        element: 'sidebar',
+        compare: 'speedbar',
+        distanceToTop: 0
+    });
+</script>
 </body>
 </html>
 
