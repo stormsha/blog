@@ -49,12 +49,12 @@
                         <h2><a target="_blank" href="/article/{{ article.slug }}" title="{{ article.title }}">{{ article.title }}</a></h2>
                     </header>
                     <div class="focus">
-                        <a target="_blank" href="/article/{{ article.slug }}">
-                        <img class="thumb"
-                              width="200"
-                              height="123"
-                              src="{{ article.img_link }}"
-                              alt="{{ article.title }}"/></a>
+                              <a target="_blank" href="{{ article.get_absolute_url }}">
+                            <img class="thumb" width="200" height="123"
+                                 src="{% if article.img %}/media/{{ article.img }}
+                                                    {% else %}{{ article.img_link }}{% endif %}"
+                                 alt="{{ article.title }}"/>
+                        </a>
                     </div>
                     <span class="note"> {{ article.summary }}</span>
                     <p class="auth-span">

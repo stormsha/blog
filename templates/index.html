@@ -99,8 +99,8 @@
                     <div class="focus">
                         <a target="_blank" href="{{ article.get_absolute_url }}">
                             <img class="thumb" width="200" height="123"
-                                 src="{% if article.img_link %}{{ article.img_link }}
-                                                    {% else %}/media/{{ article.img }}{% endif %}"
+                                 src="{% if article.img %}/media/{{ article.img }}
+                                                    {% else %}{{ article.img_link }}{% endif %}"
                                  alt="{{ article.title }}"/>
                         </a>
                     </div>
