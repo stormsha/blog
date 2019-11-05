@@ -28,6 +28,7 @@ def common_send_email(email, s_type=None, username=None, content=None):
         email_record.save()
         email_title = "欢迎注册StormSha的个人主页"
         html = open('../common/html/email.html', 'r', encoding="utf-8")
+        print(html)
         content = html.read()
         url = '{0}/account/active/{1}/'.format(settings.WEB_SITE, code)
         content = content.replace('(title)', email_title)
@@ -45,7 +46,4 @@ def common_send_email(email, s_type=None, username=None, content=None):
         msg = EmailMessage(email_title, body, settings.EMAIL_FROM, [settings.EMAIL_FROM])
         msg.content_subtype = "html"
         msg.send()
-
-
-
 

@@ -307,3 +307,6 @@ EMAIL_USE_TLS = settings_json['EMAIL_USE_TLS']  # 一般都为False
 # 打开ssl协议
 EMAIL_USE_SSL = settings_json['EMAIL_USE_SSL']
 EMAIL_FROM = settings_json['EMAIL_FROM']  # 邮箱来自
+
+# 站点公共资源主机地址
+COMMON_HOST = settings_json['COMMON_HOST']
