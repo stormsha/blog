@@ -1,3 +1,6 @@
 from django.contrib import admin
+from .models import Ouser, VerifyRecord
 
-# Register your models here.
+admin.site.register(Ouser)
+admin.site.register(VerifyRecord)
+
