@@ -304,4 +304,6 @@ EMAIL_PORT = settings_json['EMAIL_PORT']  # 一般情况下都为25
 EMAIL_HOST_USER = settings_json['EMAIL_HOST_USER']  # 账号
 EMAIL_HOST_PASSWORD = settings_json['EMAIL_HOST_PASSWORD']  # 密码
 EMAIL_USE_TLS = settings_json['EMAIL_USE_TLS']  # 一般都为False
+# 打开ssl协议
+EMAIL_USE_SSL = settings_json['EMAIL_USE_SSL']
 EMAIL_FROM = settings_json['EMAIL_FROM']  # 邮箱来自
