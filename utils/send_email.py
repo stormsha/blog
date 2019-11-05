@@ -28,8 +28,11 @@ def common_send_email(email, s_type=None, username=None, content=None):
         email_record.v_type = s_type
         email_record.save()
         email_title = "欢迎注册StormSha的个人主页"
-        base_url = os.getcwd()
-        with open(base_url + '\common\\files\html\email.html', 'r', encoding="utf-8") as html:
+        # base_url = os.getcwd()
+        # with open(base_url + '\common\\files\html\email.html', 'r', encoding="utf-8") as html:
+        #     content = html.read()
+        path = os.path.join(settings.COMMON_DIR, 'files\\html\email.html')
+        with open(path, 'r', encoding="utf-8") as html:
             content = html.read()
         url = '{0}/account/active/{1}/'.format(settings.WEB_SITE, code)
         content = content.replace('(title)', email_title)

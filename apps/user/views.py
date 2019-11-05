@@ -1,4 +1,5 @@
 import json
+import logging
 from django.contrib import auth
 from .models import Ouser
 from django.contrib.auth import authenticate
@@ -14,6 +15,8 @@ from django.http import JsonResponse
 from .forms import UserForm, loginForm, ProfileForm
 from utils.send_email import common_send_email
 from user.models import VerifyRecord
+
+logger = logging.getLogger(__name__)
 
 
 # 登出
@@ -123,6 +126,8 @@ def register(request):
             try:
                 common_send_email(email=email, s_type="1", username=username)
             except Exception as msg:
+                logger.exception(repr(msg))
+                logger.info(repr(msg))
                 print(repr(msg))
             # 添加到session
             request.session['username'] = username
