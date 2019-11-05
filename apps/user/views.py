@@ -121,7 +121,7 @@ def register(request):
             user_profile.save()  # 保存到数据库
             # 此处加入了邮箱验证的手段
             try:
-                common_send_email(email=email, s_type="1")
+                common_send_email(email=email, s_type="1", username=username)
             except Exception as msg:
                 print(repr(msg))
             # 添加到session
