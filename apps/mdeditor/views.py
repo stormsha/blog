@@ -1,7 +1,7 @@
 # -*- coding:utf-8 -*-
 import os
-import datetime
 import json
+import logging
 
 from django.views import generic
 from django.conf import settings
@@ -14,6 +14,7 @@ from utils.files import upload_attachment
 
 # TODO 此处获取default配置，当用户设置了其他配置时，此处无效，需要进一步完善
 MDEDITOR_CONFIGS = MDConfig('default')
+logger = logging.getLogger(__name__)
 
 
 class UploadView(generic.View):
@@ -25,6 +26,7 @@ class UploadView(generic.View):
 
     def post(self, request, *args, **kwargs):
         upload_image = request.FILES.get("editormd-image-file", None)
+        logger.info(upload_image.name)
         media_root = settings.MEDIA_ROOT
 
         # image none check
@@ -59,13 +61,18 @@ class UploadView(generic.View):
                 }))
 
         # save image
-
-        attachment = upload_attachment(upload_image)
-        # with open(os.path.join(file_path, file_full_name), 'wb+') as file:
-        #     for chunk in upload_image.chunks():
-        #         file.write(chunk)
-        f_name_list = attachment.file.name.split('/')
-        file_full_name = f_name_list.pop(-1)
+        try:
+            attachment = upload_attachment(upload_image)
+            # with open(os.path.join(file_path, file_full_name), 'wb+') as file:
+            #     for chunk in upload_image.chunks():
+            #         file.write(chunk)
+            f_name_list = attachment.file.name.split('/')
+            file_full_name = f_name_list.pop(-1)
+            logger.info(file_full_name)
+        except Exception as msg:
+            logger.exception(repr(msg))
+            logger.info(repr(msg))
+            file_full_name = "上传失败"
         return HttpResponse(json.dumps({'success': 1,
                                         'message': "上传成功！",
                                         'url': '{0}{1}/{2}'.format(settings.MEDIA_URL,
