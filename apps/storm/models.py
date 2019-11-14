@@ -109,7 +109,7 @@ class Article(models.Model):
     IMG_LINK = 'summary/summary.jpg'
     author = models.ForeignKey(settings.AUTH_USER_MODEL, verbose_name='作者')
     title = models.CharField(max_length=150, verbose_name='文章标题')
-    summary = models.TextField('文章摘要', max_length=230, default='文章摘要等同于网页description内容，请务必填写...')
+    summary = models.TextField('文章摘要', max_length=512, default='文章摘要等同于网页description内容，请务必填写...')
     body = MDTextField(verbose_name='文章内容')
     img_link = models.CharField('缩略图地址', max_length=255, null=True, blank=True)
     img = models.ImageField(
