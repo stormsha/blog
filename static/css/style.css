@@ -2007,7 +2007,7 @@ sub {
 }
 
 img {
-    max-width: 100%;
+    max-width: 92%;
     width: auto \9;
     height: auto;
     vertical-align: middle;
