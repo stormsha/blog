@@ -55,7 +55,7 @@ def note_view(request):
                 paginator = ""
             return render(request, 'comment/block/comment.html', context={'fun': fun, "page": page, 'paginator': paginator})
         if fun == "note":
-            comments = ArticleComment.objects.filter(Q(author=user) | Q(belong__author=user)).order_by('-create_date')
+            comments = ArticleComment.objects.filter(Q(author=user) | Q(belong__author=user) | Q(rep_to__author=user)).order_by('-create_date')
             paginator = Paginator(comments, 5)
             page = paginator.page(current_page_num)
             if len(page) == 0:

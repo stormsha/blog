@@ -24,8 +24,7 @@
                         {% endifnotequal %}
                     </dd>
                     <dd class="ptm pm_c">
-                    {{ comment.author }} {{ comment.belong.author }} {{ comment.parent }}{{ comment.parent.author }}
-                        {% if comment.belong.author == user and comment.parent != None and comment.author != user %}
+                        {% if comment.belong.author == user and comment.author != user %}
                             <span class="xi2 xw1">
                                 <a href="{{ user.link }}" target="_blank">{{ comment.author.username }}</a>
                             </span>
@@ -43,9 +42,9 @@
                                 <a target="_blank" href="{{ comment.belong.get_absolute_url }}#comments">回复</a>
                             </span>
                         {% endif %}
-                        {% if comment.parent.author == user %}
+                        {% if comment.parent.author == user and comment.author != user %}
                             <span class="xi2 xw1">
-                                <a href="{{ user.link }}" target="_blank">{{ comment.author.userrname }}</a>
+                                <a href="{{ user.link }}" target="_blank">{{ comment.author.username }}</a>
                             </span>
                             {% if comment.author.is_webmaster %}
                                 [<font color="#5f9ea0" size="3">站长</font>]
@@ -68,23 +67,15 @@
                             </span>
                         {% endif %}
                         {% if comment.author == user %}
-                            <span class="xi2 xw1">
-                                <a href="{{ user.link }}" target="_blank">您</a>
-                            </span>
                             {% if comment.parent %}
+                                <span class="xi2 xw1">
+                                    <a href="{{ user.link }}" target="_blank">您</a>
+                                </span>
                                 <i class="fa fa-share"></i>
                                 {{ comment.parent.author.username }}
-                                {% if comment.author.is_webmaster %}
+                                {% if comment.parent.author.is_webmaster %}
                                     [<font color="#5f9ea0" size="3">站长</font>]
-                                {% elif comment.belong.author == user %}
-                                    [<font color="#5f9ea0" size="3">作者</font>]
                                 {% endif %}
-                            {% elif comment.belong.author %}
-                                <i class="fa fa-share"></i>
-                                <a href="{{ comment.belong.get_absolute_url }}">
-                                    {{ comment.belong.title }}</a> |
-                                {{ comment.belong.author.username }}
-                                [<font color="red" size="3">作者</font>]
                             {% endif %}
                             <br>{{ comment.content_to_markdown | safe }} &nbsp;
                             <br>

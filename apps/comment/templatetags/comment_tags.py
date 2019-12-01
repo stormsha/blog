@@ -1,8 +1,9 @@
 # 创建了新的tags标签文件后必须重启服务器
+import logging
 from django import template
 from django.db.models import Q
-from ..models import ArticleComment, AboutComment, MessageComment
-
+from ..models import ArticleComment, AboutComment, MessageComment, Article
+logger = logging.getLogger(__name__)
 
 register = template.Library()
 
@@ -33,7 +34,12 @@ def get_comment_user_count(article):
 @register.simple_tag
 def get_comment_count(article):
     """获取一个文章的评论总数"""
-    lis = article.article_comments.all()
+    try:
+        lis = article.article_comments.all()
+    except Exception as msg:
+        logger.exception(repr(msg))
+        art = Article.objects.get(id=int(article.id))
+        lis = art.article_comments.all()
     return lis.count()
 
 

@@ -25,7 +25,7 @@ class Ouser(AbstractUser):
         return self.username
 
     def is_webmaster(self):
-        if self.is_superuser and self.username=='stormsha':
+        if self.is_superuser and self.username == 'stormsha':
             return True
         else:
             return False

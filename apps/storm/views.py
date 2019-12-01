@@ -14,11 +14,7 @@ from .models import Article, BigCategory, Category, Tag
 from markdown.extensions.toc import TocExtension  # 锚点的拓展
 from haystack.generic_views import SearchView  # 导入搜索视图
 from haystack.query import SearchQuerySet
-from user.forms import UserForm, loginForm, ProfileForm
-from django.contrib.auth import authenticate
-from django.contrib import auth
-from django.shortcuts import render, redirect, HttpResponseRedirect, reverse, HttpResponse
-from django.http import JsonResponse
+from django.shortcuts import render, HttpResponse
 from django.core.cache import cache
 
 

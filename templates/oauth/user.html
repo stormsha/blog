@@ -7,17 +7,16 @@
         <a data-toggle="modal" data-target="#register">注册</a>
     {% else %}
      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i class="fa fa-bell-o"></i>
-         {% get_unread_count user as count %}
-                <a href="{% url 'comment:note' %}">
+        {% get_unread_count user as count %}
+        <a href="{% url 'comment:note' %}">
             {% if count %}
                 <span class="get-msg" id="msg-circle" style="display: block;">{{ count }}</span>
             {% endif %}
-                </a>
+        </a>
         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i class="fa fa-user"></i>
         <a href="/">投稿</a>
         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i class="fa fa-user-circle-o" aria-hidden="true"></i>
         <a href="{% url 'comment:note' %}?next={{ request.path }}">{{ request.session.username }}</a>
-
         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i class="fa fa-sign-out" aria-hidden="true"></i>
         <a href="{% url 'accounts:logout' %}?next={{ request.path }}">退出</a>
     {% endif %}
