@@ -3,6 +3,7 @@ import hashlib
 import time
 import logging
 # django
+from django.http import HttpResponse
 from rest_framework.views import APIView, Response
 from api.permissions import check_action_permission
 from storm.models import Article
@@ -34,9 +35,10 @@ class TokenView(APIView):
         logger.info("hashcode:" + hashcode)
         # 将加密后的字符串和signatrue对比，如果相同返回echostr,表示验证成功
         if hashcode == signature:
-            return Response(echostr)
+            logger.info("验证成功")
+            return HttpResponse(echostr)
         else:
-            return Response(echostr)
+            return HttpResponse("error")
 
     def post(self, request):
         return Response({"status": "1", "data": {"key": 789}})
