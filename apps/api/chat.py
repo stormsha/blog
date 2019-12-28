@@ -17,7 +17,7 @@ class TokenView(APIView):
         timestamp = request.GET.get("timestamp")  # 获取时间戳
         nonce = request.GET.get("nonce")  # 获取随机数
         echostr = request.GET.get("echostr")  # 获取随机字符串
-        token = "echostr"  # 自己设置的token
+        token = "stormsha"  # 自己设置的token
         # 使用字典序排序（按照字母或数字的大小顺序进行排序）
         _list = [token, timestamp, nonce]
         logger.debug(_list)
