@@ -19,7 +19,7 @@
                             $('#re_username').next().html('用户名已经存在')
                         }
                         if (result.e) {
-                            $('#email').next().html('邮箱已经被占用')
+                            $('#email').next().html(result.e)
                         }
                     }
                     else {

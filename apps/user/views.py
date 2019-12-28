@@ -115,7 +115,9 @@ def register(request):
             context['e'] = '请关注微信公众号，在后台回复"注册"获取验证码'
             error = True
         else:
-            if not cache.get(email):
+            if cache.get(email):
+                pass
+            else:
                 context['e'] = '验证码有误，请重新获取验证码'
                 error = True
         if not error:
