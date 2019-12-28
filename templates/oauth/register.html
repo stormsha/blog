@@ -12,14 +12,13 @@
             data: $('#register-form').serialize(),
             success: function (result) {
                 try {
-                    console.log(result);
                     if (result.error) {
-                        if (result.n) {
-                            $('#re_username').next().html('用户名已经存在')
-                        }
                         if (result.e) {
                             console.log(result.e);
                             $('#re_email').next().html('验证码有误，请重新获取验证码')
+                        }
+                        if (result.n) {
+                            $('#re_username').next().html('用户名已经存在')
                         }
                     }
                     else {
@@ -152,7 +151,6 @@
                                    data-trigger="focus"
                             >
                             <label id="e" style="color: red;"></label>
-
                         </div>
                     </div>
                     <div class="form-group " id="div2">
