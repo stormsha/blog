@@ -24,8 +24,8 @@ class TextMsg(object):
     def send(self):
         xml_form = """
         <xml>
-        <ToUserName><![CDATA[{ToUserName}]]></ToUserName>
-        <FromUserName><![CDATA[{FromUserName}]]></FromUserName>
+        <ToUserName><![CDATA[{FromUserName}]]></ToUserName>
+        <FromUserName><![CDATA[{ToUserName}]]></FromUserName>
         <CreateTime>{CreateTime}</CreateTime>
         <MsgType><![CDATA[text]]></MsgType>
         <Content><![CDATA[{Content}]]></Content>
