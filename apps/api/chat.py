@@ -1,8 +1,10 @@
 from __future__ import unicode_literals
 import hashlib
+import random
 import time
 import logging
 # django
+from django.core.cache import cache
 from django.http import HttpResponse
 from rest_framework.views import APIView, Response
 from xml.etree import ElementTree as ET
@@ -61,18 +63,10 @@ class WeChatView(APIView):
             logger.info("数据：%s", [msg_type, to_user_name, from_user_name, create_time, msg_id, r_content])
             if msg_type == 'text':
                 if r_content == "注册":
-                    content = "6789"
+                    content = random.randint(1000, 2000)
+                    cache.set(str(content), str(content), 60*10)
                     res = TextMsg(to_user_name, from_user_name, content)
-                    logger.info("成功了!!!!!!!!!!!!!!!!!!!")
-                    logger.info(res)
                     return res.send()
-                else:
-                    content = "您好,欢迎来到Python大学习!希望我们可以一起进步!"
-                    res = TextMsg(to_user_name, from_user_name, content)
-                    logger.info("成功了!!!!!!!!!!!!!!!!!!!")
-                    logger.info(res)
-                    return res.send()
-
             elif msg_type == 'image':
                 content = "图片已收到,谢谢"
                 res = TextMsg(to_user_name, from_user_name, content)

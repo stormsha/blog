@@ -31,9 +31,6 @@ class TextMsg(object):
         <Content><![CDATA[{Content}]]></Content>
         </xml>
         """
-        logger.info(
-            xml_form.format(**self.__dict)
-        )
         return xml_form.format(**self.__dict)
 
 

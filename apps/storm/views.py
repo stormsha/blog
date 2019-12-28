@@ -273,7 +273,6 @@ class DetailView(generic.DetailView):
             ])
             body = md.convert(obj.body)
             # cache.set(md_key, body, 60 * 60 * 12)
-        print(body)
         obj.body = body
         return obj
 

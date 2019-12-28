@@ -1,9 +1,10 @@
+{% load static %}
 <script type="text/javascript">
     function register() {
         check_user_name();
         check_pwd();
         check_pwd2();
-        check_email();
+        //check_email();
         $.ajax({
             type: "POST",//方法类型
             url: "/account/register/",//url
@@ -18,7 +19,7 @@
                             $('#re_username').next().html('用户名已经存在')
                         }
                         if (result.e) {
-                             $('#email').next().html('邮箱已经被占用')
+                            $('#email').next().html('邮箱已经被占用')
                         }
                     }
                     else {
@@ -48,52 +49,49 @@
             error_name = true;
         }
     }
-    function check_pwd(){
-		var len = $('#pwd').val().length;
-		if(len<8||len>20)
-		{
-			$('#pwd').next().html('密码最少8位，最长20位')
-			$('#pwd').next().show();
-			error_password = true;
-		}
-		else
-		{
-			$('#pwd').next().hide();
-			error_password = false;
-		}
-	}
-	function check_pwd2(){
-		var pass = $('#pwd').val();
-		var pass2 = $('#pwd2').val();
 
-		if(pass!=pass2)
-		{
-			$('#pwd2').next().html('两次输入的密码不一致');
-			$('#pwd2').next().show();
-			error_check_password = true;
-		}
-		else
-		{
-			$('#pwd2').next().hide();
-			error_check_password = false;
-		}
-	}
-	function check_email(){
-		var re = /^[a-z0-9][\w\.\-]*@[a-z0-9\-]+(\.[a-z]{2,5}){1,2}$/;
+    function check_pwd() {
+        var len = $('#pwd').val().length;
+        if (len < 8 || len > 20) {
+            $('#pwd').next().html('密码最少8位，最长20位')
+            $('#pwd').next().show();
+            error_password = true;
+        }
+        else {
+            $('#pwd').next().hide();
+            error_password = false;
+        }
+    }
 
-		if(re.test($('#re_email').val()))
-		{
-			$('#re_email').next().hide();
-			error_email = false;
-		}
-		else
-		{
-			$('#re_email').next().html('你输入的邮箱格式不正确')
-			$('#re_email').next().show();
-			error_email = true;
-		}
+    function check_pwd2() {
+        var pass = $('#pwd').val();
+        var pass2 = $('#pwd2').val();
 
-	}
+        if (pass != pass2) {
+            $('#pwd2').next().html('两次输入的密码不一致');
+            $('#pwd2').next().show();
+            error_check_password = true;
+        }
+        else {
+            $('#pwd2').next().hide();
+            error_check_password = false;
+        }
+    }
+
+    function check_email() {
+        var re = /^[a-z0-9][\w\.\-]*@[a-z0-9\-]+(\.[a-z]{2,5}){1,2}$/;
+
+        if (re.test($('#re_email').val())) {
+            $('#re_email').next().hide();
+            error_email = false;
+        }
+        else {
+            $('#re_email').next().html('你输入的邮箱格式不正确')
+            $('#re_email').next().show();
+            error_email = true;
+        }
+
+    }
 </script>
 
 <div class="{% if register_error %}modal fade in {% else %} modal fade {% endif %}" id="register" tabindex="-1"
@@ -131,17 +129,30 @@
 
                     </div>
                     <div class="form-group" id="div3">
-                        <label for="firstname" class="col-sm-2 control-label">邮箱：</label>
+                        <div class="form-inline">
+                            <label for="firstname" class="form-inline">验证码：</label>
+                             <a class="weixin">
+                            <i class="fa fa-wechat" style="color: green"></i>
+                            <div class="weixin-popover">
+                                <div class="popover bottom in">
+                                    <div class="arrow"></div>
+                                    <div class="popover-title"></div>
+                                    <div class="popover-content"><img src="{% static 'images/weixin.png' %}"></div>
+                                </div>
+                            </div>
+                        </a>
+                        </div>
                         <div class="col-sm-10" id="email">
-                            <input type="text" class="form-control" id="re_email" placeholder="请输入邮箱"
+                            <input type="text" class="form-control" id="re_email" placeholder="请输入验证码"
                                    style="width:300px"
                                    name="email"
                                    class="tooltip-test"
                                    data-toggle="tooltip" data-placement="bottom"
-                                   title="请输入邮箱"
+                                   title="请输入验证码"
                                    data-trigger="focus"
                             >
                             <label id="e" style="color: red;"></label>
+
                         </div>
                     </div>
                     <div class="form-group " id="div2">

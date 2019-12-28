@@ -12,6 +12,7 @@ from django.views.decorators.csrf import csrf_exempt
 from django.shortcuts import render, redirect, HttpResponse
 from django.views.decorators.http import require_POST
 from django.http import JsonResponse
+from django.core.cache import cache
 from .forms import UserForm, loginForm, ProfileForm
 from utils.send_email import common_send_email
 from user.models import VerifyRecord
@@ -96,39 +97,44 @@ def login(request):
 def register(request):
     context = {}
     data = request.POST
+    email = data.get('email')
     form = UserForm(data)
     error = False
     if form.is_valid():
         # 获得表单数据
         username = form.cleaned_data['username']
         password = form.cleaned_data['password']
-        email = form.cleaned_data['email']
+        # email = form.cleaned_data['email']
         # 判断用户是否存在
         user = Ouser.objects.filter(username=username)
-        email_obj = Ouser.objects.filter(email=email)
+        # email_obj = Ouser.objects.filter(email=email)
         if user:
             context['n'] = '用户已经存在'
             error = True
-        if email_obj:
-            context['e'] = '邮箱已经被占用'
+        if email is None:
+            context['e'] = '请关注微信公众号，在后台回复"注册"获取验证码'
             error = True
+        else:
+            if cache.get(email) is None:
+                context['e'] = '请关注微信公众号，在后台回复"注册"获取验证码'
+                error = True
         if not error:
             # 实例化用户，然后赋值
             user_profile = Ouser()
             user_profile.username = username
-            user_profile.email = email
+            # user_profile.email = email
             # 新建用户为非活跃用户，可通过验证变为活跃用户
-            user_profile.is_active = False
+            user_profile.is_active = True
+
             # 将明文转换为密文赋给password
             user_profile.password = make_password(password)
             user_profile.save()  # 保存到数据库
             # 此处加入了邮箱验证的手段
-            try:
-                common_send_email(email=email, s_type="1", username=username)
-            except Exception as msg:
-                logger.exception(repr(msg))
-                logger.info(repr(msg))
-                print(repr(msg))
+            # try:
+            #     common_send_email(email=email, s_type="1", username=username)
+            # except Exception as msg:
+            #     logger.exception(repr(msg))
+            #     logger.info(repr(msg))
             # 添加到session
             request.session['username'] = username
             request.session['uid'] = user_profile.id
