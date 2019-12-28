@@ -26,3 +26,6 @@ class ArticleView(APIView):
         else:
             return Response({"status": "0", "error_message": "update loves fail."})
 
+
+
+

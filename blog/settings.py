@@ -31,7 +31,7 @@ DEBUG = settings_json.get('DEBUG', False)
 if DEBUG:
     ALLOWED_HOSTS = ['*', 'hao.stormsha.com']
 else:
-    ALLOWED_HOSTS = ['stormsha.com', 'www.stormsha.com']
+    ALLOWED_HOSTS = ['*', 'stormsha.com', 'www.stormsha.com']
 
 INSTALLED_APPS = [
     'django.contrib.admin',

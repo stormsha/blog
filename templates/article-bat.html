@@ -165,7 +165,7 @@
                 </div>
             </article>
             <!--赞赏-->
-            <!--<div style="background:#fff;padding-bottom:20px;font-size:14px;">
+            <div style="background:#fff;padding-bottom:20px;font-size:14px;">
                 <div class="text-center">
                     <button class="btn btn-danger rounded-0" style="line-height: 1;font-size: .8rem;" id="support">
                         <i class="fa fa-cny"></i>
@@ -234,85 +234,6 @@
                         </div>
                     </div>
                 </div>
-            </div>-->
-            <div style="background:#fff;padding-bottom:20px;font-size:14px;">
-                <div class="text-center">
-                    <button class="btn btn-danger rounded-0" style="line-height: 1;font-size: .8rem;"
-                            id="support" data-toggle="modal" data-target="#myModal">
-                        <i class="fa fa-cny"></i>
-                        如果文章对你有所帮助，可以赞助本站
-                        <i class="fa fa-chevron-down"></i>
-                    </button>
-                </div>
-                <!-- 模态框（Modal） -->
-                <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
-                     aria-hidden="true">
-                    <div class="modal-dialog">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
-                                    &times;
-                                </button>
-                                <h4 class="modal-title" id="myModalLabel">
-                                    模态框（Modal）标题
-                                </h4>
-                            </div>
-                            <div class="modal-body">
-                                <div class="container-fluid">
-                                    <div>
-                                        <form action="/extends/payjs/qrpay/" method="post" target="_blank">
-                                            <input type="hidden" name="csrfmiddlewaretoken"
-                                                   value="JNcyeyFB2LoA7DVTpeWrNp4v9IGumOlQa6L0rHEM9QNZW9UgaEH1xXnOOFmBgf5L">
-                                            <div class="form-group">
-                                                <label for="total_fee">
-                                                    <span style="font-weight: bold">金额<span style="color: red;">*</span>：</span>
-                                                    <span style="color: darkorange; font-weight: bold; font-size: 2em;"
-                                                          class="fee_number">38</span> 元
-                                                </label>
-                                                <input type="range" class="custom-range total_fee" id="total_fee"
-                                                       value="800" name="total_fee" min="100" max="5000" step="100">
-                                                <small>
-                                                    <a onclick="random_amount()" href="javascript:;"
-                                                       class="no-underline hvr-grow text-muted" style="float: right">试试手气</a>
-                                                </small>
-
-                                            </div>
-
-                                            <div class="form-group">
-                                                <label for="username"><span style="font-weight: bold">昵称：</span></label>
-                                                <input type="text" class="form-control sponsor-username" id="username"
-                                                       name="username" aria-describedby="username" placeholder="大侠尊姓大名？"
-                                                       value="[游客]">
-                                            </div>
-                                            <div class="form-group">
-                                                <label for="message"><span style="font-weight: bold">留言：</span></label>
-                                                <input type="text" class="form-control sponsor-message" id="message"
-                                                       name="message" aria-describedby="message" placeholder="请少于70字哦"
-                                                       value="赞赏博主">
-                                            </div>
-                                            <input type="text" hidden="" name="article_id" value="76" title="">
-                                            <br>
-                                            <div style="text-align: center">
-                                                <button type="submit"
-                                                        class="btn btn-warning text-white hvr-grow sponsor-submit"
-                                                        onclick="close_modal()">
-                                                    少废话，快给朕二维码！
-                                                </button>
-                                            </div>
-                                        </form>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-default" data-dismiss="modal">关闭
-                                </button>
-                                <button type="button" class="btn btn-primary">
-                                    提交更改
-                                </button>
-                            </div>
-                        </div><!-- /.modal-content -->
-                    </div><!-- /.modal -->
-                </div>
             </div>
             <div>
                 <footer class="article-footer">
@@ -328,18 +249,18 @@
                 </footer>
                 <!--推荐文章-->
                 <nav class="article-nav">
-            <span class="article-nav-prev">
-                <i class="fa fa-angle-double-left"></i>
-                {% get_article_previous object.id as article_previous %}
-                <a href="{% url 'blog:article'  article.get_pre.slug %}"
-                   rel="prev">{{ article.get_pre.title }}</a>
-            </span>
-                    <span class="article-nav-next">
-                {% get_article_next object.id as article_next %}
-                <a href="{% url 'blog:article'  article.get_next.slug %}"
-                   rel="prev">{{ article.get_next.title }}</a>
-                <i class="fa fa-angle-double-right"></i>
-            </span>
+                    <span class="article-nav-prev">
+                        <i class="fa fa-angle-double-left"></i>
+                        {% get_article_previous object.id as article_previous %}
+                        <a href="{% url 'blog:article'  article.get_pre.slug %}"
+                           rel="prev">{{ article.get_pre.title }}</a>
+                    </span>
+                            <span class="article-nav-next">
+                        {% get_article_next object.id as article_next %}
+                        <a href="{% url 'blog:article'  article.get_next.slug %}"
+                           rel="prev">{{ article.get_next.title }}</a>
+                        <i class="fa fa-angle-double-right"></i>
+                    </span>
                 </nav>
                 <div class="related_top">
                     <div class="related_posts">
@@ -354,7 +275,6 @@
                                 </li>
                             {% endfor %}
                         </ul>
-
                         <div class="relates">
                             <ul>
                                 {% for article in category_article.article_8 %}

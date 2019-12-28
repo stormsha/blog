@@ -13,3 +13,4 @@ django-redis==4.10.0
 pyperclip==1.7.0
 gunicorn==19.9.0
 Pygments==2.4.2
+WeRoBot==1.10.1
