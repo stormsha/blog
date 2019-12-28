@@ -15,11 +15,11 @@
                     console.log(result);
                     if (result.error) {
                         if (result.n) {
-                            console.log(result.n);
                             $('#re_username').next().html('用户名已经存在')
                         }
                         if (result.e) {
-                            $('#re_email').next().html(result.e)
+                            console.log(result.e);
+                            $('#re_email').next().html('验证码有误，请重新获取验证码')
                         }
                     }
                     else {
