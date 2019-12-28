@@ -362,3 +362,8 @@ EMAIL_FROM = settings_json['EMAIL_FROM']  # 邮箱来自
 
 # 站点公共资源主机地址
 COMMON_HOST = settings_json['COMMON_HOST']
+
+# 微信公众平台ID、密码
+APP_ID = settings_json['APP_ID']
+APP_SECRET = settings_json['APP_SECRET']
+APP_TOKEN = settings_json['APP_TOKEN']
