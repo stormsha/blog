@@ -43,9 +43,8 @@ class WeChatView(APIView):
             return HttpResponse("error")
 
     def post(self, request):
-        logger.info('ssssssssssssssssssssssssssssssssssss,接受消息')
         content = self.auto_reply(request)
-        return content
+        return HttpResponse(content, content_type="text/xml")
 
     @staticmethod
     def auto_reply(request):
