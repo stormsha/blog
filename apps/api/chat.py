@@ -11,7 +11,7 @@ from api.serializers import ArticleSerializer
 logger = logging.getLogger(__name__)
 
 
-class TokenView(APIView):
+class WeChatView(APIView):
 
     def get(self, request):
         signature = request.GET.get("signature")  # 先获取加密签名
@@ -41,13 +41,8 @@ class TokenView(APIView):
             return HttpResponse("error")
 
     def post(self, request):
-        return Response({"status": "1", "data": {"key": 789}})
+        data = request.get_data()
+        logger.info(data)
+        return HttpResponse("1")
 
 
-class WeChatView(APIView):
-
-    def get(self, request):
-        return Response({"status": "1", "data": {"key": 789}})
-
-    def post(self, request):
-        return Response({"status": "1", "data": {"key": 789}})
