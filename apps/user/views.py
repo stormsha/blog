@@ -144,6 +144,7 @@ def register(request):
             auth.login(request, user_profile)
             context['active'] = True
         context['error'] = error
+        logger.info("register: %s" % context)
         return HttpResponse(json.dumps(context))
     else:
         context['register_error'] = '注册信息填写有误'
