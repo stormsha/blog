@@ -59,7 +59,7 @@ class WeChatView(APIView):
             create_time = xml_data.find('CreateTime').text
             msg_id = xml_data.find('MsgId').text
             r_content = xml_data.find('Content').text
-            logger.info("数据：%s", [msg_type, to_user_name, from_user_name, create_time, msg_id])
+            logger.info("数据：%s", [msg_type, to_user_name, from_user_name, create_time, msg_id, r_content])
             if msg_type == 'text':
                 if r_content == "注册":
                     content = "6789"

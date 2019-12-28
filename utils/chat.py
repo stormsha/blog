@@ -1,4 +1,6 @@
 import time
+import logging
+logger = logging.getLogger(__name__)
 
 
 class Message(object):
@@ -29,6 +31,9 @@ class TextMsg(object):
         <Content><![CDATA[{Content}]]></Content>
         </xml>
         """
+        logger.info(
+            xml_form.format(**self.__dict)
+        )
         return xml_form.format(**self.__dict)
 
 
