@@ -140,7 +140,7 @@ def register(request):
             request.session['uid'] = user_profile.id
             # 调用auth登录
             auth.login(request, user_profile)
-            context['active'] = False
+            context['active'] = True
         context['error'] = error
         return HttpResponse(json.dumps(context))
     else:
