@@ -64,7 +64,11 @@ class WeChatView(APIView):
             if msg_type == 'text':
                 if r_content == "注册":
                     content = random.randint(1000, 2000)
-                    cache.set(str(content), str(content), 60*10)
+                    cache.set(str(content), str(content), 60*2)
+                    res = TextMsg(to_user_name, from_user_name, content)
+                    return res.send()
+                else:
+                    content = "回复1024有惊喜额"
                     res = TextMsg(to_user_name, from_user_name, content)
                     return res.send()
             elif msg_type == 'image':
