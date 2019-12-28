@@ -12,10 +12,13 @@ robot = WeRoBot(enable_session=False,
 # 被关注
 @robot.subscribe
 def subscribe(message):
+    logger.info("用户输入: " + message.content)
     return "欢迎关注我呀"
 
 
 # 文本消息返回原文
 @robot.text
 def echo(message):
+    logger.info("用户输入: " + message.content)
     return message.content
+
