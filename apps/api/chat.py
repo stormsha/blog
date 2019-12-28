@@ -5,6 +5,7 @@ import logging
 # django
 from django.http import HttpResponse
 from rest_framework.views import APIView, Response
+from xml.etree import ElementTree as ET
 from api.permissions import check_action_permission
 from storm.models import Article
 from api.serializers import ArticleSerializer
@@ -41,10 +42,11 @@ class WeChatView(APIView):
             return HttpResponse("error")
 
     def post(self, request):
-        logger.info('llll')
-        print(request)
+        logger.info('ssssssssssssssssssssssssssssssssssss,接受消息')
         data = request.data
         logger.info(data)
+        # xml = ET.fromstring(data)
+
         return HttpResponse("1")
 
 
