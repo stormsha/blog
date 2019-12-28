@@ -41,7 +41,9 @@ class WeChatView(APIView):
             return HttpResponse("error")
 
     def post(self, request):
-        data = request.get_data()
+        logger.info('llll')
+        print(request)
+        data = request.data
         logger.info(data)
         return HttpResponse("1")
 
