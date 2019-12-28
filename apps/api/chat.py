@@ -6,6 +6,7 @@ import logging
 from django.http import HttpResponse
 from rest_framework.views import APIView, Response
 from xml.etree import ElementTree as ET
+from utils.chat import TextMsg
 from api.permissions import check_action_permission
 from storm.models import Article
 from api.serializers import ArticleSerializer
@@ -43,10 +44,61 @@ class WeChatView(APIView):
 
     def post(self, request):
         logger.info('ssssssssssssssssssssssssssssssssssss,接受消息')
-        data = request.data
-        logger.info(data)
-        # xml = ET.fromstring(data)
+        content = self.auto_reply(request)
+        return content
 
-        return HttpResponse("1")
+    @staticmethod
+    def auto_reply(request):
+        try:
+            data = request.body
+            xml_data = ET.fromstring(data)
+            logger.info(xml_data)
+            msg_type = xml_data.find('MsgType').text
+            to_user_name = xml_data.find('ToUserName').text
+            from_user_name = xml_data.find('FromUserName').text
+            create_time = xml_data.find('CreateTime').text
+            msg_type = xml_data.find('MsgType').text
+            msg_id = xml_data.find('MsgId').text
+            r_content = xml_data.find('Content').text
 
+            if msg_type == 'text':
+                if r_content == "注册":
+                    content = "6789"
+                    res = TextMsg(to_user_name, from_user_name, content)
+                    logger.info("成功了!!!!!!!!!!!!!!!!!!!")
+                    logger.info(res)
+                    return res.send()
+                else:
+                    content = "您好,欢迎来到Python大学习!希望我们可以一起进步!"
+                    res = TextMsg(to_user_name, from_user_name, content)
+                    logger.info("成功了!!!!!!!!!!!!!!!!!!!")
+                    logger.info(res)
+                    return res.send()
+
+            elif msg_type == 'image':
+                content = "图片已收到,谢谢"
+                res = TextMsg(to_user_name, from_user_name, content)
+                return res.send()
+            elif msg_type == 'voice':
+                content = "语音已收到,谢谢"
+                res = TextMsg(to_user_name, from_user_name, content)
+                return res.send()
+            elif msg_type == 'video':
+                content = "视频已收到,谢谢"
+                res = TextMsg(to_user_name, from_user_name, content)
+                return res.send()
+            elif msg_type == 'shortvideo':
+                content = "小视频已收到,谢谢"
+                res = TextMsg(to_user_name, from_user_name, content)
+                return res.send()
+            elif msg_type == 'location':
+                content = "位置已收到,谢谢"
+                res = TextMsg(to_user_name, from_user_name, content)
+                return res.send()
+            else:
+                content = "链接已收到,谢谢"
+                res = TextMsg(to_user_name, from_user_name, content)
+                return res.send()
+        except Exception as msg:
+            return repr(msg)
 
