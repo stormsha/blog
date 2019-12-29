@@ -21,6 +21,7 @@ var/
 wheels/
 media/
 logs/
+whoosh_index/
 *.egg-info/
 .installed.cfg
 *.egg

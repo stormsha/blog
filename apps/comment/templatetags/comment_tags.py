@@ -34,10 +34,9 @@ def get_comment_user_count(article):
 @register.simple_tag
 def get_comment_count(article):
     """获取一个文章的评论总数"""
-    try:
+    if article.article_comments:
         lis = article.article_comments.all()
-    except Exception as msg:
-        logger.exception(repr(msg))
+    else:
         art = Article.objects.get(id=int(article.id))
         lis = art.article_comments.all()
     return lis.count()
