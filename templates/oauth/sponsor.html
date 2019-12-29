@@ -1,0 +1,71 @@
+
+<!DOCTYPE html>
+<html lang="en" class="no-js">
+<head>
+<meta charset="UTF-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>jquery表格标题固定特效代码</title>
+<link rel="stylesheet" type="text/css" href="/static/sponsor/css/normalize.css" />
+<link rel="stylesheet" type="text/css" href="/static/sponsor/css/demo.css" />
+
+<link rel="stylesheet" type="text/css" href="/static/sponsor/css/component.css" />
+<!--[if IE]>
+<script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+<![endif]-->
+</head>
+<body>
+<div class="container">
+<div class="component">
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Email</th>
+<th>Phone</th>
+<th>Mobile</th>
+</tr>
+</thead>
+<tbody>
+<tr><td class="user-name">gary coleman</td><td class="user-email"><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="61060013184f020e0d040c000f5350210419000c110d044f020e0c">[email&#160;protected]</a></td><td class="user-phone">(398)-332-5385</td><td class="user-mobile">(888)-677-3719</td></tr>
+<tr><td class="user-name">rose parker</td><td class="user-email"><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="a5d7cad6c08bd5c4d7cec0d79493e5c0ddc4c8d5c9c08bc6cac8">[email&#160;protected]</a></td><td class="user-phone">(293)-873-2247</td><td class="user-mobile">(216)-889-4933</td></tr>
+<tr><td class="user-name">chloe nelson</td><td class="user-email"><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="d5b6bdb9bab0fbbbb0b9a6babbe4ed95b0adb4b8a5b9b0fbb6bab8">[email&#160;protected]</a></td><td class="user-phone">(957)-213-3499</td><td class="user-mobile">(207)-516-4474</td></tr>
+<tr><td class="user-name">eric bell</td><td class="user-email"><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="96f3e4fff5b8f4f3fafaa7a0d6f3eef7fbe6faf3b8f5f9fb">[email&#160;protected]</a></td><td class="user-phone">(897)-762-9782</td><td class="user-mobile">(565)-627-3002</td></tr>
+<tr><td class="user-name">douglas hayes</td><td class="user-email"><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="c1a5aeb4a6ada0b2efa9a0b8a4b2f8f381a4b9a0acb1ada4efa2aeac">[email&#160;protected]</a></td><td class="user-phone">(231)-391-6269</td><td class="user-mobile">(790)-838-2130</td></tr>
+<tr><td class="user-name">cameron brown</td><td class="user-email"><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="93f0f2fef6e1fcfdbdf1e1fce4fda0a1d3f6ebf2fee3fff6bdf0fcfe">[email&#160;protected]</a></td><td class="user-phone">(204)-488-5204</td><td class="user-mobile">(508)-463-6811</td></tr>
+<tr><td class="user-name">nevaeh diaz</td><td class="user-email"><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="d2bcb7a4b3b7bafcb6bbb3a8ebeb92b7aab3bfa2beb7fcb1bdbf">[email&#160;protected]</a></td><td class="user-phone">(436)-578-2946</td><td class="user-mobile">(906)-412-3302</td></tr>
+<tr><td class="user-name">kathy miller</td><td class="user-email"><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="5c373d2834257231353030392e6a6e1c39243d312c3039723f3331">[email&#160;protected]</a></td><td class="user-phone">(724)-705-3555</td><td class="user-mobile">(764)-841-2531</td></tr>
+<tr><td class="user-name">susan king</td><td class="user-email"><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="4a393f392b24642123242d72720a2f322b273a262f64292527">[email&#160;protected]</a></td><td class="user-phone">(774)-205-7754</td><td class="user-mobile">(639)-267-9728</td></tr>
+<tr><td class="user-name">jeffery ramirez</td><td class="user-email"><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="abc1cecdcdced9d285d9cac6c2d9ced19398ebced3cac6dbc7ce85c8c4c6">[email&#160;protected]</a></td><td class="user-phone">(723)-243-7706</td><td class="user-mobile">(172)-597-3422</td></tr>
+<tr><td class="user-name">gary coleman</td><td class="user-email"><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="147375666d3a777b787179757a262554716c75796478713a777b79">[email&#160;protected]</a></td><td class="user-phone">(398)-332-5385</td><td class="user-mobile">(888)-677-3719</td></tr>
+<tr><td class="user-name">rose parker</td><td class="user-email"><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="24564b57410a5445564f4156151264415c45495448410a474b49">[email&#160;protected]</a></td><td class="user-phone">(293)-873-2247</td><td class="user-mobile">(216)-889-4933</td></tr>
+<tr><td class="user-name">chloe nelson</td><td class="user-email"><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="bfdcd7d3d0da91d1dad3ccd0d18e87ffdac7ded2cfd3da91dcd0d2">[email&#160;protected]</a></td><td class="user-phone">(957)-213-3499</td><td class="user-mobile">(207)-516-4474</td></tr>
+<tr><td class="user-name">eric bell</td><td class="user-email"><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="acc9dec5cf82cec9c0c09d9aecc9d4cdc1dcc0c982cfc3c1">[email&#160;protected]</a></td><td class="user-phone">(897)-762-9782</td><td class="user-mobile">(565)-627-3002</td></tr>
+<tr><td class="user-name">douglas hayes</td><td class="user-email"><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="dbbfb4aebcb7baa8f5b3baa2bea8e2e99bbea3bab6abb7bef5b8b4b6">[email&#160;protected]</a></td><td class="user-phone">(231)-391-6269</td><td class="user-mobile">(790)-838-2130</td></tr>
+<tr><td class="user-name">cameron brown</td><td class="user-email"><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="e182808c84938e8fcf83938e968fd2d3a18499808c918d84cf828e8c">[email&#160;protected]</a></td><td class="user-phone">(204)-488-5204</td><td class="user-mobile">(508)-463-6811</td></tr>
+<tr><td class="user-name">nevaeh diaz</td><td class="user-email"><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="4a242f3c2b2f22642e232b3073730a2f322b273a262f64292527">[email&#160;protected]</a></td><td class="user-phone">(436)-578-2946</td><td class="user-mobile">(906)-412-3302</td></tr>
+<tr><td class="user-name">kathy miller</td><td class="user-email"><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="fd969c899584d390949191988fcbcfbd98859c908d9198d39e9290">[email&#160;protected]</a></td><td class="user-phone">(724)-705-3555</td><td class="user-mobile">(764)-841-2531</td></tr>
+<tr><td class="user-name">susan king</td><td class="user-email"><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="e3909690828dcd888a8d84dbdba3869b828e938f86cd808c8e">[email&#160;protected]</a></td><td class="user-phone">(774)-205-7754</td><td class="user-mobile">(639)-267-9728</td></tr>
+<tr><td class="user-name">jeffery ramirez</td><td class="user-email"><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="f19b949797948388df83909c9883948bc9c2b19489909c819d94df929e9c">[email&#160;protected]</a></td><td class="user-phone">(723)-243-7706</td><td class="user-mobile">(172)-597-3422</td></tr>
+<tr><td class="user-name">gary coleman</td><td class="user-email"><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="096e687b70276a66656c6468673b38496c71686479656c276a6664">[email&#160;protected]</a></td><td class="user-phone">(398)-332-5385</td><td class="user-mobile">(888)-677-3719</td></tr>
+<tr><td class="user-name">rose parker</td><td class="user-email"><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="ed9f829e88c39d8c9f86889fdcdbad88958c809d8188c38e8280">[email&#160;protected]</a></td><td class="user-phone">(293)-873-2247</td><td class="user-mobile">(216)-889-4933</td></tr>
+<tr><td class="user-name">chloe nelson</td><td class="user-email"><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="ee8d8682818bc0808b829d8180dfd6ae8b968f839e828bc08d8183">[email&#160;protected]</a></td><td class="user-phone">(957)-213-3499</td><td class="user-mobile">(207)-516-4474</td></tr>
+<tr><td class="user-name">eric bell</td><td class="user-email"><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="ddb8afb4bef3bfb8b1b1eceb9db8a5bcb0adb1b8f3beb2b0">[email&#160;protected]</a></td><td class="user-phone">(897)-762-9782</td><td class="user-mobile">(565)-627-3002</td></tr>
+<tr><td class="user-name">douglas hayes</td><td class="user-email"><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="93f7fce6f4fff2e0bdfbf2eaf6e0aaa1d3f6ebf2fee3fff6bdf0fcfe">[email&#160;protected]</a></td><td class="user-phone">(231)-391-6269</td><td class="user-mobile">(790)-838-2130</td></tr>
+<tr><td class="user-name">cameron brown</td><td class="user-email"><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="9ffcfef2faedf0f1b1fdedf0e8f1acaddffae7fef2eff3fab1fcf0f2">[email&#160;protected]</a></td><td class="user-phone">(204)-488-5204</td><td class="user-mobile">(508)-463-6811</td></tr>
+<tr><td class="user-name">nevaeh diaz</td><td class="user-email"><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="b6d8d3c0d7d3de98d2dfd7cc8f8ff6d3ced7dbc6dad398d5d9db">[email&#160;protected]</a></td><td class="user-phone">(436)-578-2946</td><td class="user-mobile">(906)-412-3302</td></tr>
+<tr><td class="user-name">kathy miller</td><td class="user-email"><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="f29993869a8bdc9f9b9e9e9780c4c0b2978a939f829e97dc919d9f">[email&#160;protected]</a></td><td class="user-phone">(724)-705-3555</td><td class="user-mobile">(764)-841-2531</td></tr>
+<tr><td class="user-name">susan king</td><td class="user-email"><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="b8cbcdcbd9d696d3d1d6df8080f8ddc0d9d5c8d4dd96dbd7d5">[email&#160;protected]</a></td><td class="user-phone">(774)-205-7754</td><td class="user-mobile">(639)-267-9728</td></tr>
+<tr><td class="user-name">jeffery ramirez</td><td class="user-email"><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="513b3437373423287f23303c3823342b6962113429303c213d347f323e3c">[email&#160;protected]</a></td><td class="user-phone">(723)-243-7706</td><td class="user-mobile">(172)-597-3422</td></tr>
+</tbody>
+</table>
+</div>
+</div>
+<script data-cfasync="false" src="/static/sponsor/js/email-decode.min.js"></script>
+<script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
+<script src="/static/sponsor/js/jquery.ba-throttle-debounce.min.js"></script>
+<script src="/static/sponsor/js/jquery.stickyheader.js"></script>
+<div style="text-align:center;margin:50px 0; font:normal 14px/24px 'MicroSoft YaHei';">
+</div>
+</body>
+</html>
