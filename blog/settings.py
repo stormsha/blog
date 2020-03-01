@@ -107,10 +107,11 @@ DATABASES = {
 REDIS_HOST = settings_json.get('REDIS_HOST', '127.0.0.1')
 REDIS_PORT = settings_json.get('REDIS_PORT', '6379')
 REDIS_PASS = settings_json.get('REDIS_PASS')
+print("redis://:{}@{}:{}/1".format(REDIS_PASS, REDIS_HOST, REDIS_PORT))
 CACHES = {
     "default": {
         "BACKEND": "django_redis.cache.RedisCache",
-        "LOCATION": "redis://:{}@{}:{}".format(REDIS_PASS, REDIS_HOST, REDIS_PORT),
+        "LOCATION": "redis://:{}@{}:{}/1".format(REDIS_PASS, REDIS_HOST, REDIS_PORT),
         "OPTIONS": {
             "CLIENT_CLASS": "django_redis.client.DefaultClient",
         }
