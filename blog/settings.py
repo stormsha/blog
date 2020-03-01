@@ -111,9 +111,10 @@ print("redis://:{}@{}:{}/1".format(REDIS_PASS, REDIS_HOST, REDIS_PORT))
 CACHES = {
     "default": {
         "BACKEND": "django_redis.cache.RedisCache",
-        "LOCATION": "redis://:{}@{}:{}/1".format(REDIS_PASS, REDIS_HOST, REDIS_PORT),
+        "LOCATION": "redis://{}:{}".format(REDIS_HOST, REDIS_PORT),
         "OPTIONS": {
             "CLIENT_CLASS": "django_redis.client.DefaultClient",
+            "PASSWORD": REDIS_PASS
         }
     }
 }
