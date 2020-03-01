@@ -1,0 +1,582 @@
+/* comment form */
+#no-editor {
+    background-color: #f5f5f5;
+    border-radius: 4px;
+}
+#emoji-btns,
+.editor-btns .btn {
+    background: #fff;
+}
+#emoji-btns:hover,
+.editor-btns .btn:hover {
+    background: #f4f4f4;
+}
+
+#emoji-btns:focus,
+.editor-btns .btn:focus {
+    outline:0;
+    box-shadow:none;
+}
+#emoji-btns:active,
+.editor-btns .btn:active {
+    box-shadow:inset 0 3px 5px rgba(0,0,0,.125)
+}
+.editor-btns img {
+    width: 24px;
+    height: 24px;
+}
+.CodeMirror,
+.CodeMirror-scroll {
+    min-height: 100px;
+}
+.editor-statusbar span {
+    min-width: 0;
+}
+.editor-toolbar,
+.CodeMirror {
+    border-radius: 0!important;
+}
+.editor-toolbar a {
+    margin: 0 .15em;
+}
+.hidden {
+    display: none!important;
+}
+/* comemnts block */
+#comment-list img {
+    display: block;
+    max-width: 100%;
+    height: auto;
+    margin-right: auto;
+    margin-left: auto;
+}
+.comment-parent {
+    border-top: 1px solid #f0f0f0;
+}
+.comment-parent .avatar {
+    width: 40px;
+    heigth: 40px;
+    margin-right: 1rem;
+    border-radius: 50%;
+}
+.comment-child {
+    border-top: 1px dashed #f0f0f0;
+}
+.comment-child .avatar {
+    width: 35px;
+    heigth: 35px;
+    margin-right: 1rem;
+    border-radius: 50%;
+    margin-top: 5px;
+}
+#comment-list table {
+    width: 100%;
+    max-width: 100%;
+    margin-bottom: 1rem;
+    background-color: transparent;
+}
+#comment-list table th,
+#comment-list table td {
+    padding:2px 15px;
+    border: 1px solid #95a5a6;
+}
+#comment-list table th {
+    background-color:#212529;
+    color:#fff;
+}
+#comment-list p {
+    margin-bottom:1em;
+}
+.rep-btn {
+    color:#868e96;
+}
+.rep-btn:hover {
+    color:#ea6f5a;
+}
+.CodeMirror .cm-spell-error:not(.cm-url):not(.cm-comment):not(.cm-tag):not(.cm-word) {
+    background: none;
+}
+/* Extra large devices (large desktops, 1200px and up) */
+/* PC X-iPad Pro*/
+@media (min-width: 1200px) {
+.comment-parent .avatar {
+    margin-top: 5px;
+}
+}
+.get-msg {
+    display: none;
+    background-color: #CA0C16;
+    border-radius: 16px;
+    padding: 0 3px!important;
+    position: absolute;
+    top: 2px;
+    margin-left: 31px;
+    color: #fff;
+    font-size: xx-small;
+    transform: scale(.8);
+    vertical-align: middle;
+    line-height: 16px!important;
+    height: 16px;
+    min-width: 11px;
+    border: 1px solid #FFF;
+    text-align: center!important;
+}
+* {
+    word-wrap: break-word;
+}
+
+body {
+    background: #FFF url("/static/comment/images/background.png?080cc62f3a18") repeat-x 0 0;
+}
+
+body, ul, ol, li, dl, dd, p, h1, h2, h3, h4, h5, h6, form, fieldset, .pr, .pc {
+    margin: 0;
+    padding: 0;
+}
+
+em, cite, i {
+    font-style: normal;
+}
+
+a {
+    color: #333;
+    text-decoration: none;
+}
+
+
+.y {
+    float: right;
+}
+
+.cl:after {
+    content: ".";
+    display: block;
+    height: 0;
+    clear: both;
+    visibility: hidden;
+}
+
+.cl {
+    zoom: 1;
+}
+
+hr {
+    display: block;
+    clear: both;
+    *margin-top: -8px !important;
+    *margin-bottom: -8px !important;
+}
+
+.mn hr, .sd hr {
+    margin: 0 10px;
+}
+
+.area hr {
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+}
+
+hr.l {
+    height: 1px;
+    border: none;
+    background: #CDCDCD;
+    color: #CDCDCD;
+}
+
+hr.l2 {
+    height: 2px;
+}
+
+hr.l3 {
+    height: 3px;
+}
+
+hr.da {
+    height: 0;
+    border: none;
+    border-top: 1px dashed #CDCDCD;
+    background: transparent;
+    color: transparent;
+}
+
+hr.bk {
+    margin-bottom: 10px !important;
+    *margin-bottom: 2px !important;
+    height: 0;
+    border: none;
+    border-top: 1px solid #FFF;
+    background: transparent;
+    color: transparent;
+}
+
+.n .sd hr.bk {
+    border-top-color: #F9F9F9;
+}
+
+hr.m0 {
+    margin-left: 0;
+    margin-right: 0;
+}
+
+.wx, .ph {
+    font-family: 'Microsoft YaHei', 'Hiragino Sans GB', 'STHeiti', Tahoma, 'SimHei', sans-serif;
+    font-weight: 100;
+}
+
+.ph {
+    font-size: 20px;
+}
+
+.mt {
+    padding: 10px 0;
+    font-size: 16px;
+}
+
+.pipe {
+    margin: 0 5px;
+    color: #CCC;
+}
+
+.xi1, .onerror {
+    color: #F26C4F;
+}
+
+.xi2, .xi2 a, .xi3 a {
+    color: #369;
+}
+
+.xw0 {
+    font-weight: 400;
+}
+
+.xw1 {
+    font-weight: 700;
+}
+
+.bbda {
+    border-bottom: 1px dashed #CDCDCD;
+}
+
+
+
+
+.bw0 {
+    border: none !important;
+}
+
+.brs, .avt img, .oshr {
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+    border-radius: 5px;
+}
+
+.brm {
+    -moz-border-radius: 10px;
+    -webkit-border-radius: 10px;
+    border-radius: 10px;
+}
+
+.brw {
+    -moz-border-radius: 20px;
+    -webkit-border-radius: 20px;
+    border-radius: 20px;
+}
+
+.ptm {
+    padding-top: 10px !important;
+}
+
+.pbm {
+    padding-bottom: 10px !important;
+}
+
+.avt img {
+    padding: 2px;
+    width: 48px;
+    height: 48px;
+    background: #FFF;
+    border: 1px solid;
+    border-color: #F2F2F2 #CDCDCD #CDCDCD #F2F2F2;
+}
+
+.wp {
+    margin: 0 auto;
+    width: 960px;
+}
+
+#wp .wp {
+    width: auto;
+}
+
+#qmenu_menu ul.nav li {
+    float: left;
+}
+
+.ie6 #qmenu_menu ul.nav li {
+    clear: none !important;
+    width: auto !important;
+}
+
+#ct {
+    min-height: 300px;
+}
+
+.ie6 #ct {
+    height: 300px;
+}
+
+.mn {
+    overflow: hidden;
+}
+
+.ct1 {
+    border: 1px solid #CCC;
+    border-top: none;
+}
+
+.ct2 .mn {
+    float: left;
+    width: 730px;
+    margin-bottom: 1em;
+}
+
+.ct2 .sd {
+    float: right;
+    width: 220px;
+    overflow: hidden;
+    _overflow-y: visible;
+}
+
+.appl {
+    float: left;
+    overflow: hidden;
+    margin-bottom: 10px;
+    padding: 6px 10px;
+    width: 117px;
+}
+
+.ct2_a, .ct3_a {
+    border: 1px solid #CCC;
+    background: url("/static/comment/images/vlineb.png?080cc62f3a18") repeat-y 0 0
+}
+
+.ct2_a_r {
+    border: none;
+    background-image: none;
+}
+
+.ct2_a h1.mt {
+    display: none;
+}
+
+.ct2_a .tb {
+    margin-top: 3px;
+}
+
+.ct2_a .mn {
+    float: right;
+    width: 810px;
+}
+
+.ct2_a .mn {
+    display: inline;
+    margin-right: 10px;
+    padding-top: 10px;
+    width: 800px;
+}
+
+#nv_userapp .ct2_a .mn, .ct2_a_r .mn {
+    margin-right: 0;
+    width: 810px;
+}
+
+.ct3_a .mn {
+    float: left;
+    margin-left: 20px;
+    width: 565px;
+}
+
+.ct3_a .sd {
+    float: right;
+    width: 220px;
+}
+
+
+
+.bw0 {
+    background: transparent;
+}
+
+.bw {
+    padding: 0 15px;
+}
+
+#pt {
+    margin: 2px 0;
+    height: 29px;
+    border: none;
+    background: transparent;
+    line-height: 29px;
+}
+
+.tb {
+    margin-top: 10px;
+    padding-left: 5px;
+    line-height: 30px;
+    border-bottom: 1px solid #CDCDCD;
+}
+
+.tb li {
+    float: left;
+    margin: 0 3px -1px 0;
+}
+
+.ie6 .tb .a, .ie6 .tb .current {
+    position: relative;
+}
+
+.tb a {
+    display: block;
+    padding: 0 10px;
+    border: 1px solid #CDCDCD;
+    background: #E5EDF2;
+}
+
+.tb .a a, .tb .current a {
+    border-bottom-color: #FFF;
+    background: #FFF;
+    font-weight: 700;
+}
+
+.tb a:hover {
+    text-decoration: none;
+}
+
+.tb .y {
+    float: right;
+    margin-right: 0;
+}
+
+.xl1 li {
+    height: 1.5em;
+    overflow: hidden;
+}
+
+.xl2 li {
+    float: left;
+    margin: 2px 0;
+    padding: 0;
+    width: 50%;
+    height: 1.5em;
+    overflow: hidden;
+}
+
+
+
+.xl ol li, ol.xl li {
+    background: none;
+    padding-left: 20px;
+}
+
+.xl ol li, ol.xl li {
+    height: 21px;
+}
+
+.xld dt {
+    padding: 8px 0 5px;
+    font-weight: 700;
+}
+
+.xld dd {
+    margin-bottom: 8px;
+}
+
+.xld .m {
+    float: left;
+    margin: 8px 8px 10px 0;
+}
+
+.xld .atc {
+    float: right;
+    margin-left: 20px;
+}
+
+.ie8 .xld .atc {
+    max-width: 86px;
+}
+
+.xld .atc img {
+    padding: 2px;
+    max-width: 80px;
+    max-height: 80px;
+    border: 1px solid #CCC;
+    background: #FFF;
+}
+
+
+.xld a.d:hover, .xl a.d:hover, .attc a.d:hover, .c a.d:hover, .sinf a.d:hover {
+    background-position: 0 -22px;
+}
+
+.xld a.b {
+    background-position: 0 -40px;
+}
+
+.xld a.b:hover {
+    background-position: 0 -60px;
+}
+
+.xlda dl {
+    padding-left: 65px;
+}
+
+.xlda .m {
+    display: inline;
+    margin: 8px 0 8px -65px;
+}
+
+.xlda .avt img {
+    display: block;
+}
+
+.xlda dd img {
+    max-width: 550px;
+}
+.xlda dd a {
+    color: #369;
+}
+
+.xlda dd .hot {
+    color: #F26C4F;
+}
+
+
+.appl ul {
+    margin: 3px 0;
+}
+
+.appl li {
+    display: block;
+    height: 28px;
+    line-height: 28px;
+    white-space: nowrap;
+    word-wrap: normal;
+    font-size: 14px;
+    text-overflow: ellipsis;
+    overflow: hidden;
+}
+
+.appl li a {
+    text-decoration: none !important;
+}
+
+.slidebar li {
+    float: left;
+    margin-right: 1px;
+    width: 20px;
+    height: 20px;
+    line-height: 20px;
+    text-align: center;
+    font-size: 10px;
+    cursor: pointer;
+}

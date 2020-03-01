@@ -106,17 +106,20 @@ DATABASES = {
 # 使用django-redis缓存页面
 REDIS_HOST = settings_json.get('REDIS_HOST', '127.0.0.1')
 REDIS_PORT = settings_json.get('REDIS_PORT', '6379')
-# REDIS_PASS = settings_json.get('REDIS_PASS')
+REDIS_PASS = settings_json.get('REDIS_PASS')
 CACHES = {
     "default": {
         "BACKEND": "django_redis.cache.RedisCache",
-        "LOCATION": "redis://{}:{}/1".format(REDIS_HOST, REDIS_PORT),
+        "LOCATION": "redis://{}:{}".format(REDIS_HOST, REDIS_PORT),
+        "CONNECTION_POOL_KWARGS": {"max_connections": 100},
         "OPTIONS": {
             "CLIENT_CLASS": "django_redis.client.DefaultClient",
-            # "PASSWORD": REDIS_PASS
+            # "PASSWORD": "sxc123654"
         }
     }
 }
+# 全局缓存时间
+CACHE_TIME = settings_json['CACHE_TIME']
 # Password validation
 # https://docs.djangoproject.com/en/1.11/ref/settings/#auth-password-validators
 
@@ -289,9 +292,6 @@ SITE_KEYWORDS = settings_json['SITE_KEYWORDS']
 SITE_END_TITLE = "聚会阅读器"
 
 API_FLAG = settings_json['API_FLAG']
-
-# 全局缓存时间
-CACHE_TIME = settings_json['CACHE_TIME']
 
 # 存放图片的主机
 PIC_HOST = settings_json['PIC_HOST']
