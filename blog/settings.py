@@ -114,7 +114,7 @@ CACHES = {
         "CONNECTION_POOL_KWARGS": {"max_connections": 100},
         "OPTIONS": {
             "CLIENT_CLASS": "django_redis.client.DefaultClient",
-            # "PASSWORD": "sxc123654"
+            # "PASSWORD": REDIS_PASS
         }
     }
 }
