@@ -5,7 +5,7 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
     <meta name="baidu-tc-verification" content="0fb041a64ee71333c957d8c784961cc8"/>
     <meta property="qc:admins" content="145637425211673116375"/>
     <meta http-equiv="X-UA-Compatible" content="IE=10,IE=9,IE=8">
@@ -23,7 +23,7 @@
     </title>
     <script>
         window._deel = {name: '渡', url: '/', ajaxpager: 'on', commenton: 0, roll: [11, 12]}
-        window._deel.commenton=1
+        window._deel.commenton = 1
     </script>
     <link rel='stylesheet' id='style-css' href='https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css'
           type='text/css' media='all'/>
@@ -71,135 +71,147 @@
         });
     </script>
     <!--百度统计-->
+    <script>
+        var _hmt = _hmt || [];
+        (function () {
+            var hm = document.createElement("script");
+            hm.src = "https://hm.baidu.com/hm.js?8788e0a15b358c68f601e6baf6d75c52";
+            var s = document.getElementsByTagName("script")[0];
+            s.parentNode.insertBefore(hm, s);
+        })();
+    </script>
     <script type="text/javascript"></script>
 </head>
 
 <body class="home blog">
 <div class="page">
-<header id="header" class="header">
-    <div class="container-inner">
-        <!--头部-->
-        <div class="yusi-logo">
-            <a href="/">
-                <h1>
-                    <span class="yusi-mono">渡</span>
-                    <span class="yusi-bloger">StormSha的个人博客</span>
-                </h1>
-            </a>
-        </div>
+    <header id="header" class="header">
+        <div class="container-inner">
+            <!--头部-->
+            <div class="yusi-logo">
+                <a href="/">
+                    <h1>
+                        <span class="yusi-mono">渡</span>
+                        <span class="yusi-bloger">StormSha的个人博客</span>
+                    </h1>
+                </a>
+            </div>
 
-        <!--导航条-->
-        <div id="nav-header" class="navbar">
-            <ul class="nav">
-                <!--获取一级分类信息-->
-                {% get_bigcategory_list as bigcategory %}
-                <li id="menu-item-44"
-                    class="menu-item menu-item-type-custom menu-item-object-custom {% if not category %}current-menu-item current_page_item{% endif %} menu-item-home menu-item-44">
-                    <a
-                            href="/">首页</a></li>
+            <!--导航条-->
+            <div id="nav-header" class="navbar">
+                <ul class="nav">
+                    <!--获取一级分类信息-->
+                    {% get_bigcategory_list as bigcategory %}
+                    <li id="menu-item-44"
+                        class="menu-item menu-item-type-custom menu-item-object-custom {% if not category %}current-menu-item current_page_item{% endif %} menu-item-home menu-item-44">
+                        <a
+                                href="/">首页</a></li>
 
-                <!--导航条一级分类渲染-->
-                {% for big in bigcategory %}
+                    <!--导航条一级分类渲染-->
+                    {% for big in bigcategory %}
 
-                    <!--获取二级分类信息-->
-                    {% get_category_list big.id as cate %}
+                        <!--获取二级分类信息-->
+                        {% get_category_list big.id as cate %}
 
-                    <!--如果一级分类下有二级分类则进行渲染-->
-                    {% if cate %}
-                        <li id="menu-item-14"
-                            class="menu-item menu-item-type-taxonomy menu-item-object-category {% if category == big.slug %}current-menu-item {% endif %} menu-item-has-children menu-item-14">
-                            <a href="{% url 'blog:category' big.slug '' %}">{{ big.name }}</a>
-                            <ul class="sub-menu">
-                                <!--导航条二级分类渲染-->
-                                {% for c in cate %}
-                                    <li id="menu-item-19"
-                                        class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-19">
-                                        <a href="{% url 'blog:category'  big.slug   c.slug %}">{{ c.name }}</a></li>
-                                {% endfor %}
-                            </ul>
-                        </li>
+                        <!--如果一级分类下有二级分类则进行渲染-->
+                        {% if cate %}
+                            <li id="menu-item-14"
+                                class="menu-item menu-item-type-taxonomy menu-item-object-category {% if category == big.slug %}current-menu-item {% endif %} menu-item-has-children menu-item-14">
+                                <a href="{% url 'blog:category' big.slug '' %}">{{ big.name }}</a>
+                                <ul class="sub-menu">
+                                    <!--导航条二级分类渲染-->
+                                    {% for c in cate %}
+                                        <li id="menu-item-19"
+                                            class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-19">
+                                            <a href="{% url 'blog:category'  big.slug   c.slug %}">{{ c.name }}</a></li>
+                                    {% endfor %}
+                                </ul>
+                            </li>
 
-                        <!--无二级分类的一级分类渲染-->
-                    {% else %}
-                        <li id="menu-item-851"
-                            class="menu-item menu-item-type-post_type menu-item-object-page {% if category == big.slug %}current-menu-item {% endif %} menu-item-851">
-                            <a href="{% url 'blog:category' big.slug '' %}">{{ big.name }}</a></li>
-                    {% endif %}
-                {% endfor %}
-                <!--导航条结束-->
+                            <!--无二级分类的一级分类渲染-->
+                        {% else %}
+                            <li id="menu-item-851"
+                                class="menu-item menu-item-type-post_type menu-item-object-page {% if category == big.slug %}current-menu-item {% endif %} menu-item-851">
+                                <a href="{% url 'blog:category' big.slug '' %}">{{ big.name }}</a></li>
+                        {% endif %}
+                    {% endfor %}
+                    <!--导航条结束-->
 
-                <!--搜索框-->
-                <li style="float:right;">
-                    <div class="toggle-search"><i class="fa fa-search"></i></div>
-                    <div class="search-expand">
-                        <div class="search-expand-inner">
-                            <form class="nav-item navbar-form mr-2 py-md-2" role="search" method="get" id="searchform"
-                                  action="{% url 'blog:search' %}">
-                                <div class="input-group">
-                                    <input type="search" name="q" class="search" placeholder="搜索" required=True>
-                                    <button class="search" type="submit" style="position: absolute;height: 30px"><i
-                                            class="fa fa-search"></i></button>
-                                </div><!-- /input-group -->
-                            </form>
+                    <!--搜索框-->
+                    <li style="float:right;">
+                        <div class="toggle-search"><i class="fa fa-search"></i></div>
+                        <div class="search-expand">
+                            <div class="search-expand-inner">
+                                <form class="nav-item navbar-form mr-2 py-md-2" role="search" method="get"
+                                      id="searchform"
+                                      action="{% url 'blog:search' %}">
+                                    <div class="input-group">
+                                        <input type="search" name="q" class="search" placeholder="搜索" required=True>
+                                        <button class="search" type="submit" style="position: absolute;height: 30px"><i
+                                                class="fa fa-search"></i></button>
+                                    </div><!-- /input-group -->
+                                </form>
+                            </div>
                         </div>
-                    </div>
-                </li>
-                <!--搜索框结束-->
+                    </li>
+                    <!--搜索框结束-->
 
-            </ul>
+                </ul>
+            </div>
+            <!--导航条结束-->
         </div>
-        <!--导航条结束-->
-    </div>
-</header>
+    </header>
 
-<section class="container">
+    <section class="container">
 
-    <div class="speedbar" id="speedbar">
-        <!--登录-->
-        <!--目前登录功能只有注册登录其它没必要没做-->
-        {% include 'oauth/user.html' %}
-        <!--登录注册结束-->
-        <!--公告-->
-        <div class="toptip"><strong class="text-success"><i class="fa fa-volume-up"></i> </strong>{% get_active %}</div>
-        <!--公告结束-->
-    </div>
-
-    <!--右侧内容区-->
-    {% block body %}{% endblock body %}
-    <!--左侧内容区结束-->
-
-    <!--右侧信息标签广告区-->
-
-    {% block right %}{% endblock %}
-    <!--评论区输入框相关js代码，必须放在页面底部引入，在评论框标签未加载出来之前，js代码是不生效的-->
-    <script type='text/javascript' src="https://cdn.jsdelivr.net/simplemde/latest/simplemde.min.js"></script>
-    <!--操作评论框-->
-    <script type='text/javascript' src="/static/comment/js/editor.js"></script>
-    <!--评论框输入特效-->
-    <script type='text/javascript' src="{% static 'comment/js/activate-power.js' %}?v=20180120"></script>
-    <script>
-        var sw = window.screen.width;
-        if (sw > 1200) {
-            POWERMODE.colorful = true;
-            POWERMODE.shake = false;
-            document.body.addEventListener('input', POWERMODE)
-        }
-    </script>
-</section>
-<!--网站底部-->
-<footer class="footer" style="flex: 0 0 auto;">
-    <div class="footer-inner">
-        <div class="copyright pull-left">
-            <a href="/" title="静觅">StormSha</a> 版权所有丨采用
-            <a href="http://yusi123.com/"> 欲思 </a>主题丨
-            <a href="https://www.djangoproject.com/" title="Django" target="_blank">基于Django构建</a>© 2019丨托管于
-            <a rel="nofollow" target="_blank" href="https://www.aliyun.com/" title="阿里云主机" target="_blank">阿里云主机</a> &
-            <a rel="nofollow" target="_blank" href="https://www.qiniu.com/">七牛云存储 </a>丨
-            <a href="/sitemap.xml" title="Sitemap" target="_blank">网站地图</a> |
-            <a href="http://www.beian.miit.gov.cn" title="Sitemap" target="_blank">	豫ICP备19008942号</a>
+        <div class="speedbar" id="speedbar">
+            <!--登录-->
+            <!--目前登录功能只有注册登录其它没必要没做-->
+            {% include 'oauth/user.html' %}
+            <!--登录注册结束-->
+            <!--公告-->
+            <div class="toptip"><strong class="text-success"><i class="fa fa-volume-up"></i> </strong>{% get_active %}
+            </div>
+            <!--公告结束-->
         </div>
-    </div>
-</footer>
+
+        <!--右侧内容区-->
+        {% block body %}{% endblock body %}
+        <!--左侧内容区结束-->
+
+        <!--右侧信息标签广告区-->
+
+        {% block right %}{% endblock %}
+        <!--评论区输入框相关js代码，必须放在页面底部引入，在评论框标签未加载出来之前，js代码是不生效的-->
+        <script type='text/javascript' src="https://cdn.jsdelivr.net/simplemde/latest/simplemde.min.js"></script>
+        <!--操作评论框-->
+        <script type='text/javascript' src="/static/comment/js/editor.js"></script>
+        <!--评论框输入特效-->
+        <script type='text/javascript' src="{% static 'comment/js/activate-power.js' %}?v=20180120"></script>
+        <script>
+            var sw = window.screen.width;
+            if (sw > 1200) {
+                POWERMODE.colorful = true;
+                POWERMODE.shake = false;
+                document.body.addEventListener('input', POWERMODE)
+            }
+        </script>
+    </section>
+    <!--网站底部-->
+    <footer class="footer" style="flex: 0 0 auto;">
+        <div class="footer-inner">
+            <div class="copyright pull-left">
+                <a href="/" title="静觅">StormSha</a> 版权所有丨采用
+                <a href="http://yusi123.com/"> 欲思 </a>主题丨
+                <a href="https://www.djangoproject.com/" title="Django" target="_blank">基于Django构建</a>© 2019丨托管于
+                <a rel="nofollow" target="_blank" href="https://www.aliyun.com/" title="阿里云主机" target="_blank">阿里云主机</a>
+                &
+                <a rel="nofollow" target="_blank" href="https://www.qiniu.com/">七牛云存储 </a>丨
+                <a href="/sitemap.xml" title="Sitemap" target="_blank">网站地图</a> |
+                <a href="http://www.beian.miit.gov.cn" title="Sitemap" target="_blank"> 豫ICP备19008942号</a>
+            </div>
+        </div>
+    </footer>
 </div>
 <!--网站底部结束-->
 <!--侧边栏跟随-->
@@ -247,9 +259,9 @@
             var speed_bar = document.getElementById(_self.config.compare);
             _self.config._distanceRight = document.body.clientWidth - _self._getCumulativeOffset(element).right;
             element.style.position = 'static';
-            if (_self.config._distanceRight < 0){
+            if (_self.config._distanceRight < 0) {
                 element.style.right = 0 - _self.config._distanceRight + 'px';
-            }else {
+            } else {
                 element.style.right = _self.config._distanceRight + 'px';
             }
             _self._addListener(window, 'scroll', function () {
@@ -281,11 +293,11 @@
             var elementToPrev = _self._getCumulativeOffset(prevElement).top + _self._getVisibleSize(prevElement).height;
             // 当节点进入跟随区域, 跟随滚动
             var distanceRight = document.body.clientWidth - _self._getCumulativeOffset(speed_bar).right;
-            if (distanceRight != _self.config._distanceRight || distanceRight < 0){
-                if (distanceRight < 0){
-                    element.style.right = - distanceRight  + 'px';
-                }else {
-                    element.style.right = distanceRight  + 'px';
+            if (distanceRight != _self.config._distanceRight || distanceRight < 0) {
+                if (distanceRight < 0) {
+                    element.style.right = -distanceRight + 'px';
+                } else {
+                    element.style.right = distanceRight + 'px';
                 }
             }
             if (_self._getScrollY() > elementToTop + parentToBottom) {
@@ -299,7 +311,7 @@
                 element.style.bottom = 0;
                 element.style.position = 'fixed';
                 {#while ()#}
-                element.style.right = distanceRight  + 'px';
+                element.style.right = distanceRight + 'px';
                 // 否则回到原位
             } else if (_self.cache.originalToTop > elementToTop || elementToPrev > elementToTop) {
                 var parent = _self.cache.placeholder.parentNode;
