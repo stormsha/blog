@@ -1,5 +1,5 @@
 // CodeMirror, copyright (c) by Marijn Haverbeke and others
-// Distributed under an MIT license: http://codemirror.net/LICENSE
+// Distributed under an MIT license: https://codemirror.net/LICENSE
 
 (function() {
   var mode = CodeMirror.getMode({indentUnit: 2}, "javascript");
@@ -171,8 +171,8 @@
   LD("json_ld_keywords",
     '{',
     '  [meta "@context"]: {',
-    '    [meta "@base"]: [string "http://example.com"],',
-    '    [meta "@vocab"]: [string "http://xmlns.com/foaf/0.1/"],',
+    '    [meta "@base"]: [string "https://example.com"],',
+    '    [meta "@vocab"]: [string "https://xmlns.com/foaf/0.1/"],',
     '    [property "likesFlavor"]: {',
     '      [meta "@container"]: [meta "@list"]',
     '      [meta "@reverse"]: [string "@beFavoriteOf"]',
@@ -181,11 +181,11 @@
     '    [property "nick"]: { [meta "@container"]: [meta "@index"] }',
     '  },',
     '  [meta "@graph"]: [[ {',
-    '    [meta "@id"]: [string "http://dbpedia.org/resource/John_Lennon"],',
+    '    [meta "@id"]: [string "https://dbpedia.org/resource/John_Lennon"],',
     '    [property "name"]: [string "John Lennon"],',
     '    [property "modified"]: {',
     '      [meta "@value"]: [string "2010-05-29T14:17:39+02:00"],',
-    '      [meta "@type"]: [string "http://www.w3.org/2001/XMLSchema#dateTime"]',
+    '      [meta "@type"]: [string "https://www.w3.org/2001/XMLSchema#dateTime"]',
     '    }',
     '  } ]]',
     '}');

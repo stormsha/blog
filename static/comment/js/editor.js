@@ -4,8 +4,8 @@
 		autoDownloadFontAwesome:false,
 		insertTexts: {
 		horizontalRule: ["", "\n\n-----\n\n"],
-		image: ["![图片Alt](http://", ")"],
-		link: ["[链接描述](http://", ")"],
+		image: ["![图片Alt](https://", ")"],
+		link: ["[链接描述](https://", ")"],
 		table: ["", "\n\n| Column 1 | Column 2 | Column 3 |\n| -------- | -------- | -------- |\n| Text     | Text      | Text     |\n\n"],
 	    },
 		toolbar: [{

@@ -6,4 +6,4 @@ Disallow: /feed/
 Disallow: /search/
 Disallow: /silian.xml
 
-Sitemap: http://stormsha.com/sitemap.xml
+Sitemap: https://stormsha.com/sitemap.xml

@@ -1,5 +1,5 @@
 // CodeMirror, copyright (c) by Marijn Haverbeke and others
-// Distributed under an MIT license: http://codemirror.net/LICENSE
+// Distributed under an MIT license: https://codemirror.net/LICENSE
 
 (function() {
   var mode = CodeMirror.getMode({tabSize: 4}, "gfm");
@@ -131,31 +131,31 @@
      "[em *foo ][em&link bar/hello#1][em *]");
 
   MT("vanillaLink",
-     "foo [link http://www.example.com/] bar");
+     "foo [link https://www.example.com/] bar");
 
   MT("vanillaLinkPunctuation",
-     "foo [link http://www.example.com/]. bar");
+     "foo [link https://www.example.com/]. bar");
 
   MT("vanillaLinkExtension",
-     "foo [link http://www.example.com/markdown.html] bar");
+     "foo [link https://www.example.com/markdown.html] bar");
 
   MT("vanillaLinkEmphasis",
-     "foo [em *][em&link http://www.example.com/markdown.html][em *] bar");
+     "foo [em *][em&link https://www.example.com/markdown.html][em *] bar");
 
   MT("notALink",
      "[comment ```css]",
      "[tag foo] {[property color]:[keyword black];}",
-     "[comment ```][link http://www.example.com/]");
+     "[comment ```][link https://www.example.com/]");
 
   MT("notALink",
-     "[comment ``foo `bar` http://www.example.com/``] hello");
+     "[comment ``foo `bar` https://www.example.com/``] hello");
 
   MT("notALink",
      "[comment `foo]",
-     "[link http://www.example.com/]",
+     "[link https://www.example.com/]",
      "[comment `foo]",
      "",
-     "[link http://www.example.com/]");
+     "[link https://www.example.com/]");
 
   MT("headerCodeBlockGithub",
      "[header&header-1 # heading]",
@@ -166,7 +166,7 @@
      "",
      "Commit: [link be6a8cc1c1ecfe9489fb51e4869af15a13fc2cd2]",
      "Issue: [link #1]",
-     "Link: [link http://www.example.com/]");
+     "Link: [link https://www.example.com/]");
 
   MT("strikethrough",
      "[strikethrough ~~foo~~]");

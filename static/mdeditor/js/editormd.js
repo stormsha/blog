@@ -3371,7 +3371,7 @@
 
     // Twitter Emoji (Twemoji)  graphics files url path    
     editormd.twemoji = {
-        path : "http://twemoji.maxcdn.com/36x36/",
+        path : "https://twemoji.maxcdn.com/36x36/",
         ext  : ".png"
     };
 

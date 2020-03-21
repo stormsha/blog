@@ -10,7 +10,7 @@
 <script src="sparql.js"></script>
 <style>.CodeMirror {border-top: 1px solid black; border-bottom: 1px solid black;}</style>
 <div id=nav>
-  <a href="http://codemirror.net"><h1>CodeMirror</h1><img id=logo src="../../doc/logo.png"></a>
+  <a href="https://codemirror.net"><h1>CodeMirror</h1><img id=logo src="../../doc/logo.png"></a>
 
   <ul>
     <li><a href="../../index.html">Home</a>
@@ -26,17 +26,17 @@
 <article>
 <h2>SPARQL mode</h2>
 <form><textarea id="code" name="code">
-PREFIX a: &lt;http://www.w3.org/2000/10/annotation-ns#>
-PREFIX dc: &lt;http://purl.org/dc/elements/1.1/>
-PREFIX foaf: &lt;http://xmlns.com/foaf/0.1/>
-PREFIX rdfs: &lt;http://www.w3.org/2000/01/rdf-schema#>
+PREFIX a: &lt;https://www.w3.org/2000/10/annotation-ns#>
+PREFIX dc: &lt;https://purl.org/dc/elements/1.1/>
+PREFIX foaf: &lt;https://xmlns.com/foaf/0.1/>
+PREFIX rdfs: &lt;https://www.w3.org/2000/01/rdf-schema#>
 
 # Comment!
 
 SELECT ?given ?family
 WHERE {
   {
-    ?annot a:annotates &lt;http://www.w3.org/TR/rdf-sparql-query/> .
+    ?annot a:annotates &lt;https://www.w3.org/TR/rdf-sparql-query/> .
     ?annot dc:creator ?c .
     OPTIONAL {?c foaf:givenName ?given ;
                  foaf:familyName ?family }

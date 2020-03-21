@@ -1,5 +1,5 @@
 // CodeMirror, copyright (c) by Marijn Haverbeke and others
-// Distributed under an MIT license: http://codemirror.net/LICENSE
+// Distributed under an MIT license: https://codemirror.net/LICENSE
 
 // declare global: diff_match_patch, DIFF_INSERT, DIFF_DELETE, DIFF_EQUAL
 
@@ -13,7 +13,7 @@
 })(function(CodeMirror, diff_match_patch) {
   "use strict";
   var Pos = CodeMirror.Pos;
-  var svgNS = "http://www.w3.org/2000/svg";
+  var svgNS = "https://www.w3.org/2000/svg";
 
   function DiffView(mv, type) {
     this.mv = mv;

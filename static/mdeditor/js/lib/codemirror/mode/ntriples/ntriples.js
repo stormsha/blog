@@ -1,11 +1,11 @@
 // CodeMirror, copyright (c) by Marijn Haverbeke and others
-// Distributed under an MIT license: http://codemirror.net/LICENSE
+// Distributed under an MIT license: https://codemirror.net/LICENSE
 
 /**********************************************************
 * This script provides syntax highlighting support for
 * the Ntriples format.
 * Ntriples format specification:
-*     http://www.w3.org/TR/rdf-testcases/#ntriples
+*     https://www.w3.org/TR/rdf-testcases/#ntriples
 ***********************************************************/
 
 /*

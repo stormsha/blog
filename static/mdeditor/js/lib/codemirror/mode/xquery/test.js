@@ -1,5 +1,5 @@
 // CodeMirror, copyright (c) by Marijn Haverbeke and others
-// Distributed under an MIT license: http://codemirror.net/LICENSE
+// Distributed under an MIT license: https://codemirror.net/LICENSE
 
 // Don't take these too seriously -- the expected results appear to be
 // based on the results of actual runs without any serious manual
@@ -40,23 +40,23 @@
      "[tag <p ][attribute a1]=[string \"foo\"] [attribute a2]=[string \"bar\"][tag >][variable hello] [variable world][tag </p>]");
 
   MT("test namespaced variable",
-     "[keyword declare] [keyword namespace] [variable e] [keyword =] [string \"http://example.com/ANamespace\"][variable ;declare] [keyword variable] [variable $e:exampleComThisVarIsNotRecognized] [keyword as] [keyword element]([keyword *]) [variable external;]");
+     "[keyword declare] [keyword namespace] [variable e] [keyword =] [string \"https://example.com/ANamespace\"][variable ;declare] [keyword variable] [variable $e:exampleComThisVarIsNotRecognized] [keyword as] [keyword element]([keyword *]) [variable external;]");
 
   MT("test EQName variable",
-     "[keyword declare] [keyword variable] [variable $\"http://www.example.com/ns/my\":var] [keyword :=] [atom 12][variable ;]",
-     "[tag <out>]{[variable $\"http://www.example.com/ns/my\":var]}[tag </out>]");
+     "[keyword declare] [keyword variable] [variable $\"https://www.example.com/ns/my\":var] [keyword :=] [atom 12][variable ;]",
+     "[tag <out>]{[variable $\"https://www.example.com/ns/my\":var]}[tag </out>]");
 
   MT("test EQName function",
-     "[keyword declare] [keyword function] [def&variable \"http://www.example.com/ns/my\":fn] ([variable $a] [keyword as] [atom xs:integer]) [keyword as] [atom xs:integer] {",
+     "[keyword declare] [keyword function] [def&variable \"https://www.example.com/ns/my\":fn] ([variable $a] [keyword as] [atom xs:integer]) [keyword as] [atom xs:integer] {",
      "   [variable $a] [keyword +] [atom 2]",
      "}[variable ;]",
-     "[tag <out>]{[def&variable \"http://www.example.com/ns/my\":fn]([atom 12])}[tag </out>]");
+     "[tag <out>]{[def&variable \"https://www.example.com/ns/my\":fn]([atom 12])}[tag </out>]");
 
   MT("test EQName function with single quotes",
-     "[keyword declare] [keyword function] [def&variable 'http://www.example.com/ns/my':fn] ([variable $a] [keyword as] [atom xs:integer]) [keyword as] [atom xs:integer] {",
+     "[keyword declare] [keyword function] [def&variable 'https://www.example.com/ns/my':fn] ([variable $a] [keyword as] [atom xs:integer]) [keyword as] [atom xs:integer] {",
      "   [variable $a] [keyword +] [atom 2]",
      "}[variable ;]",
-     "[tag <out>]{[def&variable 'http://www.example.com/ns/my':fn]([atom 12])}[tag </out>]");
+     "[tag <out>]{[def&variable 'https://www.example.com/ns/my':fn]([atom 12])}[tag </out>]");
 
   MT("testProcessingInstructions",
      "[def&variable data]([comment&meta <?target content?>]) [keyword instance] [keyword of] [atom xs:string]");

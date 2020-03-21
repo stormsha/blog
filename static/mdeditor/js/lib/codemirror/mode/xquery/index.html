@@ -15,7 +15,7 @@
 	}
     </style>
 <div id=nav>
-  <a href="http://codemirror.net"><h1>CodeMirror</h1><img id=logo src="../../doc/logo.png"></a>
+  <a href="https://codemirror.net"><h1>CodeMirror</h1><img id=logo src="../../doc/logo.png"></a>
 
   <ul>
     <li><a href="../../index.html">Home</a>
@@ -73,7 +73,7 @@ xquery version &quot;1.0-ml&quot;;
  : you may not use this file except in compliance with the License.
  : You may obtain a copy of the License at
  :
- :     http://www.apache.org/licenses/LICENSE-2.0
+ :     https://www.apache.org/licenses/LICENSE-2.0
  :
  : Unless required by applicable law or agreed to in writing, software
  : distributed under the License is distributed on an &quot;AS IS&quot; BASIS,
@@ -82,8 +82,8 @@ xquery version &quot;1.0-ml&quot;;
  : limitations under the License.
  :)
 
-module namespace json = &quot;http://marklogic.com/json&quot;;
-declare default function namespace &quot;http://www.w3.org/2005/xpath-functions&quot;;
+module namespace json = &quot;https://marklogic.com/json&quot;;
+declare default function namespace &quot;https://www.w3.org/2005/xpath-functions&quot;;
 
 (: Need to backslash escape any double quotes, backslashes, and newlines :)
 declare function json:escape($s as xs:string) as xs:string {
@@ -144,12 +144,12 @@ declare function json:print-name-value($x as element()) as xs:string? {
 };
 
 (:~
-  Transforms an XML element into a JSON string representation.  See http://json.org.
+  Transforms an XML element into a JSON string representation.  See https://json.org.
   &lt;p/&gt;
   Sample usage:
   &lt;pre&gt;
     xquery version &quot;1.0-ml&quot;;
-    import module namespace json=&quot;http://marklogic.com/json&quot; at &quot;json.xqy&quot;;
+    import module namespace json=&quot;https://marklogic.com/json&quot; at &quot;json.xqy&quot;;
     json:serialize(&amp;lt;foo&amp;gt;&amp;lt;bar&amp;gt;kid&amp;lt;/bar&amp;gt;&amp;lt;/foo&amp;gt;)
   &lt;/pre&gt;
   Sample transformations:
@@ -203,7 +203,7 @@ declare function json:serialize($x as element())  as xs:string {
     <p><strong>MIME types defined:</strong> <code>application/xquery</code>.</p> 
  
     <p>Development of the CodeMirror XQuery mode was sponsored by 
-      <a href="http://marklogic.com">MarkLogic</a> and developed by 
+      <a href="https://marklogic.com">MarkLogic</a> and developed by
       <a href="https://twitter.com/mbrevoort">Mike Brevoort</a>.
     </p>
  

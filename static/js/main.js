@@ -27,12 +27,12 @@ $(document).ready(function(){
 
 	$('#SOHU_MAIN .head-img-gw img').wait(function(){
 		var imgs = new Array();
-		imgs[0] = 'http://qiniu.cuiqingcai.com/wp-content/uploads/2015/05/20150525111154.jpg';
-		imgs[1] = 'http://qiniu.cuiqingcai.com/wp-content/uploads/2015/05/20150525111447.jpg';
-		imgs[2] = 'http://qiniu.cuiqingcai.com/wp-content/uploads/2015/05/20150525112058.jpg';
-		imgs[3] = 'http://qiniu.cuiqingcai.com/wp-content/uploads/2015/05/20150525112112.jpg';
-		imgs[4] = 'http://qiniu.cuiqingcai.com/wp-content/uploads/2015/05/20150525112129.jpg';
-		imgs[5] = 'http://qiniu.cuiqingcai.com/wp-content/uploads/2015/05/20150525112155.jpg';
+		imgs[0] = 'https://qiniu.cuiqingcai.com/wp-content/uploads/2015/05/20150525111154.jpg';
+		imgs[1] = 'https://qiniu.cuiqingcai.com/wp-content/uploads/2015/05/20150525111447.jpg';
+		imgs[2] = 'https://qiniu.cuiqingcai.com/wp-content/uploads/2015/05/20150525112058.jpg';
+		imgs[3] = 'https://qiniu.cuiqingcai.com/wp-content/uploads/2015/05/20150525112112.jpg';
+		imgs[4] = 'https://qiniu.cuiqingcai.com/wp-content/uploads/2015/05/20150525112129.jpg';
+		imgs[5] = 'https://qiniu.cuiqingcai.com/wp-content/uploads/2015/05/20150525112155.jpg';
 		
 			
 		$('.head-img-gw img[src*="avatar"]').each(function(){

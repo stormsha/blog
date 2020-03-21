@@ -16,7 +16,7 @@
       .cm-s-default .cm-trailing-space-new-line:before {position: absolute; content: "\21B5"; color: #777;}
     </style>
 <div id=nav>
-  <a href="http://codemirror.net"><h1>CodeMirror</h1><img id=logo src="../../doc/logo.png"></a>
+  <a href="https://codemirror.net"><h1>CodeMirror</h1><img id=logo src="../../doc/logo.png"></a>
 
   <ul>
     <li><a href="../../index.html">Home</a>
@@ -228,20 +228,20 @@ text you want to turn into a link.
 Inline-style links use parentheses immediately after the link text.
 For example:
 
-    This is an [example link](http://example.com/).
+    This is an [example link](https://example.com/).
 
 Output:
 
-    &lt;p&gt;This is an &lt;a href="http://example.com/"&gt;
+    &lt;p&gt;This is an &lt;a href="https://example.com/"&gt;
     example link&lt;/a&gt;.&lt;/p&gt;
 
 Optionally, you may include a title attribute in the parentheses:
 
-    This is an [example link](http://example.com/ "With a Title").
+    This is an [example link](https://example.com/ "With a Title").
 
 Output:
 
-    &lt;p&gt;This is an &lt;a href="http://example.com/" title="With a Title"&gt;
+    &lt;p&gt;This is an &lt;a href="https://example.com/" title="With a Title"&gt;
     example link&lt;/a&gt;.&lt;/p&gt;
 
 Reference-style links allow you to refer to your links by names, which
@@ -250,15 +250,15 @@ you define elsewhere in your document:
     I get 10 times more traffic from [Google][1] than from
     [Yahoo][2] or [MSN][3].
 
-    [1]: http://google.com/        "Google"
-    [2]: http://search.yahoo.com/  "Yahoo Search"
-    [3]: http://search.msn.com/    "MSN Search"
+    [1]: https://google.com/        "Google"
+    [2]: https://search.yahoo.com/  "Yahoo Search"
+    [3]: https://search.msn.com/    "MSN Search"
 
 Output:
 
-    &lt;p&gt;I get 10 times more traffic from &lt;a href="http://google.com/"
-    title="Google"&gt;Google&lt;/a&gt; than from &lt;a href="http://search.yahoo.com/"
-    title="Yahoo Search"&gt;Yahoo&lt;/a&gt; or &lt;a href="http://search.msn.com/"
+    &lt;p&gt;I get 10 times more traffic from &lt;a href="https://google.com/"
+    title="Google"&gt;Google&lt;/a&gt; than from &lt;a href="https://search.yahoo.com/"
+    title="Yahoo Search"&gt;Yahoo&lt;/a&gt; or &lt;a href="https://search.msn.com/"
     title="MSN Search"&gt;MSN&lt;/a&gt;.&lt;/p&gt;
 
 The title attribute is optional. Link names may contain letters,
@@ -267,12 +267,12 @@ numbers and spaces, but are *not* case sensitive:
     I start my morning with a cup of coffee and
     [The New York Times][NY Times].
 
-    [ny times]: http://www.nytimes.com/
+    [ny times]: https://www.nytimes.com/
 
 Output:
 
     &lt;p&gt;I start my morning with a cup of coffee and
-    &lt;a href="http://www.nytimes.com/"&gt;The New York Times&lt;/a&gt;.&lt;/p&gt;
+    &lt;a href="https://www.nytimes.com/"&gt;The New York Times&lt;/a&gt;.&lt;/p&gt;
 
 
 ### Images ###

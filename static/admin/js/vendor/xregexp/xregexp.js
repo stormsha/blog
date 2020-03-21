@@ -3,7 +3,7 @@
 
 /*!
  * XRegExp v2.0.0
- * (c) 2007-2012 Steven Levithan <http://xregexp.com/>
+ * (c) 2007-2012 Steven Levithan <https://xregexp.com/>
  * MIT License
  */
 
@@ -12,7 +12,7 @@
  * flags, and methods beyond what browsers support natively. XRegExp is also a regex utility belt
  * with tools to make your client-side grepping simpler and more powerful, while freeing you from
  * worrying about pesky cross-browser inconsistencies and the dubious `lastIndex` property. See
- * XRegExp's documentation (http://xregexp.com/) for more details.
+ * XRegExp's documentation (https://xregexp.com/) for more details.
  * @module xregexp
  * @requires N/A
  */
@@ -644,8 +644,8 @@ XRegExp = XRegExp || (function (undef) {
  * // -> ['2', '4', '56']
  *
  * // Passing forward and returning specific backreferences
- * html = '<a href="http://xregexp.com/api/">XRegExp</a>\
- *         <a href="http://www.google.com/">Google</a>';
+ * html = '<a href="https://xregexp.com/api/">XRegExp</a>\
+ *         <a href="https://www.google.com/">Google</a>';
  * XRegExp.matchChain(html, [
  *   {regex: /<a href="([^"]+)">/i, backref: 1},
  *   {regex: XRegExp('(?i)^https?://(?<domain>[^/?#]+)'), backref: 'domain'}
@@ -1271,9 +1271,9 @@ XRegExp = XRegExp || (function (undef) {
 
 /*!
  * XRegExp Unicode Base v1.0.0
- * (c) 2008-2012 Steven Levithan <http://xregexp.com/>
+ * (c) 2008-2012 Steven Levithan <https://xregexp.com/>
  * MIT License
- * Uses Unicode 6.1 <http://unicode.org/>
+ * Uses Unicode 6.1 <https://unicode.org/>
  */
 
 /**
@@ -1426,9 +1426,9 @@ XRegExp = XRegExp || (function (undef) {
 
 /*!
  * XRegExp Unicode Categories v1.2.0
- * (c) 2010-2012 Steven Levithan <http://xregexp.com/>
+ * (c) 2010-2012 Steven Levithan <https://xregexp.com/>
  * MIT License
- * Uses Unicode 6.1 <http://unicode.org/>
+ * Uses Unicode 6.1 <https://unicode.org/>
  */
 
 /**
@@ -1531,9 +1531,9 @@ XRegExp = XRegExp || (function (undef) {
 
 /*!
  * XRegExp Unicode Scripts v1.2.0
- * (c) 2010-2012 Steven Levithan <http://xregexp.com/>
+ * (c) 2010-2012 Steven Levithan <https://xregexp.com/>
  * MIT License
- * Uses Unicode 6.1 <http://unicode.org/>
+ * Uses Unicode 6.1 <https://unicode.org/>
  */
 
 /**
@@ -1632,9 +1632,9 @@ XRegExp = XRegExp || (function (undef) {
 
 /*!
  * XRegExp Unicode Blocks v1.2.0
- * (c) 2010-2012 Steven Levithan <http://xregexp.com/>
+ * (c) 2010-2012 Steven Levithan <https://xregexp.com/>
  * MIT License
- * Uses Unicode 6.1 <http://unicode.org/>
+ * Uses Unicode 6.1 <https://unicode.org/>
  */
 
 /**
@@ -1818,9 +1818,9 @@ XRegExp = XRegExp || (function (undef) {
 
 /*!
  * XRegExp Unicode Properties v1.0.0
- * (c) 2012 Steven Levithan <http://xregexp.com/>
+ * (c) 2012 Steven Levithan <https://xregexp.com/>
  * MIT License
- * Uses Unicode 6.1 <http://unicode.org/>
+ * Uses Unicode 6.1 <https://unicode.org/>
  */
 
 /**
@@ -1860,7 +1860,7 @@ XRegExp = XRegExp || (function (undef) {
 
 /*!
  * XRegExp.matchRecursive v0.2.0
- * (c) 2009-2012 Steven Levithan <http://xregexp.com/>
+ * (c) 2009-2012 Steven Levithan <https://xregexp.com/>
  * MIT License
  */
 
@@ -2044,9 +2044,9 @@ XRegExp = XRegExp || (function (undef) {
 
 /*!
  * XRegExp.build v0.1.0
- * (c) 2012 Steven Levithan <http://xregexp.com/>
+ * (c) 2012 Steven Levithan <https://xregexp.com/>
  * MIT License
- * Inspired by RegExp.create by Lea Verou <http://lea.verou.me/>
+ * Inspired by RegExp.create by Lea Verou <https://lea.verou.me/>
  */
 
 (function (XRegExp) {
@@ -2193,7 +2193,7 @@ XRegExp = XRegExp || (function (undef) {
 
 /*!
  * XRegExp Prototype Methods v1.0.0
- * (c) 2012 Steven Levithan <http://xregexp.com/>
+ * (c) 2012 Steven Levithan <https://xregexp.com/>
  * MIT License
  */
 
