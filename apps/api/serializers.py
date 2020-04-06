@@ -41,7 +41,7 @@ class ArticleSerializer(serializers.ModelSerializer):
     class Meta:
         model = Article
         # # fields = ('id', 'author', 'title', 'views', 'category', 'tags')
-        # # fields = '__all__'
-        exclude = ('body',)
+        fields = '__all__'
+        # exclude = ('body',)
         # fields = ('id', 'loves')
 
