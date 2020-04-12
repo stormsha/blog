@@ -275,12 +275,15 @@ BASE_ORPHANS = 5
 # 全文搜索应用配置
 HAYSTACK_CONNECTIONS = {
     'default': {
-        'ENGINE': 'storm.whoosh_cn_backend.WhooshEngine',  # 选择语言解析器为自己更换的结巴分词
-        'PATH': os.path.join(BASE_DIR, 'whoosh_index'),  # 保存索引文件的地址，选择主目录下，这个会自动生成
+        # 'ENGINE': 'storm.whoosh_cn_backend.WhooshEngine',  # 选择语言解析器为自己更换的结巴分词
+        'ENGINE': 'haystack.backends.solr_backend.SolrEngine',
+        'URL': settings_json['SOLR']['URL'],
+        # 'PATH': os.path.join(BASE_DIR, 'whoosh_index'),  # 保存索引文件的地址，选择主目录下，这个会自动生成
+        'INCLUDE_SPELLING': True,
     }
 }
 # 自动更新索引
-HAYSTACK_SIGNAL_PROCESSOR = 'haystack.signals.RealtimeSignalProcessor'
+# HAYSTACK_SIGNAL_PROCESSOR = 'haystack.signals.RealtimeSignalProcessor'
 
 # 自定义用户model
 AUTH_USER_MODEL = 'user.Ouser'
