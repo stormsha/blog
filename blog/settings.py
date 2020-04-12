@@ -283,7 +283,7 @@ HAYSTACK_CONNECTIONS = {
     }
 }
 # 自动更新索引
-# HAYSTACK_SIGNAL_PROCESSOR = 'haystack.signals.RealtimeSignalProcessor'
+HAYSTACK_SIGNAL_PROCESSOR = 'haystack.signals.RealtimeSignalProcessor'
 
 # 自定义用户model
 AUTH_USER_MODEL = 'user.Ouser'
