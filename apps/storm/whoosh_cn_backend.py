@@ -121,14 +121,13 @@ class WhooshSearchBackend(BaseSearchBackend):
         self.content_field_name, self.schema = self.build_schema(connections[self.connection_alias].get_unified_index().all_searchfields())
         self.parser = QueryParser(self.content_field_name, schema=self.schema)
 
-        if new_index is True:
-            self.index = self.storage.create_index(self.schema)
-        else:
+        if not new_index:
             try:
                 self.index = self.storage.open_index(schema=self.schema)
-            except index.EmptyIndexError:
-                self.index = self.storage.create_index(self.schema)
+            except BaseException as e:
+                print("OpenIndexError: {}".format(e))
 
+        self.index = self.storage.create_index(self.schema)
         self.setup_complete = True
 
     def build_schema(self, fields):
