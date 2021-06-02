@@ -15,7 +15,7 @@ httplib2==0.12.1
 idna==2.8
 jieba==0.39
 Markdown==2.6.8
-markdown2==2.3.7
+markdown2==2.4.0
 mysqlclient==1.4.2.post1
 oauth==1.0.1
 oauth2client==4.1.3
