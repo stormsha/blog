@@ -58,6 +58,7 @@ coverage.xml
 *.log
 local_settings.py
 db.sqlite3
+blog.sql
 migrations/
 
 # Flask stuff:

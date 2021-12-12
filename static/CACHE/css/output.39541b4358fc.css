@@ -1,9 +1,9 @@
-﻿﻿
+﻿
 
 @font-face {
     font-family: FontAwesome;
     src: url(/static/fonts/fontawesome-webfont.eot?8f0da7df9b87);
-    src: url(/static/fonts/fontawesome-webfont.eot?8f0da7df9b87) format('embedded-opentype'), url(/static/fonts/fontawesome-webfont.woff?8f0da7df9b87) format('woff'), url(/static/fonts/fontawesome-webfont.ttf?8f0da7df9b87) format('truetype'), url(/static/fonts/fontawesome-webfont.svg?8f0da7df9b87) format('svg');
+    src: url(/static/fonts/fontawesome-webfont.eot?8f0da7df9b87) format('embedded-opentype'), url(/static/fonts/fontawesome-webfont.woff?8f0da7df9b87) format('woff'), url(/static/fonts/fontawesome-webfont.ttf?8f0da7df9b87) format('truetype'), url(/static/fonts/fontawesome-webfont.svg?4d16dac6f69c) format('svg');
     font-weight: 400;
     font-style: normal
 }
