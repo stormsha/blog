@@ -1,0 +1,14 @@
+version: "3.7"
+services:
+  blog:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: blog
+#    env_file:
+#      - ./env
+
+    volumes:
+      - ./blog/settings.py:/opt/blog/settings.py
+    ports:
+      - 8000:8000
