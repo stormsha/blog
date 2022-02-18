@@ -5,10 +5,13 @@ services:
       context: .
       dockerfile: Dockerfile
     container_name: blog
-#    env_file:
-#      - ./env
-
     volumes:
       - ./blog/settings.py:/opt/blog/settings.py
     ports:
       - 8000:8000
+  nginx:
+    image: nginx:alpine
+    volumes:
+      - ./default.conf:/etc/nginx/conf.d/default.conf
+    ports:
+      - 80:80

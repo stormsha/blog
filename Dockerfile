@@ -8,4 +8,4 @@ RUN apt update \
 
 ADD . .
 
-ENTRYPOINT ["/opt/docker-entrypoint.sh"]
+ENTRYPOINT ["/bin/bash", "/opt/docker-entrypoint.sh"]
