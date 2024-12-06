@@ -16,12 +16,11 @@ import sys
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
-
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.11/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = ''
+SECRET_KEY = 'django-insecure-()n4+p13gw)=fvl_#*c6sthz^5(gde91#&ioo-3gr_r=-h9g!n'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -31,6 +30,11 @@ ALLOWED_HOSTS = ['*']
 # Application definition
 
 INSTALLED_APPS = [
+    'storm',  # 博客应用
+    # 'apps.storm.apps.StormConfig',  # 博客应用
+    'comment',  # 评论
+    # 'apps.comment.apps.CommentConfig',  # 评论
+    'user',  # 自定义用户应用
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -39,11 +43,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'django.contrib.sitemaps',
     'django.contrib.humanize',  # 添加人性化过滤器
-    'storm',    # 博客应用
-    'user',     # 自定义用户应用
-    'comment',  # 评论
     'haystack',  # 全文搜索应用 这个要放在其他应用之前
-    'rest_framework',   # API
+    'rest_framework',  # API
 ]
 
 MIDDLEWARE = [
@@ -78,7 +79,6 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'blog.wsgi.application'
 
-
 # Database
 # https://docs.djangoproject.com/en/1.11/ref/settings/#databases
 # 添加 apps 目录
@@ -86,19 +86,19 @@ sys.path.insert(0, os.path.join(BASE_DIR, 'apps'))
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'HOST': '',
-        'PORT': '',
-        'USER': '',
-        'PASSWORD': '',
-        'NAME': 'blog',
+        'HOST': '106.12.30.201',
+        'PORT': '33306',
+        'USER': 'root',
+        'PASSWORD': 'kMhsL81ZqrrX',
+        'NAME': 'blog_dev',
         # 避免映射数据库时出现警告
         'OPTIONS': {
             'init_command': "SET sql_mode='STRICT_TRANS_TABLES'",
             'charset': 'utf8mb4',
+            # 'VERSION': '8.0.2'
         },
     }
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/1.11/ref/settings/#auth-password-validators
@@ -117,7 +117,6 @@ AUTH_PASSWORD_VALIDATORS = [
         'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
     },
 ]
-
 
 # Internationalization
 # https://docs.djangoproject.com/en/1.11/topics/i18n/
@@ -142,7 +141,7 @@ STATICFILES_DIRS = [
 ]
 
 # 媒体文件收集
-MEDIA_URL = "/media/"   # 媒体文件别名(相对路径) 和 绝对路径
+MEDIA_URL = "/media/"  # 媒体文件别名(相对路径) 和 绝对路径
 MEDIA_ROOT = (
     os.path.join(BASE_DIR, 'media')
 )
@@ -171,3 +170,4 @@ SITE_KEYWORDS = "StormSha,静觅,网络,IT,技术,博客,Python"
 SITE_END_TITLE = "聚会阅读器"
 
 API_FLAG = True
+DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'

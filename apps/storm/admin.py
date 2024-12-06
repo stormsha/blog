@@ -1,5 +1,6 @@
 from django.contrib import admin
-from .models import Article, Tag, Category, Carousel, Keyword, FriendLink, BigCategory
+
+from storm.models import Article, Tag, Category, BigCategory, Carousel, Keyword, FriendLink
 
 
 @admin.register(Article)

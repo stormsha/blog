@@ -14,9 +14,11 @@ class Keyword(models.Model):
     name = models.CharField('文章关键词', max_length=20)
 
     class Meta:
+        # app_label = 'storm'  # 这里使用您的应用名称
         verbose_name = '关键词'
         verbose_name_plural = verbose_name
         ordering = ['name']
+        app_label = 'storm'
 
     def __str__(self):
         return self.name
@@ -27,7 +29,7 @@ class Tag(models.Model):
     name = models.CharField('文章标签', max_length=20)
     slug = models.SlugField(unique=True)
     description = models.TextField('描述', max_length=240, default=settings.SITE_DESCRIPTION,
-                                 help_text='用来作为SEO中description,长度参考SEO标准')
+                                   help_text='用来作为SEO中description,长度参考SEO标准')
 
     class Meta:
         verbose_name = '标签'
@@ -52,9 +54,9 @@ class BigCategory(models.Model):
     # 用作文章的访问路径，每篇文章有独一无二的标识，下同
     slug = models.SlugField(unique=True)
     description = models.TextField('描述', max_length=240, default=settings.SITE_DESCRIPTION,
-                                 help_text='用来作为SEO中description,长度参考SEO标准')
+                                   help_text='用来作为SEO中description,长度参考SEO标准')
     keywords = models.TextField('关键字', max_length=240, default=settings.SITE_KEYWORDS,
-                              help_text='用来作为SEO中keywords,长度参考SEO标准')
+                                help_text='用来作为SEO中keywords,长度参考SEO标准')
 
     class Meta:
         verbose_name = '大分类'
@@ -68,9 +70,17 @@ class BigCategory(models.Model):
 class Category(models.Model):
     name = models.CharField('文章分类', max_length=20)
     slug = models.SlugField(unique=True)
-    description = models.TextField('描述', max_length=240, default=settings.SITE_DESCRIPTION,
-                                 help_text='用来作为SEO中description,长度参考SEO标准')
-    bigcategory = models.ForeignKey(BigCategory, verbose_name='大分类')
+    description = models.TextField(
+        '描述',
+        max_length=240,
+        default=settings.SITE_DESCRIPTION,
+        help_text='用来作为SEO中description,长度参考SEO标准'
+    )
+    bigcategory = models.ForeignKey(
+        BigCategory,
+        verbose_name='大分类',
+        on_delete=models.CASCADE  # 添加 on_delete 参数
+    )
 
     class Meta:
         verbose_name = '分类'
@@ -90,7 +100,11 @@ class Category(models.Model):
 # 文章
 class Article(models.Model):
     IMG_LINK = '/static/images/summary.jpg'
-    author = models.ForeignKey(settings.AUTH_USER_MODEL, verbose_name='作者')
+    author = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        verbose_name='作者',
+        on_delete=models.CASCADE  # 添加 on_delete 参数
+    )
     title = models.CharField(max_length=150, verbose_name='文章标题')
     summary = models.TextField('文章摘要', max_length=230, default='文章摘要等同于网页description内容，请务必填写...')
     body = models.TextField(verbose_name='文章内容')
@@ -100,10 +114,16 @@ class Article(models.Model):
     views = models.IntegerField('阅览量', default=0)
     loves = models.IntegerField('喜爱量', default=0)
     slug = models.SlugField(unique=True)
-    category = models.ForeignKey(Category, verbose_name='文章分类')
+    category = models.ForeignKey(
+        Category,
+        verbose_name='文章分类',
+        on_delete=models.CASCADE  # 添加 on_delete 参数
+    )
     tags = models.ManyToManyField(Tag, verbose_name='标签')
-    keywords = models.ManyToManyField(Keyword, verbose_name='文章关键词',
-                                    help_text='文章关键词，用来作为SEO中keywords，最好使用长尾词，3-4个足够')
+    keywords = models.ManyToManyField(
+        Keyword, verbose_name='文章关键词',
+        help_text='文章关键词，用来作为SEO中keywords，最好使用长尾词，3-4个足够'
+    )
 
     class Meta:
         verbose_name = '文章'
@@ -191,7 +211,7 @@ class FriendLink(models.Model):
         return home_url
 
     def active_to_false(self):
-        self.is_active=False
+        self.is_active = False
         self.save(update_fields=['is_active'])
 
     def show_to_false(self):
@@ -211,5 +231,3 @@ class Activate(models.Model):
 
     def __str__(self):
         return self.id
-
-

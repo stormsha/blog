@@ -20,7 +20,7 @@ class Ouser(AbstractUser):
         verbose_name = '用户'  # 定义网站管理后台表名
         verbose_name_plural = verbose_name
         ordering = ['-id']
+        app_label="user"
 
     def __str__(self):
         return self.username
-

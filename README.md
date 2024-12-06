@@ -1,4 +1,3 @@
-
 # 简介
 
 环境：Python3.6 + Django1.11 + Wordpress，Yusi主题 制作的个人主页
@@ -9,12 +8,11 @@
 
 位置：上海
 
-
 ## 此项目包含两个分支
 
 ### 分支master
 
-基于 Python3.6 + Django1.11  1：1 仿制崔庆才个人博客
+基于 Python3.6 + Django1.11 1：1 仿制崔庆才个人博客
 
 ### 分支online
 
@@ -53,3 +51,18 @@ https://stormsha.com
 
 - 由于本项目分为几个不同的分支，每个分支的功能有所不同，但是运行的方式基本相同，所以需要根据分支查看对应的运行wiki
 - 指导 wiki：https://github.com/stormsha/blog/wiki
+
+## 初始化数据
+
+```shell
+python manage.py makemigrations
+python manage.py migrate
+python manage.py createsuperuser
+python manage.py loaddata initial_data.json
+```
+
+## 文章头图
+
+```shell
+https://picsum.photos/
+```

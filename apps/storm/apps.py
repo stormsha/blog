@@ -1,5 +1,5 @@
-from django.apps import AppConfig
-
-
-class StormConfig(AppConfig):
-    name = 'storm'
+# from django.apps import AppConfig
+#
+#
+# class StormConfig(AppConfig):
+#     name = 'apps.storm'

@@ -1,0 +1,61 @@
+[
+  {
+    "model": "storm.keyword",
+    "pk": 1,
+    "fields": {
+      "name": "SEO优化"
+    }
+  },
+  {
+    "model": "storm.tag",
+    "pk": 1,
+    "fields": {
+      "name": "技术",
+      "slug": "technology",
+      "description": "技术相关的文章"
+    }
+  },
+  {
+    "model": "storm.bigcategory",
+    "pk": 1,
+    "fields": {
+      "name": "大分类示例",
+      "slug": "example-category",
+      "description": "这是一个大分类示例",
+      "keywords": "大分类, 示例"
+    }
+  },
+  {
+    "model": "storm.category",
+    "pk": 1,
+    "fields": {
+      "name": "分类示例",
+      "slug": "example-subcategory",
+      "description": "这是一个子分类示例",
+      "bigcategory": 1
+    }
+  },
+  {
+    "model": "storm.article",
+    "pk": 1,
+    "fields": {
+      "author": 1,
+      "title": "示例文章",
+      "summary": "这是一个示例文章摘要。",
+      "body": "这是文章内容。",
+      "img_link": "/static/images/summary.jpg",
+      "views": 0,
+      "loves": 0,
+      "slug": "example-article",
+      "create_date": "2024-12-06 00:00:00",
+      "update_date": "2024-12-06 00:00:00",
+      "category": 1,
+      "tags": [
+        1
+      ],
+      "keywords": [
+        1
+      ]
+    }
+  }
+]

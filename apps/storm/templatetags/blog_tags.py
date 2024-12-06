@@ -1,15 +1,17 @@
 # ---------------------------
 __author__ = 'stormsha'
 __date__ = '2019/3/15 20:31'
+
 # ---------------------------
 
 # 创建了新的tags标签文件后必须重启服务器
 
 from django import template
-from ..models import Article, Category, Tag, Carousel, FriendLink, BigCategory, Activate, Keyword
 from django.db.models.aggregates import Count
 from django.utils.html import mark_safe
 import re
+
+from storm.models import BigCategory, Category, Activate, Article, Tag, FriendLink, Carousel, Keyword
 
 # 注册自定义标签函数
 register = template.Library()
@@ -203,4 +205,3 @@ def my_highlight(text, q):
         except:
             pass
     return text
-
